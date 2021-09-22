@@ -2,7 +2,7 @@
 A game of life clone that runs in a hexagonal grid!
 
 ## Todo:
-1. Implement the board management (reading, writing)
+1. Implement the board management (reading, writing) - TTG
    1. For this we will need to figure out a coordinates system. **TODO**
    2. Based on the coordinates system, make functions to:
       - Generate the board. **TODO**
