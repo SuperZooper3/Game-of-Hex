@@ -2,12 +2,12 @@ cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
 
 class Board:
     def __init__(self, x: int, y: int):
-        self.grid = [[False for _ in range(x)] for _ in range(y)]
+        self.grid = [[False for _ in range(y)] for _ in range(x)]
         self.x = x
         self.y = y
     
     @classmethod
-    def genAlive(cls, *aliveCells: list, x: int, y:int):
+    def genAlive(cls, *aliveCells: tuple[list], x: int, y:int):
         board = cls(x, y)
         for cell in aliveCells:
             board.write(cell[0], cell[1], True)
@@ -16,7 +16,7 @@ class Board:
     def state(self, x: int, y: int) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
             return None
-        return self.grid[y][x]
+        return self.grid[x][y]
 
     def alive(self, x: int, y: int) -> int:
         count = 0
@@ -34,7 +34,7 @@ class Board:
     def write(self, x: int, y: int, state: bool) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y) or not (state == True or state == False):
             return None
-        self.grid[y][x] = state
+        self.grid[x][y] = state
         return state
     
     def __str__(self):
