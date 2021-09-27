@@ -14,15 +14,25 @@ A game of life clone that runs in a hexagonal grid!
       - Generate the board. **TODO**
       - Read and write **TODO**
       - Check agacent cells (number of alive cells) **TODO**
-2. Implement the ruleset
+2. Implement the ruleset - BG
    1. Actualy write the basic rules
       - Make a clear way to set and edit basic rules (number of alives needed to spawn, die). **TODO**
       - Use variables or a settings file **TODO**
    2. Make the code easy to change to accomodate new, more complex, rules being added. 
       - Have a structure where you can just hook in new functions that are their own rules. **TODO**
-3. Display the board!
+3. Get input from the user:
+   1. *In the futre:* using the GUI, get coordinates that will be passed at the start
+   2. Pass through the cells that will be alive to the Board manager
+4. Display the board! - Tommcn
     1. **Keep** rendering pipeline seperate from compute.
     2. Make platform specific rendering functions that can be quickly turned on and off.
        - Basic Command line rendering (working in either unix command line or windows) **TODO**
        - Numpy or equililant computer GUI rendering **TODO**
        - Numworks calculator rendering! (If we still feel like it) **TODO** 
+5. Write tests - Super
+   1. Make a checking system that is integrated with github actions - **TODO**
+   2. Actualy write all the checks: - **TODO**
+      - Make sure that the scripts have no syntax errors
+      - Check to make sure board generates, can read, can write, dosent crash when writing ouside of range
+      - Make sure there is a ruleset
+      - Make sure the simulation follows the ruleset
