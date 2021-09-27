@@ -4,9 +4,10 @@ A game of life clone that runs in a hexagonal grid!
 ## Todo:
 1. Implement the board management (reading, writing) - TTG
    1. For this we will need to figure out a coordinates system. **TODO**
+   
       Coordinate system functions:
          - Board(x: int, y: int) generates the board with x amount of lines and y columns and returns the Board class
-         - Board.genWithAlive(*aliveCells: list, x: int, y:int) classmethod that generates a board with the given cell coordinates alive, example: Board.genWithAlive([1, 1], [2, 2], [1, 2], x=5, y=5)
+         - Board.genAlive(*aliveCells: list, x: int, y:int) classmethod that generates a board with the given cell coordinates alive, example: Board.genAlive([1, 1], [2, 2], [1, 2], x=5, y=5)
          - Board.state(x: int, y: int) -> bool: returns the state of a given cell, True if alive and False is dead
          - Board.alive(x: int, y: int) -> int: returns the amount of alive cells around the requested cell(excluding itself), value is between 0 and 6
          - Board.around(x: int, y: int) -> list\[bool\]: returns a list of the cells around the given cell(excluding itself), order is up, up-right, down-right, down, down-left, up-left
