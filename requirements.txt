@@ -1,0 +1,10 @@
+astroid==2.8.0
+isort==5.9.3
+lazy-object-proxy==1.6.0
+mccabe==0.6.1
+platformdirs==2.4.0
+pygame==2.0.1
+pylint==2.11.1
+toml==0.10.2
+typing-extensions==3.10.0.2
+wrapt==1.12.1
