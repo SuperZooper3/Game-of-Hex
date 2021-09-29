@@ -1,3 +1,5 @@
+from typing import Tuple
+
 cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
 
 """
@@ -29,7 +31,7 @@ class Board:
         Board
     """
     @classmethod
-    def genAlive(cls, *aliveCells: tuple[list], x: int, y:int):
+    def genAlive(cls, *aliveCells: Tuple[list], x: int, y:int):
         board = cls(x, y)
         for cell in aliveCells:
             board.write(cell[0], cell[1], True)
