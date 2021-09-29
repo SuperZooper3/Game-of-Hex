@@ -1,10 +1,11 @@
 # Game of Hex
+
 A game of life clone that runs in a hexagonal grid!
 
-## Todo:
+## Todo
+
 1. Implement the board management (reading, writing) - TTG
-   1. For this we will need to figure out a coordinates system. **TODO**
-   
+   1. For this we will need to figure out a coordinates system. **DONE**
       Coordinate system functions:
          - Board(x: int, y: int) generates the board with x amount of lines and y columns and returns the Board class
          - Board.genAlive(*aliveCells: list, x: int, y:int) classmethod that generates a board with the given cell coordinates alive, example: Board.genAlive([1, 1], [2, 2], [1, 2], x=5, y=5)
@@ -13,9 +14,9 @@ A game of life clone that runs in a hexagonal grid!
          - Board.around(x: int, y: int) -> list\[bool\]: returns a list of the cells around the given cell(excluding itself), order is up, up-right, down-right, down, down-left, up-left
          - Board.write(x: int, y: int, state: bool) -> bool: sets the state of a given cell to alive or dead, state accepts True for alive and False for dead and returns the new value of the cell
    2. Based on the coordinates system, make functions to:
-      - Generate the board. **TODO**
-      - Read and write **TODO**
-      - Check agacent cells (number of alive cells) **TODO**
+      - Generate the board. **DONE**
+      - Read and write **DONE**
+      - Check agacent cells (number of alive cells) **DONE**
 2. Implement the ruleset - BG
    1. Actualy write the basic rules
       - Make a clear way to set and edit basic rules (number of alives needed to spawn, die). **TODO**
