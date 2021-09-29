@@ -42,7 +42,7 @@ class Board:
         y: int y coordinate of the cell to check
     
     Returns:
-        bool the state of the cell, True if alive, False if dead
+        bool the state of the cell, True if alive, False if dead and None if the cell is out of the grid
     """
     def state(self, x: int, y: int) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
