@@ -14,11 +14,14 @@ b = Board(10, 3)
 
 running = True
 while running:
+    # Useless but needed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
     screen.fill((255, 255, 255))
+
     renderBoard(screen, b)
     b.write(random.randint(0, x-1), random.randint(0, y-1), random.choice([True, False]))
+
+    # Update screen
     pygame.display.flip()
