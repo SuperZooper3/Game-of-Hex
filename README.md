@@ -20,10 +20,10 @@ A game of life clone that runs in a hexagonal grid!
    1. *In the futre:* using the GUI, get coordinates that will be passed at the start
    2. Pass through the cells that will be alive to the Board manager
 4. Display the board! - Tommcn
-    1. **Keep** rendering pipeline seperate from compute.
+    1. **Keep** rendering pipeline seperate from compute. - **DONE**
     2. Make platform specific rendering functions that can be quickly turned on and off.
        - Basic Command line rendering (working in either unix command line or windows) **TODO**
-       - Numpy or equililant computer GUI rendering **TODO**
+       - Numpy or equililant computer GUI rendering **DONE**
        - Numworks calculator rendering! (If we still feel like it) **TODO** 
 5. Write tests - Super
    1. Make a checking system that is integrated with github actions - **TODO**
