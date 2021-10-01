@@ -1,3 +1,5 @@
+import pygame
+
 # Width and height, respectively
 x, y = 15, 10
 
@@ -12,3 +14,11 @@ RADIUS = 50
 
 # Padding around the top and left edges
 OFFSET = RADIUS * 1.8
+
+# Game clock
+clock = pygame.time.Clock()
+
+# Font for the fps counter
+# Function becuase pygame needs to be initialized before calling font methods
+def get_fps_font():
+    return pygame.font.SysFont("verdana", 32)

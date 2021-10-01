@@ -4,32 +4,32 @@ import random
 import pygame
 
 from board import Board
-from render import renderBoard
+from render import renderBoard, handleEvents
 from settings import x, y, MAX_FPS, RESOLUTION
 
 pygame.init()
 screen = pygame.display.set_mode(RESOLUTION)
-clock = pygame.time.Clock()
-font = pygame.font.SysFont("verdana", 32)
 
 b = Board(x, y)
+paused = True
 
-running = True
-while running:
-    # Useless but needed, also debug stuff
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    screen.fill((255, 255, 255))
-    fps = "FPS: " + str(int(clock.get_fps()))
-    fps_text = font.render(fps, 1, pygame.Color("black"))
-    screen.blit(fps_text, (RESOLUTION[0] - 150, 20))
+def clickHandler(pos):
+    b.write(*pos, not b.state(*pos))
 
+def calcSim():
+    if not paused:
+        # Make all changes to board here
+        # rn its sets a random hex to a random state
+        b.write(
+            random.randint(0, x - 1), random.randint(0, y - 1), random.choice([True, False])
+        )
+
+def togglepause():
+    global paused
+    paused = not paused
+
+
+while True:
+    handleEvents(onclick=clickHandler, onchangepause=togglepause)
+    calcSim()
     renderBoard(screen, b)
-    b.write(
-        random.randint(0, x - 1), random.randint(0, y - 1), random.choice([True, False])
-    )
-
-    # Update screen
-    pygame.display.flip()
-    clock.tick(MAX_FPS)
