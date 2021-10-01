@@ -2,6 +2,7 @@
 import random
 
 import pygame
+from pygame.event import clear
 
 from board import Board
 from render import renderBoard, handleEvents
@@ -28,8 +29,10 @@ def togglepause():
     global paused
     paused = not paused
 
+def clearBoard():
+    b.clear()
 
 while True:
-    handleEvents(onclick=clickHandler, onchangepause=togglepause)
+    handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard)
     calcSim()
     renderBoard(screen, b)

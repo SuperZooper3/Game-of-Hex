@@ -6,7 +6,8 @@ import pygame
 from settings import RADIUS, OFFSET, get_fps_font, clock, RESOLUTION, MAX_FPS
 
 buttons = {
-    "pause": None
+    "pause": None,
+    "clear": None,
 }
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
@@ -44,10 +45,12 @@ def drawHex(screen, pos, alive):
         pygame.draw.line(screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)])
 
 
-def handleEvents(onclick=None, onchangepause=None):
+def handleEvents(onclick=None, onchangepause=None, onclear=None):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            onchangepause()
         elif event.type == pygame.MOUSEBUTTONUP:
             # Guess what: even more sketchy math :)
             # obv this isn't correct cause of hexCoordsOffset
@@ -57,6 +60,9 @@ def handleEvents(onclick=None, onchangepause=None):
 
             if buttons["pause"].collidepoint(event.pos):
                 onchangepause()
+                return
+            elif buttons["clear"].collidepoint(event.pos):
+                onclear()
                 return
 
             eventX -= OFFSET
@@ -87,8 +93,16 @@ def renderDebug(screen):
     fps_text = get_fps_font().render(fps, 1, pygame.Color("black"))
     screen.blit(fps_text, (RESOLUTION[0] - 150, 20))
 
-    buttons["pause"] = pygame.Rect(RESOLUTION[0] - 150, 75, 50, 50)
-    pygame.draw.rect(screen, [255, 0, 0], buttons["pause"])
+    pause_text = get_fps_font(size=14).render("Pause/Resume", 1, pygame.Color("white"))
+    buttons["pause"] = pygame.Rect(RESOLUTION[0] - 150, 75, 125, 50)
+    pygame.draw.rect(screen, [42, 106, 209], buttons["pause"])
+    screen.blit(pause_text, (RESOLUTION[0] - 140, 90))
+
+    clear_text = get_fps_font(size=14).render("Clear", 1, pygame.Color("white"))
+    buttons["clear"] = pygame.Rect(RESOLUTION[0] - 150, 150, 125, 50)
+    pygame.draw.rect(screen, [0, 0, 0], buttons["clear"])
+    screen.blit(clear_text, (RESOLUTION[0] - 140, 165))
+
 
 
 def main():

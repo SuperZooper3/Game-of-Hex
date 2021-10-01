@@ -3,7 +3,7 @@ from typing import Tuple
 cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
 
 """
-Board class: stores  hexagonal board
+Board class: stores hexagonal board
 """
 class Board:
     """
@@ -97,3 +97,9 @@ class Board:
             return None
         self.grid[x][y] = state
         return state
+    
+    """
+    Board.clear(): Clears/resets the board
+    """
+    def clear(self):
+        self.grid = [[False for _ in range(self.y)] for _ in range(self.x)]
