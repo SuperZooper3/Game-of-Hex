@@ -3,8 +3,7 @@ from math import cos, pi, radians, sin
 
 import pygame
 
-RADIUS = 50
-OFFSET = RADIUS * 1.8
+from settings import RADIUS, OFFSET
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
 def getHexCoords(radius, position):
