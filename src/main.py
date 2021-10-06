@@ -5,14 +5,14 @@ from pygame.event import clear
 
 from board import Board
 from render import renderBoard, handleEvents
-from settings import x, y, MAX_FPS, RESOLUTION
+from settings import *
 import rules
 import utils
 
 pygame.init()
 screen = pygame.display.set_mode(RESOLUTION)
 
-b1 = Board(x, y) # This is the board that we will be displaying to the user
+b1 = Board.genAlive(startCells,x ,y)# This is the board that we will be displaying to the user
 b2 = Board(x, y) # This is the board to which we will write the next step's board, which will then be transfered to b1 and cleared
 paused = True
 
