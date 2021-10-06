@@ -32,7 +32,7 @@ def drawHex(screen, pos, alive):
             RADIUS,
             (
                 (pos[0] * RADIUS) * 1.5 + OFFSET,
-                (pos[1] * RADIUS) * 1.7 + OFFSET - hexCoordsOffset,
+                (pos[1] * RADIUS) * 1.7 + OFFSET + hexCoordsOffset,
             ),
         )
     else:
