@@ -20,7 +20,7 @@ def clickHandler(pos):
 def calcSim():
     if not paused:
         # Run all of the checks
-        crowded = utils.crowded
+        crowded = utils.crowded()
         utils.boardRandom(1)
 
 def togglepause():
