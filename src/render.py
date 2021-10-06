@@ -12,6 +12,7 @@ buttons = {
 }
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
+# returns the 6 points for a regular hexagon
 def getHexCoords(radius, position):
     pi2 = 2 * pi
     n = 6
@@ -23,7 +24,9 @@ def getHexCoords(radius, position):
         for i in range(0, n)
     ]
 
-
+# Draws a hex from the coords `pos` (from board), takes care of converting
+# into irl coords
+# Also does some math
 def drawHex(screen, pos, alive):
     color = (255, 255, 255) if not alive else (0, 0, 0)
     # Every second hex needs to be slightly higher
@@ -34,7 +37,7 @@ def drawHex(screen, pos, alive):
             RADIUS,
             (
                 (pos[0] * RADIUS) * 1.5 + OFFSET,
-                (pos[1] * RADIUS) * 1.7 + OFFSET + hexCoordsOffset,
+                (pos[1] * RADIUS) * 1.7 + OFFSET + hexCoordsOffset, # idk why 1.7, but oh well
             ),
         )
     else:
@@ -42,11 +45,15 @@ def drawHex(screen, pos, alive):
             RADIUS, ((pos[0] * RADIUS) * 1.5 + OFFSET, (pos[1] * RADIUS) * 1.7 + OFFSET)
         )
 
+    # draw the polygon filled
     pygame.draw.polygon(screen, color, coords)
     for i in range(len(coords)):
+        # draw the lines of the polygon, for dead cells, so we can still see them
         pygame.draw.line(screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)])
 
-
+# handle click events
+# propagates onclick; onchangepause; onclear; onstep
+# Requires the args to be funcs
 def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -54,9 +61,6 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             onchangepause()
         elif event.type == pygame.MOUSEBUTTONUP:
-            # Guess what: even more sketchy math :)
-            # obv this isn't correct cause of hexCoordsOffset
-            # but it works well enough if you click on the top of the hex
             eventX = event.pos[0]
             eventY = event.pos[1]
 
@@ -91,6 +95,7 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
             onclick((roundedX, roundedY))
 
 
+# Render the board on the pygame screen
 def renderBoard(screen, board):
     renderDebug(screen)
 
@@ -102,6 +107,7 @@ def renderBoard(screen, board):
     pygame.display.flip()
 
 
+# Render debug buttons and text
 def renderDebug(screen):
     screen.fill((255, 255, 255))
     fps = "FPS: " + str(int(clock.get_fps()))
@@ -125,7 +131,7 @@ def renderDebug(screen):
 
 
 
-
+# Debug
 def main():
     from board import Board
 
