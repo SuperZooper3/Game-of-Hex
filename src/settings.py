@@ -7,7 +7,7 @@ x, y = 30, 25
 MAX_FPS = 60
 
 # Size of the window opened
-RESOLUTION = (1500, 1500)
+RESOLUTION = (1280, 720)
 
 # Radius of the hexes
 RADIUS = 20
