@@ -113,3 +113,14 @@ class Board:
     """
     def clear(self):
         self.grid = [[False for _ in range(self.y)] for _ in range(self.x)]
+
+
+    def __str__(self):
+        string = ""
+        for y in range(self.y):
+            if y%2 != 0:
+                string += " "
+            for x in range(self.x):
+                string += str(int(self.state(x, y))) + " "
+            string += "\n"
+        return string

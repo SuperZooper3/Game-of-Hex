@@ -17,9 +17,9 @@ b2 = Board(x, y) # This is the board to which we will write the next step's boar
 paused = True
 
 # Simulate a step of the board
-def simStep():
+def simStep(stepping=False):
     global b1, b2
-    if not paused:
+    if not paused or stepping:
         #b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
         # Itterate over all of the cells
         for cell in b1:
@@ -49,7 +49,11 @@ def togglepause():
 def clearBoard():
     b1.clear()
 
+def step():
+    simStep(stepping=True)
+    renderBoard(screen, b1)
+
 while True:
-    handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard)
+    handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step)
     simStep()
     renderBoard(screen, b1)

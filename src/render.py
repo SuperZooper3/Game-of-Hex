@@ -8,6 +8,7 @@ from settings import RADIUS, OFFSET, get_fps_font, clock, RESOLUTION, MAX_FPS
 buttons = {
     "pause": None,
     "clear": None,
+    "step": None
 }
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
@@ -45,7 +46,7 @@ def drawHex(screen, pos, alive):
         pygame.draw.line(screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)])
 
 
-def handleEvents(onclick=None, onchangepause=None, onclear=None):
+def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -54,7 +55,7 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None):
         elif event.type == pygame.MOUSEBUTTONUP:
             # Guess what: even more sketchy math :)
             # obv this isn't correct cause of hexCoordsOffset
-            # but it works well enough if you click on the bottom of the hex
+            # but it works well enough if you click on the top of the hex
             eventX = event.pos[0]
             eventY = event.pos[1]
 
@@ -64,6 +65,10 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None):
             elif buttons["clear"].collidepoint(event.pos):
                 onclear()
                 return
+            elif buttons["step"].collidepoint(event.pos):
+                onstep()
+                return
+
 
             eventX -= OFFSET
             eventX /= 1.5
@@ -102,6 +107,12 @@ def renderDebug(screen):
     buttons["clear"] = pygame.Rect(RESOLUTION[0] - 150, 150, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["clear"])
     screen.blit(clear_text, (RESOLUTION[0] - 140, 165))
+
+    step_text = get_fps_font(size=14).render("Step", 1, pygame.Color("white"))
+    buttons["step"] = pygame.Rect(RESOLUTION[0] - 150, 225, 125, 50)
+    pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
+    screen.blit(step_text, (RESOLUTION[0] - 140, 240))
+
 
 
 
