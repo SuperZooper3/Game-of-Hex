@@ -1,10 +1,10 @@
-from board import write
+from board.Board import write
 import random
 
 """
     boardRandom(b,n): Randomly finds n cells and has a 50% chance of turning them on or off on board b
     Args:
-        b: Baord the board to which we will write
+        b: Board the board to which we will write
         n: int the number of cells to be tried
 """
 def boardRandom(b,n):
