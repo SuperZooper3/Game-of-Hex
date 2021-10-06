@@ -7,7 +7,7 @@ Board class: stores hexagonal board
 """
 class Board:
     """
-    Board(x: int, y: int) generates the board with x amount of lines and y columns and returns the instance of Board
+    Board(x: int, y: int): generates the board with x amount of lines and y columns and returns the instance of Board
     Args:
         x: int width of the board
         y: int height of the board
@@ -21,9 +21,9 @@ class Board:
         self.y = y
     
     """
-    Board.genAlive(*aliveCells: tuple[list], x: int, y:int) classmethod that generates a board with the given cell coordinates alive and returns the board
+    Board.genAlive(*aliveCells: Tuple[list], x: int, y:int): classmethod that generates a board with the given cell coordinates alive and returns the board
     Args:
-        *aliveCells: tuple[list] the list of cells to be alive when the board is generated, format [cellX, cellY]
+        *aliveCells: Tuple[list] the list of cells to be alive when the board is generated, format [cellX, cellY]
         x: int width of the board
         y: int height of the board
     
@@ -36,6 +36,16 @@ class Board:
         for cell in aliveCells:
             board.write(cell[0], cell[1], True)
         return board
+    
+    """
+    for cell in Board: Allows iteration through the board, moves downwards then rightwards, returns each cell as a dict containing it'S state, x coordinate and y coordinate
+    Returns:
+        a generator that returns a dict per cell
+    """
+    def __iter__(self):
+        for xNum, x in enumerate(self.grid):
+            for yNum, y in enumerate(x):
+                yield {"x": xNum, "y": yNum, "state": y}
 
     """
     Board.state(x: int, y: int) -> bool: returns the state of a given cell
