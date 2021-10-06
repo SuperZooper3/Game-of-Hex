@@ -1,4 +1,4 @@
-
+from board import *
 # Structure of a rules is
 # def rule(Board, any args)
 # returns if the rule is followed or broken
