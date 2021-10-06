@@ -83,7 +83,6 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
             roundedX = round(eventX)
             if roundedX % 2 == 1:
                 eventY -= RADIUS
-                print(eventY)
     
             eventY -= OFFSET
             eventY /= 1.7
