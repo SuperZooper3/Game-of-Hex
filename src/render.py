@@ -26,6 +26,7 @@ def getHexCoords(radius, position):
 
 def drawHex(screen, pos, alive):
     color = (255, 255, 255) if not alive else (0, 0, 0)
+    # Every second hex needs to be slightly higher
     if pos[0] % 2 == 1:
         # Get ready for more math
         hexCoordsOffset = sin(radians(60)) * RADIUS
@@ -74,11 +75,20 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
             eventX /= 1.5
             eventX /= RADIUS
 
+
+            roundedX = round(eventX)
+            if roundedX % 2 == 1:
+                eventY -= RADIUS
+                print(eventY)
+    
             eventY -= OFFSET
             eventY /= 1.7
             eventY /= RADIUS
 
-            onclick((round(eventX), round(eventY)))
+            
+            roundedY = round(eventY)
+
+            onclick((roundedX, roundedY))
 
 
 def renderBoard(screen, board):
