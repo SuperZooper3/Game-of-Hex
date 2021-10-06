@@ -1,12 +1,12 @@
 # pylint: disable=no-member
-import random
-
 import pygame
 from pygame.event import clear
 
 from board import Board
 from render import renderBoard, handleEvents
 from settings import x, y, MAX_FPS, RESOLUTION
+from rules import *
+from utils import *
 
 pygame.init()
 screen = pygame.display.set_mode(RESOLUTION)
@@ -21,9 +21,7 @@ def calcSim():
     if not paused:
         # Make all changes to board here
         # rn its sets a random hex to a random state
-        b.write(
-            random.randint(0, x - 1), random.randint(0, y - 1), random.choice([True, False])
-        )
+        boardRandom(1)
 
 def togglepause():
     global paused
