@@ -1,4 +1,3 @@
-from board.Board import write
 import random
 
 """
@@ -7,7 +6,7 @@ import random
         b: Board the board to which we will write
         n: int the number of cells to be tried
 """
-def boardRandom(b,n):
+def boardRandom(b,n: int):
     for i in range(n):
         b.write(
             random.randint(0, b.x - 1), random.randint(0, b.y - 1), random.choice([True, False])
