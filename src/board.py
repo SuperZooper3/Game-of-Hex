@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List, Tuple
 
 cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
 
@@ -86,7 +86,7 @@ class Board:
     Returns:
         list[bool] the state of the cells around the checked cell, order is up, up-right, down-right, down, down-left, up-left
     """
-    def around(self, x: int, y: int) -> list[bool]:
+    def around(self, x: int, y: int) -> List[bool]:
         cells = []
         for xOffset, yOffset in cellsAround:
             cells.append(self.state(x + xOffset, y + yOffset))
