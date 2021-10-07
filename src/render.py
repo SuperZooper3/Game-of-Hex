@@ -1,9 +1,11 @@
 # pylint: disable=no-member, no-name-in-module
 from math import cos, pi, radians, sin
+import os
+import platform
 import sys
 import pygame
 
-from settings import RADIUS, OFFSET, get_fps_font, clock, RESOLUTION, MAX_FPS
+from settings import RADIUS, OFFSET, get_fps_font, clock, RESOLUTION, get_maxfps
 
 buttons = {
     "pause": None,
@@ -96,14 +98,18 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
 
 
 # Render the board on the pygame screen
-def renderBoard(screen, board):
+def renderBoard(screen, board, text=False):
+    clock.tick(get_maxfps(text=text))
+    if text:
+        os.system("cls" if platform.system() == "Windows" else "clear")
+        print(board)
+        return
     renderDebug(screen)
 
     for x, valy in enumerate(board.grid):
         for y, alive in enumerate(valy):
             drawHex(screen, (x, y), alive)
 
-    clock.tick(MAX_FPS)
     pygame.display.flip()
 
 

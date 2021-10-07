@@ -117,10 +117,17 @@ class Board:
 
     def __str__(self):
         string = ""
+        colors = True
         for y in range(self.y):
             if y%2 != 0:
                 string += " "
             for x in range(self.x):
-                string += str(int(self.state(x, y))) + " "
+                if int(self.state(x, y)) == 1:
+                    if colors:
+                        string += "\33[34m" + str(int(self.state(x, y))) + " " + "\033[0m"
+                    else:
+                        string += str(int(self.state(x, y))) + " "
+                else:
+                    string += str(int(self.state(x, y))) + " "
             string += "\n"
         return string
