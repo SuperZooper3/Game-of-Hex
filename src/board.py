@@ -65,7 +65,7 @@ class Board:
     def genAlive(cls, aliveCells: Tuple[list], x: int, y: int):
         board = cls(x, y)
         for cell in aliveCells:
-            board.write(cell[0], cell[1], True)
+            board.write(cell[0], cell[1], True, 1)
         return board
 
     """
