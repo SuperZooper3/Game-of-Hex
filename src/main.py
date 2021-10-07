@@ -52,7 +52,7 @@ def simStep(stepping=False):
         # Copy b2 to b1
         b1 = deepcopy(b2)
         # Take a screenshot of the board for a gif
-        gif.screenshot(screen)
+        if not text: gif.screenshot(screen)
 
 def clickHandler(pos):
     b1.write(*pos, not b1.state(*pos))
