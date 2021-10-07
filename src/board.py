@@ -65,8 +65,8 @@ class Board:
         a generator that returns a dict per cell
     """
     def __iter__(self):
-        for x, valy in enumerate(self.grid):
-            for y, cell in enumerate(valy):
+        for x in self.grid:
+            for cell in x:
                 yield cell
 
     """
