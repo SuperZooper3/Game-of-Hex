@@ -1,35 +1,49 @@
 import pygame
+from collections import OrderedDict
 
 # Width and height, respectively
-x, y = 60, 40
+x, y = 24, 24
 
 # Max frames per seconds
 def get_maxfps(text=False):
     return 30 if not text else 2
 
+
 # Size of the window opened
 RESOLUTION = (1000, 700)
 
 # Set the colours depending on the ages
-BGCOLOUR = (55, 55, 69)
-CELLCOLOURS = [(31, 143, 132),(17, 163, 173),(20, 173, 196),(33, 171, 217),(49, 143, 232),(37, 99, 207),(17, 59, 133),(40, 77, 143),(89, 122, 181),(150, 172, 212),(218, 226, 240)]
-CELLSTAGES = [1,3,5,7,10,15,20,25,30,40,50]
+BGCOLOR = (186, 186, 186)
+
+CELLCOLORS = OrderedDict()
+CELLCOLORS[0] = BGCOLOR
+CELLCOLORS[1] = (31, 143, 132)
+CELLCOLORS[3] = (17, 163, 173)
+CELLCOLORS[5] = (20, 173, 196)
+CELLCOLORS[7] = (33, 171, 217)
+CELLCOLORS[10] = (49, 143, 232)
+CELLCOLORS[15] = (37, 99, 207)
+CELLCOLORS[20] = (17, 59, 133)
+CELLCOLORS[25] = (40, 77, 143)
+CELLCOLORS[30] = (89, 122, 181)
+CELLCOLORS[40] = (150, 172, 212)
+CELLCOLORS[50] = (218, 226, 240)
+CELLCOLORS[float("inf")] = (255, 255, 255)
 
 # Radius of the hexes
-RADIUS = 5
-RADIUS = 2
+RADIUS = 15
 
 # Padding around the top and left edges
 OFFSET = RADIUS * 1.8
 
 # If to draw the heaxagonal lines
-DOLINES = False
+DOLINES = True
 
 # Game clock
 clock = pygame.time.Clock()
 
 # Cells to be there at start
-startCells = [[20,20]]
+startCells = [[20, 20]]
 
 # Font for the fps counter
 # Function becuase pygame needs to be initialized before calling font methods
