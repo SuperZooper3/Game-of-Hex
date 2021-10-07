@@ -36,15 +36,18 @@ def simStep(stepping=False):
             cx = cell.x
             cy = cell.y
             cs = cell.state
+            ca = cell.age
 
             # Compute all the rules
             freeze = rules.freeze(b1, cx, cy)
 
             # Combine all the rules (for now simple because we don't have many rules)
             nextstate = freeze
+            if nextstate == True: ca += 1
+            else: ca = 0
 
             # Write to the b2
-            b2.write(cx, cy, nextstate)
+            b2.write(cx, cy, nextstate, ca)
 
         # Copy b2 to b1
         b1 = deepcopy(b2)
