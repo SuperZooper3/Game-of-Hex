@@ -23,9 +23,9 @@ def simStep(stepping=False):
         #b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
         # Itterate over all of the cells
         for cell in b1:
-            cx = cell["x"]
-            cy = cell["y"]
-            cs = cell["state"]
+            cx = cell.x
+            cy = cell.y
+            cs = cell.state
 
             # Compute all the rules
             freeze = rules.freeze(b1, cx, cy)

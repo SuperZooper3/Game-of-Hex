@@ -3,6 +3,27 @@ from typing import List, Tuple
 cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
 
 """
+Cell class: the cell of a board
+"""
+class Cell:
+
+    """
+    Cell(x, y, state = False, age = 0): creates a cell
+    Args:
+        x: int the x coordinate of the cell
+        y: int the y coordiante of the cell
+        state: bool if the cell is alive or not OPTIONAL
+        age: the age of the cell OPTIONAL
+    Returns:
+        Cell
+    """
+    def __init__(self,x, y, state = False, age = 0):
+        self.x = x
+        self.y = y
+        self.state = state
+        self.age = age
+
+"""
 Board class: stores hexagonal board
 """
 class Board:
@@ -16,7 +37,7 @@ class Board:
         Board
     """
     def __init__(self, x: int, y: int):
-        self.grid = [[False for _ in range(y)] for _ in range(x)]
+        self.grid = [[Cell(_x,_y) for _y in range(y)] for _x in range(x)]
         self.x = x
         self.y = y
     
@@ -43,9 +64,9 @@ class Board:
         a generator that returns a dict per cell
     """
     def __iter__(self):
-        for xNum, x in enumerate(self.grid):
-            for yNum, y in enumerate(x):
-                yield {"x": xNum, "y": yNum, "state": y}
+        for x, valy in enumerate(self.grid):
+            for y, cell in enumerate(valy):
+                yield cell
 
     """
     Board.state(x: int, y: int) -> bool: returns the state of a given cell
@@ -59,7 +80,7 @@ class Board:
     def state(self, x: int, y: int) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
             return None
-        return self.grid[x][y]
+        return self.grid[x][y].state
 
     """
     Board.alive(x: int, y: int) -> int: returns the amount of alive cells around the requested cell(excluding itself)
@@ -105,14 +126,14 @@ class Board:
     def write(self, x: int, y: int, state: bool) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y) or not (state == True or state == False):
             return None
-        self.grid[x][y] = state
+        self.grid[x][y].state = state
         return state
     
     """
     Board.clear(): Clears/resets the board
     """
     def clear(self):
-        self.grid = [[False for _ in range(self.y)] for _ in range(self.x)]
+        self.grid = [[Cell(_x,_y) for _y in range(self.y)] for _x in range(self.x)]
 
 
     def __str__(self):

@@ -98,9 +98,8 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
 def renderBoard(screen, board):
     renderDebug(screen)
 
-    for x, valy in enumerate(board.grid):
-        for y, alive in enumerate(valy):
-            drawHex(screen, (x, y), alive)
+    for cell in board:
+        drawHex(screen, (cell.x, cell.y), cell.state)
 
     clock.tick(MAX_FPS)
     pygame.display.flip()
