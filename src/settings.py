@@ -1,14 +1,14 @@
 import pygame
 
 # Width and height, respectively
-x, y = 120, 100
+x, y = 60, 40
 
 # Max frames per seconds
 def get_maxfps(text=False):
     return 30 if not text else 2
 
 # Size of the window opened
-RESOLUTION = (1280, 1000)
+RESOLUTION = (1000, 700)
 
 # Set the colours depending on the ages
 BGCOLOUR = (55, 55, 69)
@@ -29,7 +29,7 @@ DOLINES = False
 clock = pygame.time.Clock()
 
 # Cells to be there at start
-startCells = []
+startCells = [[20,20]]
 
 # Font for the fps counter
 # Function becuase pygame needs to be initialized before calling font methods

@@ -2,7 +2,6 @@
 import argparse
 from copy import deepcopy
 
-
 import rules
 import utils
 from board import Board

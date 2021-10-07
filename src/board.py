@@ -132,11 +132,12 @@ class Board:
     Returns:
         bool the state given to the cell
     """
-    def write(self, x: int, y: int, state: bool, age = None) -> bool:
+    def write(self, x: int, y: int, state: bool, age: int = None) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y) or not (state == True or state == False):
             return None
         self.grid[x][y].state = state
-        if not age == None: self.grid[x][y].age = age # If an age is passed, add it
+        if not age == None:
+            self.grid[x][y].age = age # If an age is passed, add it
         return state
     
     """
