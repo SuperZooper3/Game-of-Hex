@@ -85,7 +85,6 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
             roundedX = round(eventX)
             if roundedX % 2 == 1:
                 eventY -= RADIUS
-                print(eventY)
     
             eventY -= OFFSET
             eventY /= 1.7
@@ -106,9 +105,8 @@ def renderBoard(screen, board, text=False):
         return
     renderDebug(screen)
 
-    for x, valy in enumerate(board.grid):
-        for y, alive in enumerate(valy):
-            drawHex(screen, (x, y), alive)
+    for cell in board:
+        drawHex(screen, (cell.x, cell.y), cell.state)
 
     pygame.display.flip()
 

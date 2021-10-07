@@ -1,17 +1,17 @@
 import pygame
 
 # Width and height, respectively
-x, y = 30, 25
+x, y = 60, 50
 
 # Max frames per seconds
 def get_maxfps(text=False):
     return 60 if not text else 2
 
 # Size of the window opened
-RESOLUTION = (1280, 720)
+RESOLUTION = (1280, 1000)
 
 # Radius of the hexes
-RADIUS = 20
+RADIUS = 10
 
 # Padding around the top and left edges
 OFFSET = RADIUS * 1.8
