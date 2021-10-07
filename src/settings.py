@@ -4,7 +4,8 @@ import pygame
 x, y = 30, 25
 
 # Max frames per seconds
-MAX_FPS = 60
+def get_maxfps(text=False):
+    return 60 if not text else 2
 
 # Size of the window opened
 RESOLUTION = (1280, 720)
