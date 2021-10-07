@@ -1,20 +1,30 @@
 # pylint: disable=no-member
-import pygame
+import argparse
 from copy import deepcopy
-from pygame.event import clear
 
-from board import Board
-from render import renderBoard, handleEvents
-from settings import *
+
 import rules
 import utils
+from board import Board
+from render import handleEvents, renderBoard
+from settings import *
 
-pygame.init()
-screen = pygame.display.set_mode(RESOLUTION)
+parser = argparse.ArgumentParser(description='Run the game of life')
+parser.add_argument('--text', action='store_true', help='Use a text UI')
+args = parser.parse_args()
+text = args.text
+
+paused = not text
 
 b1 = Board.genAlive(startCells,x ,y)# This is the board that we will be displaying to the user
 b2 = Board(x, y) # This is the board to which we will write the next step's board, which will then be transfered to b1 and cleared
-paused = True
+
+if not text:
+    import pygame
+    pygame.init()
+    screen = pygame.display.set_mode(RESOLUTION)
+else:
+    screen = None
 
 # Simulate a step of the board
 def simStep(stepping=False):
@@ -54,6 +64,7 @@ def step():
     renderBoard(screen, b1)
 
 while True:
-    handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step)
+    if not text:
+        handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step)
     simStep()
-    renderBoard(screen, b1)
+    renderBoard(screen, b1, text=text)

@@ -1,6 +1,7 @@
 from typing import List, Tuple
 
-cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
+cellsAroundEven = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [-1, -1]]
+cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
 
 """
 Cell class: the cell of a board
@@ -93,6 +94,10 @@ class Board:
     """
     def alive(self, x: int, y: int) -> int:
         count = 0
+        if x % 2 == 0:
+            cellsAround = cellsAroundEven
+        else:
+            cellsAround = cellsAroundOdd
         for xOffset, yOffset in cellsAround:
             if self.state(x + xOffset, y + yOffset) == True:
                 count += 1
@@ -109,6 +114,10 @@ class Board:
     """
     def around(self, x: int, y: int) -> List[bool]:
         cells = []
+        if x % 2 == 0:
+            cellsAround = cellsAroundEven
+        else:
+            cellsAround = cellsAroundOdd
         for xOffset, yOffset in cellsAround:
             cells.append(self.state(x + xOffset, y + yOffset))
         return cells
@@ -138,10 +147,17 @@ class Board:
 
     def __str__(self):
         string = ""
+        colors = True
         for y in range(self.y):
             if y%2 != 0:
                 string += " "
             for x in range(self.x):
-                string += str(int(self.state(x, y))) + " "
+                if int(self.state(x, y)) == 1:
+                    if colors:
+                        string += "\33[34m" + str(int(self.state(x, y))) + " " + "\033[0m"
+                    else:
+                        string += str(int(self.state(x, y))) + " "
+                else:
+                    string += str(int(self.state(x, y))) + " "
             string += "\n"
         return string
