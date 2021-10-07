@@ -1,6 +1,7 @@
 from typing import List, Tuple
 
-cellsAround = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 1], [-1, 0]]
+cellsAroundEven = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [-1, -1]]
+cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
 
 """
 Board class: stores hexagonal board
@@ -72,6 +73,10 @@ class Board:
     """
     def alive(self, x: int, y: int) -> int:
         count = 0
+        if x % 2 == 0:
+            cellsAround = cellsAroundEven
+        else:
+            cellsAround = cellsAroundOdd
         for xOffset, yOffset in cellsAround:
             if self.state(x + xOffset, y + yOffset) == True:
                 count += 1
@@ -88,6 +93,10 @@ class Board:
     """
     def around(self, x: int, y: int) -> List[bool]:
         cells = []
+        if x % 2 == 0:
+            cellsAround = cellsAroundEven
+        else:
+            cellsAround = cellsAroundOdd
         for xOffset, yOffset in cellsAround:
             cells.append(self.state(x + xOffset, y + yOffset))
         return cells
