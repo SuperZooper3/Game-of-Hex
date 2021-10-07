@@ -9,16 +9,17 @@ Cell class: the cell of a board
 class Cell:
 
     """
-    Cell(x, y, state = False, age = 0): creates a cell
+    Cell(x: int, y: int, state: bool = False, age: int = 0): creates a cell and returns it
     Args:
         x: int the x coordinate of the cell
         y: int the y coordiante of the cell
-        state: bool if the cell is alive or not OPTIONAL
-        age: the age of the cell OPTIONAL
+        state: bool, optional, the state of the cell, True for alive and False for dead
+        age: int, optional, the age of the cell
+    
     Returns:
         Cell
     """
-    def __init__(self,x, y, state = False, age = 0):
+    def __init__(self, x: int, y: int, state: bool = False, age: int = 0):
         self.x = x
         self.y = y
         self.state = state
@@ -127,7 +128,7 @@ class Board:
     Args:
         x: int x coordinate of the cell to edit
         y: int y coordinate of the cell to edit
-        state:bool the state to give to the cell, True for alive and False for dead
+        state: bool the state to give to the cell, True for alive and False for dead
     
     Returns:
         bool the state given to the cell
