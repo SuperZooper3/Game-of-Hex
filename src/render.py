@@ -5,7 +5,7 @@ import platform
 import sys
 import pygame
 
-from settings import RADIUS, OFFSET, get_fps_font, clock, RESOLUTION, get_maxfps
+from settings import *
 
 buttons = {
     "pause": None,
@@ -49,9 +49,10 @@ def drawHex(screen, pos, alive):
 
     # draw the polygon filled
     pygame.draw.polygon(screen, color, coords)
-    for i in range(len(coords)):
-        # draw the lines of the polygon, for dead cells, so we can still see them
-        pygame.draw.line(screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)])
+    if DOLINES:
+        for i in range(len(coords)):
+            # draw the lines of the polygon, for dead cells, so we can still see them
+            pygame.draw.line(screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)])
 
 # handle click events
 # propagates onclick; onchangepause; onclear; onstep
