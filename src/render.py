@@ -10,7 +10,8 @@ from settings import *
 buttons = {
     "pause": None,
     "clear": None,
-    "step": None
+    "step": None,
+    "gif": None
 }
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
@@ -57,7 +58,7 @@ def drawHex(screen, pos, alive):
 # handle click events
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
-def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
+def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None, ongif=None):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -76,12 +77,13 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
             elif buttons["step"].collidepoint(event.pos):
                 onstep()
                 return
-
+            elif buttons["gif"].collidepoint(event.pos):
+                ongif()
+                return
 
             eventX -= OFFSET
             eventX /= 1.5
             eventX /= RADIUS
-
 
             roundedX = round(eventX)
             if roundedX % 2 == 1:
@@ -91,7 +93,6 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None):
             eventY /= 1.7
             eventY /= RADIUS
 
-            
             roundedY = round(eventY)
 
             onclick((roundedX, roundedY))
@@ -119,17 +120,22 @@ def renderDebug(screen):
     fps_text = get_fps_font().render(fps, 1, pygame.Color("black"))
     screen.blit(fps_text, (RESOLUTION[0] - 150, 20))
 
-    pause_text = get_fps_font(size=14).render("Pause/Resume", 1, pygame.Color("white"))
     buttons["pause"] = pygame.Rect(RESOLUTION[0] - 150, 75, 125, 50)
     pygame.draw.rect(screen, [42, 106, 209], buttons["pause"])
+    pause_text = get_fps_font(size=14).render("Pause/Resume", 1, pygame.Color("white"))
     screen.blit(pause_text, (RESOLUTION[0] - 140, 90))
 
-    clear_text = get_fps_font(size=14).render("Clear", 1, pygame.Color("white"))
     buttons["clear"] = pygame.Rect(RESOLUTION[0] - 150, 150, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["clear"])
+    clear_text = get_fps_font(size=14).render("Clear", 1, pygame.Color("white"))
     screen.blit(clear_text, (RESOLUTION[0] - 140, 165))
 
-    step_text = get_fps_font(size=14).render("Step", 1, pygame.Color("white"))
     buttons["step"] = pygame.Rect(RESOLUTION[0] - 150, 225, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
+    step_text = get_fps_font(size=14).render("Step", 1, pygame.Color("white"))
     screen.blit(step_text, (RESOLUTION[0] - 140, 240))
+
+    buttons["gif"] = pygame.Rect(RESOLUTION[0] - 150, 300, 125, 50)
+    pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
+    gif_text = get_fps_font(size=14).render("Make Gif", 1, pygame.Color("white"))
+    screen.blit(gif_text, (RESOLUTION[0] - 140, 240))

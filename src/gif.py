@@ -29,6 +29,6 @@ def compileGif():
                     append_images=frames[1:], # Load in every single frame
                     save_all=True, # Idk what this does :)
                     duration=GIFSPEED*len(frames), loop=0) # 0.3 seconds per frame, make that shit loop
-    os.startfile(os.path.join(os.getcwd(), f"img/snowflake{t}.gif")) # Open the gif to watch it instantly
+    # os.open(os.path.join(os.getcwd(), f"img/snowflake{t}.gif")) # Open the gif to watch it instantly
 
     for i in frames: i.close() # #savingram

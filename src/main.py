@@ -71,6 +71,6 @@ def step():
 
 while True:
     if not text:
-        handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step)
+        handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step, ongif=gif.compileGif)
     simStep()
     renderBoard(screen, b1, text=text)
