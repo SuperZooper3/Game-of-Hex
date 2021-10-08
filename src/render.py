@@ -136,6 +136,6 @@ def renderDebug(screen):
     screen.blit(step_text, (RESOLUTION[0] - 140, 240))
 
     buttons["gif"] = pygame.Rect(RESOLUTION[0] - 150, 300, 125, 50)
-    pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
+    pygame.draw.rect(screen, [0, 0, 0], buttons["gif"])
     gif_text = get_fps_font(size=14).render("Make Gif", 1, pygame.Color("white"))
-    screen.blit(gif_text, (RESOLUTION[0] - 140, 240))
+    screen.blit(gif_text, (RESOLUTION[0] - 140, 315))
