@@ -2,6 +2,7 @@
 import argparse
 from copy import deepcopy
 
+import gif
 import rules
 import utils
 from board import Board
@@ -21,6 +22,9 @@ b1 = Board.genAlive(
 b2 = Board(
     x, y
 )  # This is the board to which we will write the next step's board, which will then be transfered to b1 and cleared
+
+# Get rid of all of the gifs until now
+gif.clearImg()
 
 if not text:
     import pygame
@@ -57,6 +61,8 @@ def simStep(stepping=False):
 
         # Copy b2 to b1
         b1 = deepcopy(b2)
+        # Take a screenshot of the board for a gif
+        if not text: gif.screenshot(screen)
 
 
 def clickHandler(pos):
@@ -69,6 +75,7 @@ def togglepause():
 
 
 def clearBoard():
+    gif.clearImg()
     global paused
     paused = True
     b1.clear()
@@ -82,11 +89,6 @@ def step():
 
 while True:
     if not text:
-        handleEvents(
-            onclick=clickHandler,
-            onchangepause=togglepause,
-            onclear=clearBoard,
-            onstep=step,
-        )
+        handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step, ongif=gif.compileGif)
     simStep()
     renderBoard(screen, b1, text=text)

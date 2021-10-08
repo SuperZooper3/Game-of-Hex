@@ -39,6 +39,9 @@ OFFSET = RADIUS * 1.8
 # If to draw the heaxagonal lines
 DOLINES = True
 
+# Number of seconds per frame of the gif
+GIFSPEED = 0.5
+
 # Game clock
 clock = pygame.time.Clock()
 
