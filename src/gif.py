@@ -14,7 +14,6 @@ def screenshot(screen): # Takes a screenshot of the gamescreen and saves it for 
     global cnt
     image.save(screen, f"img/sc/sfsc{cnt}.png")
     cnt += 1
-    if cnt == 10: compileGif()
 
 def compileGif():
     frames = [] # Array to store all the frames in
