@@ -2,7 +2,7 @@ import pygame
 from collections import OrderedDict
 
 # Width and height, respectively
-x, y = 24, 24
+x, y = 200, 200
 
 # Max frames per seconds
 def get_maxfps(text=False):
@@ -31,22 +31,22 @@ CELLCOLORS[50] = (218, 226, 240)
 CELLCOLORS[float("inf")] = (255, 255, 255)
 
 # Radius of the hexes
-RADIUS = 15
+RADIUS = 3
 
 # Padding around the top and left edges
 OFFSET = RADIUS * 1.8
 
 # If to draw the heaxagonal lines
-DOLINES = True
+DOLINES = False
 
 # Number of seconds per frame of the gif
-GIFSPEED = 0.5
+GIFSPEED = 0.4
 
 # Game clock
 clock = pygame.time.Clock()
 
 # Cells to be there at start
-startCells = [[20, 20]]
+startCells = []
 
 # Font for the fps counter
 # Function becuase pygame needs to be initialized before calling font methods
