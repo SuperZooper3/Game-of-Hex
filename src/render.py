@@ -14,6 +14,12 @@ buttons = {
     "gif": None
 }
 
+# Easy math to start with
+def closest(lst, K):
+    # print(lst[min(range(len(lst)), key = lambda i: abs(lst[i]-K))])
+    return lst[min(range(len(lst)), key=lambda i: abs(lst[i] - K))]
+
+
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
 # returns the 6 points for a regular hexagon
 def getHexCoords(radius, position):
@@ -27,11 +33,17 @@ def getHexCoords(radius, position):
         for i in range(0, n)
     ]
 
+
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen, pos, alive):
+def drawHex(screen, pos, alive, age):
     color = (255, 255, 255) if not alive else (0, 0, 0)
+    if age is not None and alive:
+        color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
+    else:
+        color = CELLCOLORS[0]
+
     # Every second hex needs to be slightly higher
     if pos[0] % 2 == 1:
         # Get ready for more math
@@ -40,7 +52,9 @@ def drawHex(screen, pos, alive):
             RADIUS,
             (
                 (pos[0] * RADIUS) * 1.5 + OFFSET,
-                (pos[1] * RADIUS) * 1.7 + OFFSET + hexCoordsOffset, # idk why 1.7, but oh well
+                (pos[1] * RADIUS) * 1.7  # idk why 1.7, but oh well
+                + OFFSET
+                + hexCoordsOffset,
             ),
         )
     else:
@@ -53,7 +67,10 @@ def drawHex(screen, pos, alive):
     if DOLINES:
         for i in range(len(coords)):
             # draw the lines of the polygon, for dead cells, so we can still see them
-            pygame.draw.line(screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)])
+            pygame.draw.line(
+                screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)]
+            )
+
 
 # handle click events
 # propagates onclick; onchangepause; onclear; onstep
@@ -88,7 +105,7 @@ def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None, on
             roundedX = round(eventX)
             if roundedX % 2 == 1:
                 eventY -= RADIUS
-    
+
             eventY -= OFFSET
             eventY /= 1.7
             eventY /= RADIUS
@@ -108,7 +125,7 @@ def renderBoard(screen, board, text=False):
     renderDebug(screen)
 
     for cell in board:
-        drawHex(screen, (cell.x, cell.y), cell.state)
+        drawHex(screen, (cell.x, cell.y), cell.state, cell.age)
 
     pygame.display.flip()
 

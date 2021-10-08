@@ -3,46 +3,52 @@ from typing import List, Tuple
 cellsAroundEven = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [-1, -1]]
 cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
 
+# TODO: Rename `state` to `alive`
+
 """
 Cell class: the cell of a board
 """
-class Cell:
 
+
+class Cell:
     """
     Cell(x: int, y: int, state: bool = False, age: int = 0): creates a cell and returns it
     Args:
         x: int the x coordinate of the cell
         y: int the y coordiante of the cell
-        state: bool, optional, the state of the cell, True for alive and False for dead
-        age: int, optional, the age of the cell
-    
+        state?: bool if the cell is alive or not
+        age?: int?Nonetype the age of the cell, None if dead
     Returns:
         Cell
-    """
-    def __init__(self, x: int, y: int, state: bool = False, age: int = 0):
+    """    
+    def __init__(self, x: int, y: int, state: bool = False, age = None):
         self.x = x
         self.y = y
         self.state = state
         self.age = age
 
+
 """
 Board class: stores hexagonal board
 """
+
+
 class Board:
     """
     Board(x: int, y: int): generates the board with x amount of lines and y columns and returns the instance of Board
     Args:
         x: int width of the board
         y: int height of the board
-    
+
     Returns:
         Board
     """
+
     def __init__(self, x: int, y: int):
-        self.grid = [[Cell(_x,_y) for _y in range(y)] for _x in range(x)]
+        self.grid = [[Cell(_x, _y) for _y in range(y)] for _x in range(x)]
         self.x = x
         self.y = y
-    
+
     """
     Board.genAlive(*aliveCells: Tuple[list], x: int, y:int): classmethod that generates a board with the given cell coordinates alive and returns the board
     Args:
@@ -53,21 +59,23 @@ class Board:
     Returns:
         Board
     """
+
     @classmethod
-    def genAlive(cls, aliveCells: Tuple[list], x: int, y:int):
+    def genAlive(cls, aliveCells: Tuple[list], x: int, y: int):
         board = cls(x, y)
         for cell in aliveCells:
-            board.write(cell[0], cell[1], True)
+            board.write(cell[0], cell[1], True, 1)
         return board
-    
+
     """
     for cell in Board: Allows iteration through the board, moves downwards then rightwards, returns each cell as a dict containing it'S state, x coordinate and y coordinate
     Returns:
         a generator that returns a dict per cell
     """
+
     def __iter__(self):
-        for x, valy in enumerate(self.grid):
-            for y, cell in enumerate(valy):
+        for x in self.grid:
+            for cell in x:
                 yield cell
 
     """
@@ -79,10 +87,26 @@ class Board:
     Returns:
         bool the state of the cell, True if alive, False if dead and None if the cell is out of the grid
     """
+
     def state(self, x: int, y: int) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
             return None
         return self.grid[x][y].state
+
+    """
+    Board.age(x: int, y: int) -> bool: returns the age of a given cell
+    Args:
+        x: int x coordinate of the cell to check
+        y: int y coordinate of the cell to check
+    
+    Returns:
+        bool: the age of the cell
+    """
+
+    def age(self, x: int, y: int) -> bool:
+        if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
+            return None
+        return self.grid[x][y].age
 
     """
     Board.alive(x: int, y: int) -> int: returns the amount of alive cells around the requested cell(excluding itself)
@@ -93,6 +117,7 @@ class Board:
     Returns:
         int the amount of alive cells around the cell, velues range from 0-6
     """
+
     def alive(self, x: int, y: int) -> int:
         count = 0
         if x % 2 == 0:
@@ -113,6 +138,7 @@ class Board:
     Returns:
         list[bool] the state of the cells around the checked cell, order is up, up-right, down-right, down, down-left, up-left
     """
+
     def around(self, x: int, y: int) -> List[bool]:
         cells = []
         if x % 2 == 0:
@@ -133,32 +159,43 @@ class Board:
     Returns:
         bool the state given to the cell
     """
-    def write(self, x: int, y: int, state: bool) -> bool:
-        if (x < 0 or x >= self.x) or (y < 0 or y >= self.y) or not (state == True or state == False):
+
+    def write(self, x: int, y: int, state: bool, age: int = None) -> bool:
+        if (
+            (x < 0 or x >= self.x)
+            or (y < 0 or y >= self.y)
+            or not (state == True or state == False)
+        ):
             return None
         self.grid[x][y].state = state
+        if age is not None:
+            self.grid[x][y].age = age  # If an age is passed, add it
         return state
-    
+
     """
     Board.clear(): Clears/resets the board
     """
-    def clear(self):
-        self.grid = [[Cell(_x,_y) for _y in range(self.y)] for _x in range(self.x)]
 
+    def clear(self):
+        self.grid = [
+            [Cell(_x, _y, state=False, age=None) for _y in range(self.y)]
+            for _x in range(self.x)
+        ]
 
     def __str__(self):
         string = ""
         colors = True
         for y in range(self.y):
-            if y%2 != 0:
+            if y % 2 != 0:
                 string += " "
             for x in range(self.x):
-                if int(self.state(x, y)) == 1:
+                dis = 0 if self.age(x, y) is None else self.age(x, y)
+                if int(self.state(x, y)) == True:
                     if colors:
-                        string += "\33[34m" + str(int(self.state(x, y))) + " " + "\033[0m"
+                        string += "\33[34m" + str(dis) + " " + "\033[0m"
                     else:
-                        string += str(int(self.state(x, y))) + " "
+                        string += str(dis) + " "
                 else:
-                    string += str(int(self.state(x, y))) + " "
+                    string += str(dis) + " "
             string += "\n"
         return string
