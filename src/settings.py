@@ -1,5 +1,6 @@
 import argparse
 from collections import OrderedDict
+import json
 
 import pygame
 
@@ -21,9 +22,9 @@ parser.add_argument(
     type=int,
     help="Resolution of the window to open",
 )
+parser.add_argument("-p", "--previous", action="store_true", help="Use previous settings")
 args = parser.parse_args()
 text = args.text
-print(args)
 
 # Width and height, respectively
 x, y = args.x, args.y
@@ -82,3 +83,26 @@ startCells = []
 # Function becuase pygame needs to be initialized before calling font methods
 def get_fps_font(size=32):
     return pygame.font.SysFont("verdana", size)
+
+
+if args.previous:
+    with open("settings.json", "r", encoding="UTF-8") as f:
+        previous = json.load(f)
+        x = previous["x"]
+        y = previous["y"]
+        maxfps = previous["maxfps"]
+        RADIUS = previous["radius"]
+        text = previous["text"]
+        DOLINES = previous["lines"]
+        RESOLUTION = tuple(previous["resolution"])
+
+with open("settings.json", "w+", encoding="UTF-8") as f:
+    json.dump({
+        "x": x,
+        "y": y,
+        "maxfps": args.maxfps,
+        "radius": RADIUS,
+        "text": text,
+        "lines": DOLINES,
+        "resolution": RESOLUTION
+    }, f)
