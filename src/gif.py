@@ -32,8 +32,12 @@ def compileGif():
     )  # Get all the frames made by the screenshotter
     for i in imgs:
         new_frame = Image.open(i)  # Open the image
-        new_frame = new_frame.quantize(method=Image.MEDIANCUT) # Conver the colours for nicer gifs
-        new_frame = new_frame.resize(tuple(round(n/GIFCOMPRESSION) for n in RESOLUTION), Image.LANCZOS) # Compress the gif
+        new_frame = new_frame.quantize(
+            method=Image.MEDIANCUT
+        )  # Conver the colours for nicer gifs
+        new_frame = new_frame.resize(
+            tuple(round(n / GIFCOMPRESSION) for n in RESOLUTION), Image.LANCZOS
+        )  # Compress the gif
         frames.append(new_frame)  # Load it onto an array
 
     # Save into a GIF file that loops forever
@@ -45,8 +49,9 @@ def compileGif():
             append_images=frames[1:],  # Load in every single frame
             save_all=True,  # Idk what this does :)
             duration=GIFSPEED * 400,
-            loop=0, optimize = True,
-        ) 
+            loop=0,
+            optimize=True,
+        )
         if sys == "windows":  # dosent work on mac :kekw:
             os.startfile(
                 os.path.join(os.getcwd(), f"img/snowflake{t}.gif")
