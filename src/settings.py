@@ -13,6 +13,7 @@ parser.add_argument(
 )
 parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
 parser.add_argument("--text", action="store_true", help="Use a text UI")
+parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon outine")
 parser.add_argument(
     "--resolution",
     nargs=2,
@@ -63,7 +64,7 @@ RADIUS = args.radius
 OFFSET = RADIUS * 1.8
 
 # If to draw the heaxagonal lines
-DOLINES = False
+DOLINES = args.lines
 
 # Number of seconds per frame of the gif
 GIFSPEED = 0.4
