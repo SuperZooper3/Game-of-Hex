@@ -6,8 +6,8 @@ import pygame
 parser = argparse.ArgumentParser(
     description="Run the game of life using hexagonal grids"
 )
-parser.add_argument("-x", type=int, default=120, help="Width of the grid")
-parser.add_argument("-y", type=int, default=120, help="Height of the grid")
+parser.add_argument("-x", type=int, default=190, help="Width of the grid")
+parser.add_argument("-y", type=int, default=135, help="Height of the grid")
 parser.add_argument(
     "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
 )
@@ -38,6 +38,9 @@ def get_maxfps(text=False):
 
 # Size of the window opened
 RESOLUTION = tuple(args.resolution)
+
+# How many times to divide the size of the gif (not that important so I have 1)
+GIFCOMPRESSION = 2
 
 # Set the colours depending on the ages
 BGCOLOR = (186, 186, 186)
