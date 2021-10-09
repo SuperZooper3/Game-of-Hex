@@ -1,8 +1,18 @@
-import pygame
+import argparse
 from collections import OrderedDict
 
+import pygame
+
+parser = argparse.ArgumentParser(description='Run the game of life using hexagonal grids')
+parser.add_argument('-x', type=int, default=120, help='Width of the grid')
+parser.add_argument('-y', type=int, default=120, help='Height of the grid')
+parser.add_argument('--text', action='store_true', help='Use a text UI')
+args = parser.parse_args()
+text = args.text
+print(args)
+
 # Width and height, respectively
-x, y = 200, 200
+x, y = args.x, args.y
 
 # Max frames per seconds
 def get_maxfps(text=False):

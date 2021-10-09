@@ -9,11 +9,6 @@ from board import Board
 from render import handleEvents, renderBoard
 from settings import *
 
-parser = argparse.ArgumentParser(description="Run the game of life")
-parser.add_argument("--text", action="store_true", help="Use a text UI")
-args = parser.parse_args()
-text = args.text
-
 paused = not text
 
 b1 = Board.genAlive(
