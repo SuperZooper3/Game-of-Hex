@@ -3,13 +3,23 @@ from collections import OrderedDict
 
 import pygame
 
-parser = argparse.ArgumentParser(description='Run the game of life using hexagonal grids')
-parser.add_argument('-x', type=int, default=120, help='Width of the grid')
-parser.add_argument('-y', type=int, default=120, help='Height of the grid')
-parser.add_argument('-f', '--maxfps', dest="maxfps", type=int, help='Maximum frames per seconds')
-parser.add_argument('-r', '--radius', type=int, default=3, help='Radius of the hexes')
-parser.add_argument('--text', action='store_true', help='Use a text UI')
-parser.add_argument('--resolution', nargs=2, default=(1000, 700), type=int, help='Resolution of the window to open')
+parser = argparse.ArgumentParser(
+    description="Run the game of life using hexagonal grids"
+)
+parser.add_argument("-x", type=int, default=120, help="Width of the grid")
+parser.add_argument("-y", type=int, default=120, help="Height of the grid")
+parser.add_argument(
+    "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
+)
+parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
+parser.add_argument("--text", action="store_true", help="Use a text UI")
+parser.add_argument(
+    "--resolution",
+    nargs=2,
+    default=(1000, 700),
+    type=int,
+    help="Resolution of the window to open",
+)
 args = parser.parse_args()
 text = args.text
 print(args)

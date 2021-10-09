@@ -57,7 +57,8 @@ def simStep(stepping=False):
         # Copy b2 to b1
         b1 = deepcopy(b2)
         # Take a screenshot of the board for a gif
-        if not text: gif.screenshot(screen)
+        if not text:
+            gif.screenshot(screen)
 
 
 def clickHandler(pos):
@@ -84,6 +85,12 @@ def step():
 
 while True:
     if not text:
-        handleEvents(onclick=clickHandler, onchangepause=togglepause, onclear=clearBoard, onstep=step, ongif=gif.compileGif)
+        handleEvents(
+            onclick=clickHandler,
+            onchangepause=togglepause,
+            onclear=clearBoard,
+            onstep=step,
+            ongif=gif.compileGif,
+        )
     simStep()
     renderBoard(screen, b1, text=text)

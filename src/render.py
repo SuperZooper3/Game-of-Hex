@@ -7,12 +7,7 @@ import pygame
 
 from settings import *
 
-buttons = {
-    "pause": None,
-    "clear": None,
-    "step": None,
-    "gif": None
-}
+buttons = {"pause": None, "clear": None, "step": None, "gif": None}
 
 # Easy math to start with
 def closest(lst, K):
@@ -75,7 +70,9 @@ def drawHex(screen, pos, alive, age):
 # handle click events
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
-def handleEvents(onclick=None, onchangepause=None, onclear=None, onstep=None, ongif=None):
+def handleEvents(
+    onclick=None, onchangepause=None, onclear=None, onstep=None, ongif=None
+):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
