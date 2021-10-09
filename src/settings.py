@@ -8,6 +8,7 @@ parser.add_argument('-x', type=int, default=120, help='Width of the grid')
 parser.add_argument('-y', type=int, default=120, help='Height of the grid')
 parser.add_argument('-f', '--maxfps', dest="maxfps", type=int, help='Maximum frames per seconds')
 parser.add_argument('--text', action='store_true', help='Use a text UI')
+parser.add_argument('--resolution', nargs=2, default=(1000, 700), type=int, help='Resolution of the window to open')
 args = parser.parse_args()
 text = args.text
 print(args)
@@ -24,7 +25,7 @@ def get_maxfps(text=False):
 
 
 # Size of the window opened
-RESOLUTION = (1000, 700)
+RESOLUTION = tuple(args.resolution)
 
 # Set the colours depending on the ages
 BGCOLOR = (186, 186, 186)
