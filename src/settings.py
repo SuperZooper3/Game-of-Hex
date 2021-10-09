@@ -6,6 +6,7 @@ import pygame
 parser = argparse.ArgumentParser(description='Run the game of life using hexagonal grids')
 parser.add_argument('-x', type=int, default=120, help='Width of the grid')
 parser.add_argument('-y', type=int, default=120, help='Height of the grid')
+parser.add_argument('-f', '--maxfps', dest="maxfps", type=int, help='Maximum frames per seconds')
 parser.add_argument('--text', action='store_true', help='Use a text UI')
 args = parser.parse_args()
 text = args.text
@@ -16,7 +17,10 @@ x, y = args.x, args.y
 
 # Max frames per seconds
 def get_maxfps(text=False):
-    return 30 if not text else 2
+    if args.maxfps is None:
+        return 30 if not text else 2
+    else:
+        return args.maxfps
 
 
 # Size of the window opened
