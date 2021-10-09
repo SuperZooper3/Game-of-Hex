@@ -1,16 +1,43 @@
-import pygame
+import argparse
 from collections import OrderedDict
 
+import pygame
+
+parser = argparse.ArgumentParser(
+    description="Run the game of life using hexagonal grids"
+)
+parser.add_argument("-x", type=int, default=120, help="Width of the grid")
+parser.add_argument("-y", type=int, default=120, help="Height of the grid")
+parser.add_argument(
+    "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
+)
+parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
+parser.add_argument("--text", action="store_true", help="Use a text UI")
+parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon outine")
+parser.add_argument(
+    "--resolution",
+    nargs=2,
+    default=(1000, 700),
+    type=int,
+    help="Resolution of the window to open",
+)
+args = parser.parse_args()
+text = args.text
+print(args)
+
 # Width and height, respectively
-x, y = 200, 200
+x, y = args.x, args.y
 
 # Max frames per seconds
 def get_maxfps(text=False):
-    return 30 if not text else 2
+    if args.maxfps is None:
+        return 30 if not text else 2
+    else:
+        return args.maxfps
 
 
 # Size of the window opened
-RESOLUTION = (1000, 700)
+RESOLUTION = tuple(args.resolution)
 
 # Set the colours depending on the ages
 BGCOLOR = (186, 186, 186)
@@ -31,13 +58,13 @@ CELLCOLORS[50] = (218, 226, 240)
 CELLCOLORS[float("inf")] = (255, 255, 255)
 
 # Radius of the hexes
-RADIUS = 3
+RADIUS = args.radius
 
 # Padding around the top and left edges
 OFFSET = RADIUS * 1.8
 
 # If to draw the heaxagonal lines
-DOLINES = False
+DOLINES = args.lines
 
 # Number of seconds per frame of the gif
 GIFSPEED = 0.4

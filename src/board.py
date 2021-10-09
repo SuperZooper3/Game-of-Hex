@@ -20,8 +20,9 @@ class Cell:
         age?: int?Nonetype the age of the cell, None if dead
     Returns:
         Cell
-    """    
-    def __init__(self, x: int, y: int, state: bool = False, age = None):
+    """
+
+    def __init__(self, x: int, y: int, state: bool = False, age=None):
         self.x = x
         self.y = y
         self.state = state
