@@ -45,8 +45,8 @@ def compileGif():
             append_images=frames[1:],  # Load in every single frame
             save_all=True,  # Idk what this does :)
             duration=GIFSPEED * 400,
-            loop=0,
-        )  # 0.3 seconds per frame, make that shit loop
+            loop=0, optimize = True,
+        ) 
         if sys == "windows":  # dosent work on mac :kekw:
             os.startfile(
                 os.path.join(os.getcwd(), f"img/snowflake{t}.gif")
