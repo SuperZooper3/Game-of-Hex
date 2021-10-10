@@ -60,21 +60,28 @@ def drawHex(screen, pos, alive, age, board=None):
     # draw the polygon filled
     if not OUTLINE:
         pygame.draw.polygon(screen, color, coords)
+    
+
     if DOLINES:
+        # Draw the grid for the cells
         if not OUTLINE:
             for i in range(len(coords)):
-                # draw the lines of the polygon, for dead cells, so we can still see them
+                # Draw each side of the cell
                 pygame.draw.line(
                     screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)]
                 )
-        else:
-            if alive:
-                return
-            for idx, alive in enumerate(board.around(*pos)):
-                # draw the lines of the polygon, for dead cells, so we can still see them
-                pygame.draw.line(
-                    screen, (0, 0, 0) if alive else (0, 0, 0, 0), coords[idx], coords[(idx + 1) % len(coords)], width=THICKNESS
-                )
+                
+        # This part draws the outline of the board
+        # If the cell is dead, skip drawinng. If it is alive, go over each neighbouring cell and if it is dead then draw the edge, else do not draw
+        elif alive: # This skips drawing if we are dead
+            # Itterate over all of the neighboring cells
+            for idx, a in enumerate(board.around(*pos)):
+                # Draw the edge if it is dead
+                if not a:
+                    t = 4 # The neibour and draw are out of sync by 4 so this corrects that
+                    pygame.draw.line(
+                        screen, (0, 0, 0), coords[(idx+t)%6], coords[((idx + 1 + t)%6) % len(coords)], width=THICKNESS
+                    )            
 
 
 

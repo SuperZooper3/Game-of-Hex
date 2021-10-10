@@ -4,19 +4,16 @@ import json
 
 import pygame
 
-parser = argparse.ArgumentParser(
-    description="Run the game of life using hexagonal grids"
-)
+parser = argparse.ArgumentParser(description="Run the game of life using hexagonal grids")
+
 parser.add_argument("-x", type=int, default=190, help="Width of the grid")
 parser.add_argument("-y", type=int, default=135, help="Height of the grid")
-parser.add_argument(
-    "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
-)
+parser.add_argument("-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds")
 parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
 parser.add_argument("-o", "--outline", action="store_true", help="Only display hex outlines")
 parser.add_argument("-t", "--thickness", type=int, default=1, help="Only display hex outlines")
 parser.add_argument("--text", action="store_true", help="Use a text UI")
-parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon outine")
+parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon grid outine")
 parser.add_argument(
     "--resolution",
     nargs=2,
@@ -24,9 +21,7 @@ parser.add_argument(
     type=int,
     help="Resolution of the window to open",
 )
-parser.add_argument(
-    "-p", "--previous", action="store_true", help="Use previous settings"
-)
+parser.add_argument("-p", "--previous", action="store_true", help="Use previous settings")
 args = parser.parse_args()
 text = args.text
 
@@ -40,6 +35,7 @@ def get_maxfps(text=False):
     else:
         return args.maxfps
 
+# If to draw the outline of teh cells instead of the colour
 OUTLINE = args.outline
 
 # Size of the window opened
