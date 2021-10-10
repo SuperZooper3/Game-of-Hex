@@ -73,7 +73,7 @@ def drawHex(screen, pos, alive, age, board=None):
             for idx, alive in enumerate(board.around(*pos)):
                 # draw the lines of the polygon, for dead cells, so we can still see them
                 pygame.draw.line(
-                    screen, (0, 0, 0) if alive else (0, 0, 0, 0), coords[idx], coords[(idx + 1) % len(coords)]
+                    screen, (0, 0, 0) if alive else (0, 0, 0, 0), coords[idx], coords[(idx + 1) % len(coords)], width=THICKNESS
                 )
 
 

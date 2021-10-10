@@ -14,6 +14,7 @@ parser.add_argument(
 )
 parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
 parser.add_argument("-o", "--outline", action="store_true", help="Only display hex outlines")
+parser.add_argument("-t", "--thickness", type=int, default=1, help="Only display hex outlines")
 parser.add_argument("--text", action="store_true", help="Use a text UI")
 parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon outine")
 parser.add_argument(
@@ -46,6 +47,8 @@ RESOLUTION = tuple(args.resolution)
 
 # How many times to divide the size of the gif (not that important so I have 1)
 GIFCOMPRESSION = 2
+
+THICKNESS = args.thickness
 
 # Set the colours depending on the ages
 BGCOLOR = (186, 186, 186)
