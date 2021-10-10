@@ -2,7 +2,7 @@ import glob
 import os
 import datetime
 from pygame import image
-from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION, OUTLINE, DOLINES
+from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION
 from PIL import Image
 from platform import system
 

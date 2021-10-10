@@ -44,6 +44,7 @@ RESOLUTION = tuple(args.resolution)
 # How many times to divide the size of the gif (not that important so I have 1)
 GIFCOMPRESSION = 2
 
+# Thickness of the outline drawing
 THICKNESS = args.thickness
 
 # Set the colours depending on the ages
