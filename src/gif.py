@@ -17,11 +17,9 @@ def clearImg():  # Clear all the screenshots from the folder
     [os.remove(png) for png in glob.glob("img/sc/sfsc*png")]
 
 
-def screenshot(
-    screen,
-):  # Takes a screenshot of the gamescreen and saves it for gif making
+def screenshot(screen, path="img/sc/sfsc"):  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
-    image.save(screen, f"img/sc/sfsc{cnt}.png")
+    image.save(screen, f"{path}{cnt}.png")
     cnt += 1
 
 
@@ -41,7 +39,7 @@ def compileGif():
         frames.append(new_frame)  # Load it onto an array
 
     # Save into a GIF file that loops forever
-    t = round(datetime.datetime.now().timestamp() * 10)  # Time to timestamp the gif
+    t = str(round(datetime.datetime.now().timestamp() * 10))[4:]  # Time to timestamp the gif
     if len(frames) > 0:
         frames[0].save(
             f"img/snowflake{t}.gif",

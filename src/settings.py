@@ -4,17 +4,16 @@ import json
 
 import pygame
 
-parser = argparse.ArgumentParser(
-    description="Run the game of life using hexagonal grids"
-)
+parser = argparse.ArgumentParser(description="Run the game of life using hexagonal grids")
+
 parser.add_argument("-x", type=int, default=190, help="Width of the grid")
 parser.add_argument("-y", type=int, default=135, help="Height of the grid")
-parser.add_argument(
-    "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
-)
+parser.add_argument("-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds")
 parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
+parser.add_argument("-o", "--outline", action="store_true", help="Only display hex outlines")
+parser.add_argument("-t", "--thickness", type=int, default=1, help="Only display hex outlines")
 parser.add_argument("--text", action="store_true", help="Use a text UI")
-parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon outine")
+parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon grid outine")
 parser.add_argument(
     "--resolution",
     nargs=2,
@@ -36,12 +35,17 @@ def get_maxfps(text=False):
     else:
         return args.maxfps
 
+# If to draw the outline of teh cells instead of the colour
+OUTLINE = args.outline
 
 # Size of the window opened
 RESOLUTION = tuple(args.resolution)
 
 # How many times to divide the size of the gif (not that important so I have 1)
 GIFCOMPRESSION = 2
+
+# Thickness of the outline drawing
+THICKNESS = args.thickness
 
 # Set the colours depending on the ages
 BGCOLOR = (186, 186, 186)
@@ -84,6 +88,9 @@ startCells = []
 def get_fps_font(size=32):
     return pygame.font.SysFont("verdana", size)
 
+if OUTLINE:
+    BGCOLOR = (0, 0, 0, 0)
+    DOLINES = True
 
 if args.previous:
     with open("settings.json", "r", encoding="UTF-8") as f:
@@ -95,14 +102,19 @@ if args.previous:
         text = previous["text"]
         DOLINES = previous["lines"]
         RESOLUTION = tuple(previous["resolution"])
+        OUTLINE = previous["outline"]
 
 with open("settings.json", "w+", encoding="UTF-8") as f:
-    json.dump({
-        "x": x,
-        "y": y,
-        "maxfps": args.maxfps,
-        "radius": RADIUS,
-        "text": text,
-        "lines": DOLINES,
-        "resolution": RESOLUTION
-    }, f)
+    json.dump(
+        {
+            "x": x,
+            "y": y,
+            "maxfps": args.maxfps,
+            "radius": RADIUS,
+            "text": text,
+            "lines": DOLINES,
+            "resolution": RESOLUTION,
+            "outline": OUTLINE
+        },
+        f,
+    )

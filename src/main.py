@@ -2,6 +2,7 @@
 import argparse
 from copy import deepcopy
 
+import datetime
 import gif
 import rules
 import utils
@@ -82,6 +83,13 @@ def step():
     simStep(stepping=True)
     renderBoard(screen, b1)
 
+def outlineSC():
+    # Draw the screen
+    renderBoard(screen, b1, lines=True, outl=True)
+    # Take the shot
+    gif.screenshot(screen, path="outline"+str(round(datetime.datetime.now().timestamp() * 10))[4:])
+    # Draw the board again
+    renderBoard(screen, b1)
 
 while True:
     if not text:
@@ -91,6 +99,7 @@ while True:
             onclear=clearBoard,
             onstep=step,
             ongif=gif.compileGif,
+            onoutline=outlineSC,
         )
     simStep()
     renderBoard(screen, b1, text=text)

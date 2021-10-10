@@ -146,6 +146,7 @@ class Board:
             cellsAround = cellsAroundEven
         else:
             cellsAround = cellsAroundOdd
+
         for xOffset, yOffset in cellsAround:
             cells.append(self.state(x + xOffset, y + yOffset))
         return cells
