@@ -32,7 +32,7 @@ def getHexCoords(radius, position):
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen, pos, alive, age):
+def drawHex(screen, pos, alive, age, board=None):
     color = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
@@ -58,13 +58,24 @@ def drawHex(screen, pos, alive, age):
         )
 
     # draw the polygon filled
-    pygame.draw.polygon(screen, color, coords)
+    if not OUTLINE:
+        pygame.draw.polygon(screen, color, coords)
     if DOLINES:
-        for i in range(len(coords)):
-            # draw the lines of the polygon, for dead cells, so we can still see them
-            pygame.draw.line(
-                screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)]
-            )
+        if not OUTLINE:
+            for i in range(len(coords)):
+                # draw the lines of the polygon, for dead cells, so we can still see them
+                pygame.draw.line(
+                    screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)]
+                )
+        else:
+            if alive:
+                return
+            for idx, alive in enumerate(board.around(*pos)):
+                # draw the lines of the polygon, for dead cells, so we can still see them
+                pygame.draw.line(
+                    screen, (0, 0, 0) if alive else (0, 0, 0, 0), coords[idx], coords[(idx + 1) % len(coords)]
+                )
+
 
 
 # handle click events
@@ -122,7 +133,7 @@ def renderBoard(screen, board, text=False):
     renderDebug(screen)
 
     for cell in board:
-        drawHex(screen, (cell.x, cell.y), cell.state, cell.age)
+        drawHex(screen, (cell.x, cell.y), cell.state, cell.age, board=board)
 
     pygame.display.flip()
 

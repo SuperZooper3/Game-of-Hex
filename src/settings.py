@@ -13,6 +13,7 @@ parser.add_argument(
     "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
 )
 parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
+parser.add_argument("-o", "--outline", action="store_true", help="Only display hex outlines")
 parser.add_argument("--text", action="store_true", help="Use a text UI")
 parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon outine")
 parser.add_argument(
@@ -22,7 +23,9 @@ parser.add_argument(
     type=int,
     help="Resolution of the window to open",
 )
-parser.add_argument("-p", "--previous", action="store_true", help="Use previous settings")
+parser.add_argument(
+    "-p", "--previous", action="store_true", help="Use previous settings"
+)
 args = parser.parse_args()
 text = args.text
 
@@ -36,6 +39,7 @@ def get_maxfps(text=False):
     else:
         return args.maxfps
 
+OUTLINE = args.outline
 
 # Size of the window opened
 RESOLUTION = tuple(args.resolution)
@@ -84,6 +88,9 @@ startCells = []
 def get_fps_font(size=32):
     return pygame.font.SysFont("verdana", size)
 
+if OUTLINE:
+    BGCOLOR = (0, 0, 0, 0)
+    DOLINES = True
 
 if args.previous:
     with open("settings.json", "r", encoding="UTF-8") as f:
@@ -95,14 +102,19 @@ if args.previous:
         text = previous["text"]
         DOLINES = previous["lines"]
         RESOLUTION = tuple(previous["resolution"])
+        OUTLINE = previous["outline"]
 
 with open("settings.json", "w+", encoding="UTF-8") as f:
-    json.dump({
-        "x": x,
-        "y": y,
-        "maxfps": args.maxfps,
-        "radius": RADIUS,
-        "text": text,
-        "lines": DOLINES,
-        "resolution": RESOLUTION
-    }, f)
+    json.dump(
+        {
+            "x": x,
+            "y": y,
+            "maxfps": args.maxfps,
+            "radius": RADIUS,
+            "text": text,
+            "lines": DOLINES,
+            "resolution": RESOLUTION,
+            "outline": OUTLINE
+        },
+        f,
+    )
