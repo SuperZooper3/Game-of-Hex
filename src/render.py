@@ -32,7 +32,7 @@ def getHexCoords(radius, position):
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen, pos, alive, age, board=None):
+def drawHex(screen, pos, alive, age, board=None, lines=DOLINES, outl=OUTLINE):
     color = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
@@ -58,19 +58,18 @@ def drawHex(screen, pos, alive, age, board=None):
         )
 
     # draw the polygon filled
-    if not OUTLINE:
+    if not outl:
         pygame.draw.polygon(screen, color, coords)
-    
 
-    if DOLINES:
+    if lines:
         # Draw the grid for the cells
-        if not OUTLINE:
+        if not outl:
             for i in range(len(coords)):
                 # Draw each side of the cell
                 pygame.draw.line(
                     screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)]
                 )
-                
+
         # This part draws the outline of the board
         # If the cell is dead, skip drawinng. If it is alive, go over each neighbouring cell and if it is dead then draw the edge, else do not draw
         elif alive: # This skips drawing if we are dead
@@ -89,7 +88,7 @@ def drawHex(screen, pos, alive, age, board=None):
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
 def handleEvents(
-    onclick=None, onchangepause=None, onclear=None, onstep=None, ongif=None
+    onclick = None, onchangepause = None, onclear = None, onstep = None, ongif = None, onoutline = None
 ):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -112,6 +111,9 @@ def handleEvents(
             elif buttons["gif"].collidepoint(event.pos):
                 ongif()
                 return
+            elif buttons["outline"].collidepoint(event.pos):
+                onoutline()
+                return
 
             eventX -= OFFSET
             eventX /= 1.5
@@ -131,7 +133,7 @@ def handleEvents(
 
 
 # Render the board on the pygame screen
-def renderBoard(screen, board, text=False):
+def renderBoard(screen, board, text = False, lines=DOLINES, outl = OUTLINE):
     clock.tick(get_maxfps(text=text))
     if text:
         os.system("cls" if platform.system() == "Windows" else "clear")
@@ -140,7 +142,7 @@ def renderBoard(screen, board, text=False):
     renderDebug(screen)
 
     for cell in board:
-        drawHex(screen, (cell.x, cell.y), cell.state, cell.age, board=board)
+        drawHex(screen, (cell.x, cell.y), cell.state, cell.age, board=board, lines=lines, outl=outl)
 
     pygame.display.flip()
 
@@ -171,3 +173,8 @@ def renderDebug(screen):
     pygame.draw.rect(screen, [0, 0, 0], buttons["gif"])
     gif_text = get_fps_font(size=14).render("Make Gif", 1, pygame.Color("white"))
     screen.blit(gif_text, (RESOLUTION[0] - 140, 315))
+
+    buttons["outline"] = pygame.Rect(RESOLUTION[0] - 150, 375, 125, 50)
+    pygame.draw.rect(screen, [0, 0, 0], buttons["outline"])
+    outline_text = get_fps_font(size=14).render("Outline SC", 1, pygame.Color("white"))
+    screen.blit(outline_text, (RESOLUTION[0] - 140, 390))
