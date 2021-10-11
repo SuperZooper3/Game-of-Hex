@@ -142,7 +142,7 @@ def renderBoard(screen, board, text = False, lines=DOLINES, outl = OUTLINE):
     renderDebug(screen)
 
     for cell in board:
-        drawHex(screen, (cell.x, cell.y), cell.state, cell.age, board=board, lines=lines, outl=outl)
+        drawHex(screen, (cell.x, cell.y), cell.alive, cell.age, board=board, lines=lines, outl=outl)
 
     pygame.display.flip()
 

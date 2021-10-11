@@ -39,7 +39,7 @@ def simStep(stepping=False):
         for cell in b1:
             cx = cell.x
             cy = cell.y
-            cs = cell.state
+            cs = cell.alive
             ca = cell.age
 
             # Compute all the rules
@@ -63,7 +63,7 @@ def simStep(stepping=False):
 
 
 def clickHandler(pos):
-    b1.write(*pos, not b1.state(*pos), age=None if b1.state(*pos) else 1)
+    b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
 
 
 def togglepause():
