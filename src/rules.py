@@ -20,7 +20,7 @@ def freeze(b: Board, x: int, y: int) -> bool:
     # list of all the adjacent values that will lead to an alive cell
     good = [1,3,4,5,6]
     bad = []  # list of the values that would lead to a dead cell
-    if n != 0:
+    if n != None:
         if n in good:
             # print("Number of alive, good:", n, x, y)
             return True
@@ -30,8 +30,3 @@ def freeze(b: Board, x: int, y: int) -> bool:
         else:
             # print("Number of alive is not in lists:", n)
             return False
-    else:
-        return False
-    else:
-        # print("Number of alive is not in lists:", n)
-        return None
