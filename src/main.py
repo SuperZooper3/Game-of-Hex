@@ -87,7 +87,7 @@ def outlineSC():
     # Draw the screen
     renderBoard(screen, b1, lines=True, outl=True)
     # Take the shot
-    gif.screenshot(screen, path="outline"+str(round(datetime.datetime.now().timestamp() * 10))[4:])
+    gif.screenshot(screen, path="img/outline/outline"+str(round(datetime.datetime.now().timestamp() * 10))[4:])
     # Draw the board again
     renderBoard(screen, b1)
 

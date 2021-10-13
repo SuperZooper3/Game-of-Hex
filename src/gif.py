@@ -42,7 +42,7 @@ def compileGif():
     t = str(round(datetime.datetime.now().timestamp() * 10))[4:]  # Time to timestamp the gif
     if len(frames) > 0:
         frames[0].save(
-            f"img/snowflake{t}.gif",
+            f"img/gif/snowflake{t}.gif",
             format="GIF",
             append_images=frames[1:],  # Load in every single frame
             save_all=True,  # Idk what this does :)
@@ -52,7 +52,7 @@ def compileGif():
         )
         if sys == "windows":  # dosent work on mac :kekw:
             os.startfile(
-                os.path.join(os.getcwd(), f"img/snowflake{t}.gif")
+                os.path.join(os.getcwd(), f"img/gif/snowflake{t}.gif")
             )  # Open the gif to watch it instantly
 
     for i in frames:
