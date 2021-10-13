@@ -39,18 +39,21 @@ def simStep(stepping=False):
         for cell in b1:
             cx = cell.x
             cy = cell.y
-            cs = cell.state
+            cs = cell.alive
             ca = cell.age
+            nextstate = cs
 
-            # Compute all the rules
-            freeze = rules.freeze(b1, cx, cy)
+            # Skip computing the rules and the age for a cell if it and all the cells around it are dead
+            if not (cs == False and b1.aliveAround(cx, cy) == 0):
+                # Compute all the rules
+                freeze = rules.freeze(b1, cx, cy)
 
-            # Combine all the rules (for now simple because we don't have many rules)
-            nextstate = freeze
-            if nextstate == True:
-                ca = ca + 1 if ca is not None else 1
-            else:
-                ca = None
+                # Combine all the rules (for now simple because we don't have many rules)
+                nextstate = freeze
+                if nextstate == True:
+                    ca = ca + 1 if ca is not None else 1
+                else:
+                    ca = None
 
             # Write to the b2
             b2.write(cx, cy, nextstate, ca)
@@ -63,7 +66,7 @@ def simStep(stepping=False):
 
 
 def clickHandler(pos):
-    b1.write(*pos, not b1.state(*pos), age=None if b1.state(*pos) else 1)
+    b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
 
 
 def togglepause():

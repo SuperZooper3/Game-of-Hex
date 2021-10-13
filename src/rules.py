@@ -16,7 +16,7 @@ Args:
 
 
 def freeze(b: Board, x: int, y: int) -> bool:
-    n = b.alive(x, y)
+    n = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
     good = [1,3,4,5,6]
     bad = []  # list of the values that would lead to a dead cell
@@ -32,3 +32,6 @@ def freeze(b: Board, x: int, y: int) -> bool:
             return False
     else:
         return False
+    else:
+        # print("Number of alive is not in lists:", n)
+        return None
