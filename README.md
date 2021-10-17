@@ -1,6 +1,7 @@
 # Game of Hex
 
-**A game of life clone that runs in a hexagonal grid!**
+**A game of life clone that runs in a hexagonal grid for crystal and snowflake simulations!**
+
 ![An example simulation](assets/readme/ex.png)
 
 ## Table of contents:
@@ -18,6 +19,7 @@ This is a game of life that runs on hexagonal grids to simulate crystal structur
 
 These are the rules built in:
 https://clairelommeblog.wordpress.com/category/apmep-journees-2020/ 
+
 ![The ruleset](assets/readme/rules.jpg)
 
 Translates to:
@@ -33,6 +35,7 @@ Translates to:
 #### GIFS
 - Easy to make gifs (Pygame only) that make it easy to share your simulations with your friends.
 - Also helps with showcasing larger boards that may be slow to run.
+
 ![An example gif](assets/readme/exgif.gif)
 
 #### Laser cutting outlines
@@ -70,6 +73,7 @@ The first time you run the program, a `settings.json` file will be created. The 
 If you don't select `--text`, a Pygame window should open after a couple of seconds.
 
 ![How the UI works](assets/readme/ui.png)
+
 - The red part represents the "board". Click on it to place or remove cells. 
 - The purple part houses the buttons to control the simulation!
   - `Pause / Resume` pauses or resumes the simulation. When you start the program, it is paused. When playing, it runs the simulation as fast as it can.
@@ -83,4 +87,5 @@ If you don't select `--text`, a Pygame window should open after a couple of seco
 If you use `--text`, you can't really interact with the with the simulation in real time. In `settings.py`, place the coordinates for cells that are to exist at the start in `startCells = []` (list of tuples).
 
 ![How the UI works](assets/readme/text.jpg)
+
 The numbers in the cells represent the age of the cell and the colour represents it's state.
