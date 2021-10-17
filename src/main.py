@@ -10,6 +10,7 @@ from board import Board
 from render import handleEvents, renderBoard
 from settings import *
 
+print("---Game of Hex, starting!---")
 paused = not text
 
 b1 = Board.genAlive(
