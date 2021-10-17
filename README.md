@@ -83,4 +83,4 @@ If you don't select `--text`, a Pygame window should open after a couple of seco
 If you use `--text`, you can't really interact with the with the simulation in real time. In `settings.py`, place the coordinates for cells that are to exist at the start in `startCells = []` (list of tuples).
 
 ![How the UI works](assets/readme/text.jpg)
-The numbers in the cells represent the age of the cell and the colour represents the state of it.
+The numbers in the cells represent the age of the cell and the colour represents it's state.
