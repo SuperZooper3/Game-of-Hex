@@ -1,0 +1,1 @@
+Guidlines on how to contribute to the open source Game of Hex project.
