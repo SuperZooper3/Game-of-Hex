@@ -13,7 +13,7 @@ parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the h
 parser.add_argument("-o", "--outline", action="store_true", help="Only display hex outlines")
 parser.add_argument("-t", "--thickness", type=int, default=1, help="Only display hex outlines")
 parser.add_argument("--text", action="store_true", help="Use a text UI")
-parser.add_argument("-l", "--lines", action="store_true", help="Draw hexagon grid outine")
+parser.add_argument("-g", "--grid", action="store_true", help="Draw hexagon grid")
 parser.add_argument(
     "--resolution",
     nargs=2,
@@ -85,7 +85,7 @@ RADIUS = args.radius
 OFFSET = RADIUS * 1.8
 
 # If to draw the heaxagonal lines
-DOGRID = args.lines
+DOGRID = args.grid
 
 # Number of seconds per frame of the gif
 GIFSPEED = 0.4
@@ -93,8 +93,8 @@ GIFSPEED = 0.4
 # Game clock
 clock = pygame.time.Clock()
 
-# Cells to be there at start
-startCells = [(10,10)]
+# Cells to be there at start (list of tuples)
+startCells = []
 
 # Font for the fps counter
 # Function becuase pygame needs to be initialized before calling font methods
@@ -103,7 +103,6 @@ def get_fps_font(size=32):
 
 if OUTLINE:
     BGCOLOR = (0, 0, 0, 0)
-    DOGRID = True
 
 if args.previous:
     with open("settings.json", "r", encoding="UTF-8") as f:
@@ -113,7 +112,7 @@ if args.previous:
         maxfps = previous["maxfps"]
         RADIUS = previous["radius"]
         text = previous["text"]
-        DOGRID = previous["lines"]
+        DOGRID = previous["grid"]
         RESOLUTION = tuple(previous["resolution"])
         OUTLINE = previous["outline"]
 
@@ -125,7 +124,7 @@ with open("settings.json", "w+", encoding="UTF-8") as f:
             "maxfps": args.maxfps,
             "radius": RADIUS,
             "text": text,
-            "lines": DOGRID,
+            "grid": DOGRID,
             "resolution": RESOLUTION,
             "outline": OUTLINE
         },

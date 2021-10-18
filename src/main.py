@@ -11,7 +11,7 @@ from render import handleEvents, renderBoard
 from settings import *
 
 print("---Game of Hex, starting!---")
-paused = not text
+paused = False
 
 b1 = Board.genAlive(
     startCells, x, y
@@ -88,10 +88,18 @@ def step():
     renderBoard(screen, b1)
 
 def outlineSC():
-    # Draw the screen
-    renderBoard(screen, b1, lines=True, outl=True)
+    t = str(round(datetime.datetime.now().timestamp() * 10))[3:]
+
+    # DRAW THE JUST OUTLINE
+    renderBoard(screen, b1, grid=False, outl=True)
+
     # Take the shot
-    gif.screenshot(screen, path="img/outline/outline"+str(round(datetime.datetime.now().timestamp() * 10))[4:])
+    gif.screenshot(screen, path="img/outline/outline"+t)
+
+    # DRAW THE OUTLINE WITH HEXAGONS FOR ALIVE CELLS
+    renderBoard(screen, b1, grid=True, outl=True)
+    # Take the shot
+    gif.screenshot(screen, path="img/outline/outlineGrid"+t)
     # Draw the board again
     renderBoard(screen, b1)
 
