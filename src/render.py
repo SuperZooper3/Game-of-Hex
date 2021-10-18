@@ -32,7 +32,7 @@ def getHexCoords(radius, position):
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen, pos, alive, age, board=None, lines=DOLINES, outl=OUTLINE):
+def drawHex(screen, pos, alive, age, board=None, lines=DOGRID, outl=OUTLINE):
     color = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
@@ -133,7 +133,7 @@ def handleEvents(
 
 
 # Render the board on the pygame screen
-def renderBoard(screen, board, text = False, lines=DOLINES, outl = OUTLINE):
+def renderBoard(screen, board, text = False, lines=DOGRID, outl = OUTLINE):
     clock.tick(get_maxfps(text=text))
     if text:
         os.system("cls" if platform.system() == "Windows" else "clear")

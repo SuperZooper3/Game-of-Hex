@@ -85,7 +85,7 @@ RADIUS = args.radius
 OFFSET = RADIUS * 1.8
 
 # If to draw the heaxagonal lines
-DOLINES = args.lines
+DOGRID = args.lines
 
 # Number of seconds per frame of the gif
 GIFSPEED = 0.4
@@ -103,7 +103,7 @@ def get_fps_font(size=32):
 
 if OUTLINE:
     BGCOLOR = (0, 0, 0, 0)
-    DOLINES = True
+    DOGRID = True
 
 if args.previous:
     with open("settings.json", "r", encoding="UTF-8") as f:
@@ -113,7 +113,7 @@ if args.previous:
         maxfps = previous["maxfps"]
         RADIUS = previous["radius"]
         text = previous["text"]
-        DOLINES = previous["lines"]
+        DOGRID = previous["lines"]
         RESOLUTION = tuple(previous["resolution"])
         OUTLINE = previous["outline"]
 
@@ -125,7 +125,7 @@ with open("settings.json", "w+", encoding="UTF-8") as f:
             "maxfps": args.maxfps,
             "radius": RADIUS,
             "text": text,
-            "lines": DOLINES,
+            "lines": DOGRID,
             "resolution": RESOLUTION,
             "outline": OUTLINE
         },
