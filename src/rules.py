@@ -18,7 +18,7 @@ Args:
 def freeze(b: Board, x: int, y: int) -> bool:
     n = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
-    good = [1,3,4,5,6]
+    good = [1, 3, 4, 5, 6]
     bad = []  # list of the values that would lead to a dead cell
     if n != None:
         if n in good:

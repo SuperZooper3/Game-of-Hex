@@ -6,6 +6,8 @@ cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
 """
 Cell class: the cell of a board
 """
+
+
 class Cell:
     """
     Cell(x: int, y: int, alive: bool = False, age: int = 0): creates a cell and returns it
@@ -17,6 +19,7 @@ class Cell:
     Returns:
         Cell
     """
+
     def __init__(self, x: int, y: int, alive: bool = False, age=None):
         self.x = x
         self.y = y
@@ -27,6 +30,8 @@ class Cell:
 """
 Board class: stores hexagonal board
 """
+
+
 class Board:
     """
     Board(x: int, y: int): generates the board with x amount of lines and y columns and returns the instance of Board
@@ -37,6 +42,7 @@ class Board:
     Returns:
         Board
     """
+
     def __init__(self, x: int, y: int):
         self.grid = [[Cell(_x, _y) for _y in range(y)] for _x in range(x)]
         self.x = x
@@ -52,6 +58,7 @@ class Board:
     Returns:
         Board
     """
+
     @classmethod
     def genAlive(cls, aliveCells: Tuple[list], x: int, y: int):
         board = cls(x, y)
@@ -64,6 +71,7 @@ class Board:
     Returns:
         a generator that returns a dict per cell
     """
+
     def __iter__(self):
         for x in self.grid:
             for cell in x:
@@ -78,6 +86,7 @@ class Board:
     Returns:
         bool the state of the cell, True if alive, False if dead and None if the cell is out of the grid
     """
+
     def alive(self, x: int, y: int) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
             return None
@@ -92,6 +101,7 @@ class Board:
     Returns:
         bool: the age of the cell
     """
+
     def age(self, x: int, y: int) -> bool:
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
             return None
@@ -106,6 +116,7 @@ class Board:
     Returns:
         int the amount of alive cells around the cell, velues range from 0-6
     """
+
     def aliveAround(self, x: int, y: int) -> int:
         count = 0
         if x % 2 == 0:
@@ -126,6 +137,7 @@ class Board:
     Returns:
         list[bool] the state of the cells around the checked cell, order is up, up-right, down-right, down, down-left, up-left
     """
+
     def around(self, x: int, y: int) -> List[bool]:
         cells = []
         if x % 2 == 0:
@@ -147,6 +159,7 @@ class Board:
     Returns:
         bool the state given to the cell
     """
+
     def write(self, x: int, y: int, alive: bool, age: int = None) -> bool:
         if (
             (x < 0 or x >= self.x)
@@ -164,6 +177,7 @@ class Board:
     Returns:
         None
     """
+
     def clear(self) -> None:
         self.grid = [
             [Cell(_x, _y, alive=False, age=None) for _y in range(self.y)]
@@ -175,6 +189,7 @@ class Board:
     Returns:
         str The board as a string
     """
+
     def __str__(self) -> str:
         string = ""
         colors = True

@@ -87,6 +87,7 @@ def step():
     simStep(stepping=True)
     renderBoard(screen, b1)
 
+
 def outlineSC():
     t = str(round(datetime.datetime.now().timestamp() * 10))[3:]
 
@@ -94,14 +95,15 @@ def outlineSC():
     renderBoard(screen, b1, grid=False, outl=True)
 
     # Take the shot
-    gif.screenshot(screen, path="img/outline/outline"+t)
+    gif.screenshot(screen, path="img/outline/outline" + t)
 
     # DRAW THE OUTLINE WITH HEXAGONS FOR ALIVE CELLS
     renderBoard(screen, b1, grid=True, outl=True)
     # Take the shot
-    gif.screenshot(screen, path="img/outline/outlineGrid"+t)
+    gif.screenshot(screen, path="img/outline/outlineGrid" + t)
     # Draw the board again
     renderBoard(screen, b1)
+
 
 while True:
     if not text:

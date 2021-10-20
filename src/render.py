@@ -71,26 +71,34 @@ def drawHex(screen, pos, alive, age, board=None, grid=DOGRID, outl=OUTLINE):
                 )
 
         # This part draws the outline of the board
-    
+
     # Just draw the outline
-    if not grid and outl and alive: # This skips drawing if we are dead
+    if not grid and outl and alive:  # This skips drawing if we are dead
         # Itterate over all of the neighboring cells
         # If the cell is dead, skip drawinng. If it is alive, go over each neighbouring cell and if it is dead then draw the edge, else do not draw
         for idx, a in enumerate(board.around(*pos)):
             # Draw the edge if it is dead
             if not a:
-                t = 4 # The neibour and draw are out of sync by 4 so this corrects that
+                t = 4  # The neibour and draw are out of sync by 4 so this corrects that
                 pygame.draw.line(
-                    screen, (0, 0, 0), coords[(idx+t)%6], coords[((idx + 1 + t)%6) % len(coords)], width=THICKNESS
+                    screen,
+                    (0, 0, 0),
+                    coords[(idx + t) % 6],
+                    coords[((idx + 1 + t) % 6) % len(coords)],
+                    width=THICKNESS,
                 )
 
     # Draw the outline and grid
-    elif grid and outl and alive: 
+    elif grid and outl and alive:
         # Draw the oultine
         for i in range(len(coords)):
             # Draw each side of the cell one at a time
             pygame.draw.line(
-                screen, (0, 0, 0), coords[i], coords[(i + 1) % len(coords)],width=THICKNESS
+                screen,
+                (0, 0, 0),
+                coords[i],
+                coords[(i + 1) % len(coords)],
+                width=THICKNESS,
             )
 
 
@@ -98,7 +106,12 @@ def drawHex(screen, pos, alive, age, board=None, grid=DOGRID, outl=OUTLINE):
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
 def handleEvents(
-    onclick = None, onchangepause = None, onclear = None, onstep = None, ongif = None, onoutline = None
+    onclick=None,
+    onchangepause=None,
+    onclear=None,
+    onstep=None,
+    ongif=None,
+    onoutline=None,
 ):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -143,7 +156,7 @@ def handleEvents(
 
 
 # Render the board on the pygame screen
-def renderBoard(screen, board, text = False, grid=DOGRID, outl = OUTLINE):
+def renderBoard(screen, board, text=False, grid=DOGRID, outl=OUTLINE):
     clock.tick(get_maxfps(text=text))
     if text:
         os.system("cls" if platform.system() == "Windows" else "clear")
@@ -152,7 +165,15 @@ def renderBoard(screen, board, text = False, grid=DOGRID, outl = OUTLINE):
     renderDebug(screen)
 
     for cell in board:
-        drawHex(screen, (cell.x, cell.y), cell.alive, cell.age, board=board, grid=grid, outl=outl)
+        drawHex(
+            screen,
+            (cell.x, cell.y),
+            cell.alive,
+            cell.age,
+            board=board,
+            grid=grid,
+            outl=outl,
+        )
 
     pygame.display.flip()
 

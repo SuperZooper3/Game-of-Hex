@@ -4,14 +4,22 @@ import json
 
 import pygame
 
-parser = argparse.ArgumentParser(description="Run the game of life using hexagonal grids")
+parser = argparse.ArgumentParser(
+    description="Run the game of life using hexagonal grids"
+)
 
 parser.add_argument("-x", type=int, default=190, help="Width of the grid")
 parser.add_argument("-y", type=int, default=135, help="Height of the grid")
-parser.add_argument("-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds")
+parser.add_argument(
+    "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
+)
 parser.add_argument("-r", "--radius", type=int, default=3, help="Radius of the hexes")
-parser.add_argument("-o", "--outline", action="store_true", help="Only display hex outlines")
-parser.add_argument("-t", "--thickness", type=int, default=1, help="Only display hex outlines")
+parser.add_argument(
+    "-o", "--outline", action="store_true", help="Only display hex outlines"
+)
+parser.add_argument(
+    "-t", "--thickness", type=int, default=1, help="Only display hex outlines"
+)
 parser.add_argument("--text", action="store_true", help="Use a text UI")
 parser.add_argument("-g", "--grid", action="store_true", help="Draw hexagon grid")
 parser.add_argument(
@@ -21,7 +29,9 @@ parser.add_argument(
     type=int,
     help="Resolution of the window to open",
 )
-parser.add_argument("-p", "--previous", action="store_true", help="Use previous settings")
+parser.add_argument(
+    "-p", "--previous", action="store_true", help="Use previous settings"
+)
 args = parser.parse_args()
 text = args.text
 
@@ -34,6 +44,7 @@ def get_maxfps(text=False):
         return 30 if not text else 2
     else:
         return args.maxfps
+
 
 # If to draw the outline of teh cells instead of the colour
 OUTLINE = args.outline
@@ -75,7 +86,7 @@ CELLCOLORS[float("inf")] = (255, 255, 255)
 # CELLCOLORS[20] = (120, 120, 120)
 # CELLCOLORS[30] = (90, 90, 90)
 # CELLCOLORS[40] = (60, 60, 60)
-# CELLCOLORS[50] = (30, 30, 30) 
+# CELLCOLORS[50] = (30, 30, 30)
 # CELLCOLORS[float("inf")] = (0, 0, 0)
 
 # Radius of the hexes
@@ -100,6 +111,7 @@ startCells = []
 # Function becuase pygame needs to be initialized before calling font methods
 def get_fps_font(size=32):
     return pygame.font.SysFont("verdana", size)
+
 
 if OUTLINE:
     BGCOLOR = (0, 0, 0, 0)
@@ -126,7 +138,7 @@ with open("settings.json", "w+", encoding="UTF-8") as f:
             "text": text,
             "grid": DOGRID,
             "resolution": RESOLUTION,
-            "outline": OUTLINE
+            "outline": OUTLINE,
         },
         f,
     )
