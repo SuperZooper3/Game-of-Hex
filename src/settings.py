@@ -1,6 +1,7 @@
 import argparse
 from collections import OrderedDict
 import json
+from rules import freeze, eternalFreeze
 
 import pygame
 
@@ -31,6 +32,9 @@ parser.add_argument(
 )
 parser.add_argument(
     "-p", "--previous", action="store_true", help="Use previous settings"
+)
+parser.add_argument(
+    "-d", "--candie", action="store_true", help="Changes the rule so that cells can die"
 )
 args = parser.parse_args()
 text = args.text
@@ -101,6 +105,12 @@ DOGRID = args.grid
 # Number of seconds per frame of the gif
 GIFSPEED = 0.4
 
+# Rule for cell freezing
+if args.candie:
+    FREEZERULE = freeze
+else:
+    FREEZERULE = eternalFreeze
+
 # Game clock
 clock = pygame.time.Clock()
 
@@ -127,6 +137,10 @@ if args.previous:
         DOGRID = previous["grid"]
         RESOLUTION = tuple(previous["resolution"])
         OUTLINE = previous["outline"]
+        if previous["candie"]:
+            FREEZERULE = freeze
+        else:
+            FREEZERULE = eternalFreeze
 
 with open("settings.json", "w+", encoding="UTF-8") as f:
     json.dump(
@@ -139,6 +153,7 @@ with open("settings.json", "w+", encoding="UTF-8") as f:
             "grid": DOGRID,
             "resolution": RESOLUTION,
             "outline": OUTLINE,
+            "candie": args.candie
         },
         f,
     )
