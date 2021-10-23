@@ -1,6 +1,7 @@
 # Game of Hex
 
-**A game of life clone that runs in a hexagonal grid!**
+**A game of life clone that runs in a hexagonal grid for crystal and snowflake simulations!**
+
 ![An example simulation](assets/readme/ex.png)
 
 ## Table of contents
@@ -11,7 +12,7 @@
 
 ## Features
 
-#### Hexagonal game of life simulation
+### Hexagonal game of life simulation
 
 This is a game of life that runs on hexagonal grids to simulate crystal structures, like snowflakes.
 
@@ -28,6 +29,11 @@ Translates to:
 - If there are 1,3,4,5 or 6 alive adjacent cells, the cell becomes alive on the next step.
 - If there are 0 or 2 alive adjacent cells, the cell does not change.
 
+If the candie argument is passed, then the rule is:
+
+- If there are 1,3,4,5 or 6 alive adjacent cells, the cell becomes alive on the next step.
+- If there are 0 or 2 alive adjacent cells, the cell dies on the next step.
+
 #### UI
 
 - Built in options for rendering in command line (unix and windows)
@@ -38,6 +44,7 @@ Translates to:
 
 - Easy to make gifs (Pygame only) that make it easy to share your simulations with your friends.
 - Also helps with showcasing larger boards that may be slow to run.
+
 ![An example gif](assets/readme/exgif.gif)
 
 #### Laser cutting outlines
@@ -95,4 +102,5 @@ If you don't select `--text`, a Pygame window should open after a couple of seco
 If you use `--text`, you can't really interact with the with the simulation in real time. In `settings.py`, place the coordinates for cells that are to exist at the start in `startCells = []` (list of tuples).
 
 ![How the UI works](assets/readme/text.jpg)
+
 The numbers in the cells represent the age of the cell and the colour represents it's state.
