@@ -11,7 +11,7 @@ from render import handleEvents, renderBoard
 from settings import *
 
 print("---Game of Hex, starting!---")
-paused = False
+paused = not text
 
 b1 = Board.genAlive(
     startCells, x, y
