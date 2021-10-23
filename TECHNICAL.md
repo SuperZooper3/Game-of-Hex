@@ -35,3 +35,13 @@ These functions are used when rendering the board with a GUI.
 - handleEvents( onclick=None, onchangepause=None, onclear=None, onstep=None, ongif=None, onoutline=None): Handles click events from pygame, each argument has to be a function.
 - renderBoard(screen, board, text=False, grid=DOGRID, outl=OUTLINE): Renders the board according to set grid and outline parameters.
 - renderDebug(screen): Renders the butons and the FPS counter on the side of the screen.
+
+## Gif and Outline
+
+Gif.py is used to take screenshots, save them to a gif, and create outlines of the cells.
+
+### Methods
+
+- clearImg() -> None: Clears the screenshots take to make gifs (`img/sc/sfsc*png`). This is used when the "Clear" button is pressed and on starting the program.
+- screenshot(screen, path="img/sc/sfsc") -> None: Takes a screenshot of the screen and saves it to a file. This happens at every step of the simulation and is used when creating the gif.
+- compileGif() -> None: Compiles the screenshots taken to make a gif. This is used when the "Gif" button is pressed. Also opens the image if you are running windows
