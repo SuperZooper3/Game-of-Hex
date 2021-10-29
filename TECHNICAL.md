@@ -1,5 +1,26 @@
 # Technical overview
 
+## Main Program
+
+This is the main program that runs the Game of Hex simulation.
+
+### Methods
+
+- simStep(stepping=False): This method is called every time the program loops. If the cell checking is not paused, it goes over each cell and performs a rule check and updates its age, unless that cell and all of it's adjacent cells are dead(this was implemented to save time when big portions of the board are dead/unfrozen). It also saves a screenshot of the screen if graphical rendering is chosen.
+- clickHandler(pos): This function takes a tuple representing the position of a click on the board and flips the cell's state. This function is called when a cell on the board is clicked.
+- togglepause(): This function inverts the paused state of the simulation. This function is called when the "Pause/Resume" button is pressed on the pygame window.
+- clearBoard(): This function pauses the simulation, clears the saved images for the gif and clears the board. This function is called when the "Clear" button is pressed on the pygame window.
+- step(): This function simulates a step of the simulation and renders the board. This function is called when the "Step" button is pressed on the pygame window.
+- outlineSC(): This function takes 2 timestamped screenshots of the board: the first one with the outline of the clusters of alive cells and the second one with the outline and grid of alive cells. THis function is called when the "Outline SC" button is pressed on the pygame window.
+
+### Pipeline
+
+First, the arguments that were passed, if any, are parsed and the settings are defined.
+
+Afterwards, both Board objects are defined, the saved gifs are cleared and the screen is defined if the graphical display is chosen.
+
+Finally, the program enters a never-ending loop that will handle events from pygame if the graphical display is chosen, and that will simulate steps and render the board until the pygame window is closed if or Ctrl+C is pressed.
+
 ## Board class
 
 The Board class stores a hexagonal board. Having the board in a class instead of an array makes it easier to create methods for the board.
@@ -38,10 +59,19 @@ These functions are used when rendering the board with a GUI.
 
 ## Gif and Outline
 
-Gif.py is used to take screenshots, save them to a gif, and create outlines of the cells.
+gif.py is used to take screenshots, save them to a gif, and create outlines of the cells.
 
 ### Methods
 
 - clearImg() -> None: Clears the screenshots take to make gifs (`img/sc/sfsc*png`). This is used when the "Clear" button is pressed and on starting the program.
 - screenshot(screen, path="img/sc/sfsc") -> None: Takes a screenshot of the screen and saves it to a file. This happens at every step of the simulation and is used when creating the gif.
 - compileGif() -> None: Compiles the screenshots taken to make a gif. This is used when the "Gif" button is pressed. Also opens the image if you are running windows
+
+## Rule Management
+
+rules.py is where rules for the board are defined.
+
+### Methods
+
+- freeze(b: Board, x: int, y: int) -> bool: Takes as arguments a Board, and the x and y position of the cell to check, and returns a boolean value corresponding to the cell's new state after the application of the rule. This rule allows cells to die/unfreeze.
+- eternalFreeze(b: Board, x: int, y: int) -> bool: Takes as arguments a Board, and the x and y position of the cell to check, and returns a boolean value corresponding to the cell's new state after the application of the rule. This rule doesn't allow cells to die/unfreeze.
