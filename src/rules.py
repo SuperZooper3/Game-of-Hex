@@ -14,7 +14,6 @@ Args:
         bool returns if the cell is to be frozen in the next step
 """
 
-
 def freeze(b: Board, x: int, y: int) -> bool:
     n = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell

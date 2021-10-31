@@ -43,7 +43,7 @@ text = args.text
 x, y = args.x, args.y
 
 # Max frames per seconds
-def get_maxfps(text=False):
+def get_maxfps(text: bool = False) -> int:
     if args.maxfps is None:
         return 30 if not text else 2
     else:
@@ -119,7 +119,7 @@ startCells = []
 
 # Font for the fps counter
 # Function becuase pygame needs to be initialized before calling font methods
-def get_fps_font(size=32):
+def get_fps_font(size: int = 32) -> pygame.font.Font:
     return pygame.font.SysFont("verdana", size)
 
 

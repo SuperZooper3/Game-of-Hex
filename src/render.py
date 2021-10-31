@@ -3,21 +3,23 @@ from math import cos, pi, radians, sin
 import os
 import platform
 import sys
+from typing import List, Tuple
 import pygame
+from board import Board
 
 from settings import *
 
 buttons = {"pause": None, "clear": None, "step": None, "gif": None}
 
 # Easy math to start with
-def closest(lst, K):
+def closest(lst: List[int], K: int) -> int:
     # print(lst[min(range(len(lst)), key = lambda i: abs(lst[i]-K))])
     return lst[min(range(len(lst)), key=lambda i: abs(lst[i] - K))]
 
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
 # returns the 6 points for a regular hexagon
-def getHexCoords(radius, position):
+def getHexCoords(radius: int, position: List[int]) -> List[Tuple]:
     pi2 = 2 * pi
     n = 6
     return [
@@ -32,7 +34,7 @@ def getHexCoords(radius, position):
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen, pos, alive, age, board=None, grid=DOGRID, outl=OUTLINE):
+def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board: Board = None, grid: bool = DOGRID, outl: bool = OUTLINE) -> None:
     color = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
@@ -106,13 +108,13 @@ def drawHex(screen, pos, alive, age, board=None, grid=DOGRID, outl=OUTLINE):
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
 def handleEvents(
-    onclick=None,
-    onchangepause=None,
-    onclear=None,
-    onstep=None,
-    ongif=None,
-    onoutline=None,
-):
+    onclick: function = None,
+    onchangepause: function = None,
+    onclear: function = None,
+    onstep: function = None,
+    ongif: function = None,
+    onoutline: function = None,
+) -> None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -156,7 +158,7 @@ def handleEvents(
 
 
 # Render the board on the pygame screen
-def renderBoard(screen, board, text=False, grid=DOGRID, outl=OUTLINE):
+def renderBoard(screen: pygame.display, board: Board, text: bool = False, grid: bool = DOGRID, outl: bool = OUTLINE) -> None:
     clock.tick(get_maxfps(text=text))
     if text:
         os.system("cls" if platform.system() == "Windows" else "clear")
@@ -179,7 +181,7 @@ def renderBoard(screen, board, text=False, grid=DOGRID, outl=OUTLINE):
 
 
 # Render debug buttons and text
-def renderDebug(screen):
+def renderDebug(screen: pygame.display) -> None:
     screen.fill((255, 255, 255))
     fps = "FPS: " + str(int(clock.get_fps()))
     fps_text = get_fps_font().render(fps, 1, pygame.Color("black"))

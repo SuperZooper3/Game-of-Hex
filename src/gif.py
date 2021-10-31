@@ -1,7 +1,7 @@
 import glob
 import os
 import datetime
-from pygame import image
+from pygame import image, display
 from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION
 from PIL import Image
 from platform import system
@@ -13,17 +13,17 @@ sys = system().lower()
 cnt = 0
 
 
-def clearImg():  # Clear all the screenshots from the folder
+def clearImg() -> None:  # Clear all the screenshots from the folder
     [os.remove(png) for png in glob.glob("img/sc/sfsc*png")]
 
 
-def screenshot(screen, path="img/sc/sfsc"):  # Takes a screenshot of the gamescreen and saves it for gif making
+def screenshot(screen: display, path: str = "img/sc/sfsc") -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
     image.save(screen, f"{path}{cnt}.png")
     cnt += 1
 
 
-def compileGif():
+def compileGif() -> None:
     frames = []  # Array to store all the frames in
     imgs = sorted(
         glob.glob("img/sc/sfsc*.png"), key=os.path.getmtime

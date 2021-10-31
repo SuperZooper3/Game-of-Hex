@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Generator, List, Tuple
 
 cellsAroundEven = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [-1, -1]]
 cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
@@ -20,7 +20,7 @@ class Cell:
         Cell
     """
 
-    def __init__(self, x: int, y: int, alive: bool = False, age=None):
+    def __init__(self, x: int, y: int, alive: bool = False, age: int = None):
         self.x = x
         self.y = y
         self.alive = alive
@@ -72,7 +72,7 @@ class Board:
         a generator that returns a dict per cell
     """
 
-    def __iter__(self):
+    def __iter__(self) -> Generator:
         for x in self.grid:
             for cell in x:
                 yield cell

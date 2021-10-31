@@ -3,6 +3,7 @@ import argparse
 from copy import deepcopy
 
 import datetime
+from typing import Tuple
 import gif
 import rules
 import utils
@@ -32,7 +33,7 @@ else:
     screen = None
 
 # Simulate a step of the board
-def simStep(stepping=False):
+def simStep(stepping: bool = False) -> None:
     global b1, b2
     if not paused or stepping:
         # b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
@@ -66,16 +67,16 @@ def simStep(stepping=False):
             gif.screenshot(screen)
 
 
-def clickHandler(pos):
+def clickHandler(pos: Tuple[int]) -> None:
     b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
 
 
-def togglepause():
+def togglepause() -> None:
     global paused
     paused = not paused
 
 
-def clearBoard():
+def clearBoard() -> None:
     gif.clearImg()
     global paused
     paused = True
@@ -83,12 +84,12 @@ def clearBoard():
     b2.clear()
 
 
-def step():
+def step() -> None:
     simStep(stepping=True)
     renderBoard(screen, b1)
 
 
-def outlineSC():
+def outlineSC() -> None:
     t = str(round(datetime.datetime.now().timestamp() * 10))[3:]
 
     # DRAW THE JUST OUTLINE
