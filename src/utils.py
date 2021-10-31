@@ -1,4 +1,5 @@
 import random
+from board import Board
 
 """
     boardRandom(b,n): Randomly finds n cells and has a 50% chance of turning them on or off on board b
@@ -8,7 +9,7 @@ import random
 """
 
 
-def boardRandom(b, n: int):
+def boardRandom(b: Board, n: int) -> None:
     for _ in range(n):
         b.write(
             random.randint(0, b.x - 1),

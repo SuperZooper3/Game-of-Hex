@@ -1,35 +1,36 @@
 import glob
 import os
 import datetime
-from pygame import image
+from typing import List
+from pygame import image, display
 from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION
-from PIL import Image
+from PIL import Image, PngImagePlugin
 from platform import system
 
 sys = system().lower()
 
 # Base code from: https://pythonprogramming.altervista.org/pygame-draw-app-with-animation/
 
-cnt = 0
+cnt: int = 0
 
 
-def clearImg():  # Clear all the screenshots from the folder
+def clearImg() -> None:  # Clear all the screenshots from the folder
     [os.remove(png) for png in glob.glob("img/sc/sfsc*png")]
 
 
-def screenshot(screen, path="img/sc/sfsc"):  # Takes a screenshot of the gamescreen and saves it for gif making
+def screenshot(screen: display, path: str = "img/sc/sfsc") -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
     image.save(screen, f"{path}{cnt}.png")
     cnt += 1
 
 
-def compileGif():
-    frames = []  # Array to store all the frames in
-    imgs = sorted(
+def compileGif() -> None:
+    frames: List[PngImagePlugin.PngImageFile] = []  # Array to store all the frames in
+    imgs: List[str] = sorted(
         glob.glob("img/sc/sfsc*.png"), key=os.path.getmtime
     )  # Get all the frames made by the screenshotter
     for i in imgs:
-        new_frame = Image.open(i)  # Open the image
+        new_frame: PngImagePlugin.PngImageFile = Image.open(i)  # Open the image
         new_frame = new_frame.quantize(
             method=Image.MEDIANCUT
         )  # Conver the colours for nicer gifs
@@ -41,7 +42,7 @@ def compileGif():
         frames.append(new_frame)  # Load it onto an array
 
     # Save into a GIF file that loops forever
-    t = str(round(datetime.datetime.now().timestamp() * 10))[3:]  # Time to timestamp the gif
+    t: str = str(round(datetime.datetime.now().timestamp() * 10))[3:]  # Time to timestamp the gif
     
     if len(frames) > 0:
         frames[0].save(
