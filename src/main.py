@@ -12,12 +12,12 @@ from render import handleEvents, renderBoard
 from settings import *
 
 print("---Game of Hex, starting!---")
-paused = not text
+paused: bool = not text
 
-b1 = Board.genAlive(
+b1: Board = Board.genAlive(
     startCells, x, y
 )  # This is the board that we will be displaying to the user
-b2 = Board(
+b2: Board = Board(
     x, y
 )  # This is the board to which we will write the next step's board, which will then be transfered to b1 and cleared
 
@@ -28,7 +28,7 @@ if not text:
     import pygame
 
     pygame.init()
-    screen = pygame.display.set_mode(RESOLUTION)
+    screen: pygame.Surface = pygame.display.set_mode(RESOLUTION)
 else:
     screen = None
 
@@ -39,19 +39,19 @@ def simStep(stepping: bool = False) -> None:
         # b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
         # Itterate over all of the cells
         for cell in b1:
-            cx = cell.x
-            cy = cell.y
-            cs = cell.alive
-            ca = cell.age
-            nextstate = cs
+            cx: int = cell.x
+            cy: int = cell.y
+            cs: bool = cell.alive
+            ca: int = cell.age
+            nextstate: bool = cs
 
             # Skip computing the rules and the age for a cell if it and all the cells around it are dead
             if not (cs == False and b1.aliveAround(cx, cy) == 0):
                 # Compute all the rules
-                freeze = FREEZERULE(b1, cx, cy)
+                freeze: bool = FREEZERULE(b1, cx, cy)
 
                 # Combine all the rules (for now simple because we don't have many rules)
-                nextstate = freeze
+                nextstate: bool = freeze
                 if nextstate == True:
                     ca = ca + 1 if ca is not None else 1
                 else:
@@ -90,7 +90,7 @@ def step() -> None:
 
 
 def outlineSC() -> None:
-    t = str(round(datetime.datetime.now().timestamp() * 10))[3:]
+    t: str = str(round(datetime.datetime.now().timestamp() * 10))[3:]
 
     # DRAW THE JUST OUTLINE
     renderBoard(screen, b1, grid=False, outl=True)

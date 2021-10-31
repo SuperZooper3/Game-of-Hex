@@ -3,13 +3,13 @@ from math import cos, pi, radians, sin
 import os
 import platform
 import sys
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 import pygame
 from board import Board
 
 from settings import *
 
-buttons = {"pause": None, "clear": None, "step": None, "gif": None}
+buttons: Dict = {"pause": None, "clear": None, "step": None, "gif": None}
 
 # Easy math to start with
 def closest(lst: List[int], K: int) -> int:
@@ -19,9 +19,9 @@ def closest(lst: List[int], K: int) -> int:
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
 # returns the 6 points for a regular hexagon
-def getHexCoords(radius: int, position: List[int]) -> List[Tuple]:
-    pi2 = 2 * pi
-    n = 6
+def getHexCoords(radius: int, position: List[int]) -> List[Tuple[float]]:
+    pi2: float = 2 * pi
+    n: int = 6
     return [
         (
             cos(i / n * pi2) * radius + position[0],
@@ -35,7 +35,7 @@ def getHexCoords(radius: int, position: List[int]) -> List[Tuple]:
 # into irl coords
 # Also does some math
 def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board: Board = None, grid: bool = DOGRID, outl: bool = OUTLINE) -> None:
-    color = (255, 255, 255) if not alive else (0, 0, 0)
+    color: Tuple[int] = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
     else:
@@ -44,8 +44,8 @@ def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board
     # Every second hex needs to be slightly higher
     if pos[0] % 2 == 1:
         # Get ready for more math
-        hexCoordsOffset = sin(radians(60)) * RADIUS
-        coords = getHexCoords(
+        hexCoordsOffset: float = sin(radians(60)) * RADIUS
+        coords: List[Tuple[float]] = getHexCoords(
             RADIUS,
             (
                 (pos[0] * RADIUS) * 1.5 + OFFSET,
@@ -121,8 +121,8 @@ def handleEvents(
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             onchangepause()
         elif event.type == pygame.MOUSEBUTTONUP:
-            eventX = event.pos[0]
-            eventY = event.pos[1]
+            eventX: int = event.pos[0]
+            eventY: int = event.pos[1]
 
             if buttons["pause"].collidepoint(event.pos):
                 onchangepause()
@@ -183,8 +183,8 @@ def renderBoard(screen: pygame.display, board: Board, text: bool = False, grid: 
 # Render debug buttons and text
 def renderDebug(screen: pygame.display) -> None:
     screen.fill((255, 255, 255))
-    fps = "FPS: " + str(int(clock.get_fps()))
-    fps_text = get_fps_font().render(fps, 1, pygame.Color("black"))
+    fps: str = "FPS: " + str(int(clock.get_fps()))
+    fps_text: pygame.Surface = get_fps_font().render(fps, 1, pygame.Color("black"))
     screen.blit(fps_text, (RESOLUTION[0] - 150, 20))
 
     buttons["pause"] = pygame.Rect(RESOLUTION[0] - 150, 75, 125, 50)
@@ -194,20 +194,20 @@ def renderDebug(screen: pygame.display) -> None:
 
     buttons["clear"] = pygame.Rect(RESOLUTION[0] - 150, 150, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["clear"])
-    clear_text = get_fps_font(size=14).render("Clear", 1, pygame.Color("white"))
+    clear_text: pygame.Surface = get_fps_font(size=14).render("Clear", 1, pygame.Color("white"))
     screen.blit(clear_text, (RESOLUTION[0] - 140, 165))
 
     buttons["step"] = pygame.Rect(RESOLUTION[0] - 150, 225, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
-    step_text = get_fps_font(size=14).render("Step", 1, pygame.Color("white"))
+    step_text: pygame.Surface = get_fps_font(size=14).render("Step", 1, pygame.Color("white"))
     screen.blit(step_text, (RESOLUTION[0] - 140, 240))
 
     buttons["gif"] = pygame.Rect(RESOLUTION[0] - 150, 300, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["gif"])
-    gif_text = get_fps_font(size=14).render("Make Gif", 1, pygame.Color("white"))
+    gif_text: pygame.Surface = get_fps_font(size=14).render("Make Gif", 1, pygame.Color("white"))
     screen.blit(gif_text, (RESOLUTION[0] - 140, 315))
 
     buttons["outline"] = pygame.Rect(RESOLUTION[0] - 150, 375, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["outline"])
-    outline_text = get_fps_font(size=14).render("Outline SC", 1, pygame.Color("white"))
+    outline_text: pygame.Surface = get_fps_font(size=14).render("Outline SC", 1, pygame.Color("white"))
     screen.blit(outline_text, (RESOLUTION[0] - 140, 390))

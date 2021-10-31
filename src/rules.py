@@ -17,8 +17,8 @@ Args:
 def freeze(b: Board, x: int, y: int) -> bool:
     n = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
-    good = [1, 3, 4, 5, 6]
-    bad = []  # list of the values that would lead to a dead cell
+    good: List[int] = [1, 3, 4, 5, 6]
+    bad: List = []  # list of the values that would lead to a dead cell
     if n != None:
         if n in good:
             # print("Number of alive, good:", n, x, y)
@@ -32,10 +32,10 @@ def freeze(b: Board, x: int, y: int) -> bool:
 
 # Different version of the freeze rule that prevents cells from dying
 def eternalFreeze(b: Board, x: int, y: int) -> bool:
-    n = b.aliveAround(x, y)
+    n: int = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
-    good = [1, 3, 4, 5, 6]
-    bad = []  # list of the values that would lead to a dead cell
+    good: List[int] = [1, 3, 4, 5, 6]
+    bad: List = []  # list of the values that would lead to a dead cell
     if b.alive(x, y):
         return True
     if n != None:
