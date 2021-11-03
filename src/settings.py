@@ -27,7 +27,7 @@ parser.add_argument("-g", "--grid", action="store_true", help="Draw hexagon grid
 parser.add_argument(
     "--resolution",
     nargs=2,
-    default=(1000, 700),
+    default=(1050, 700),
     type=int,
     help="Resolution of the window to open",
 )
