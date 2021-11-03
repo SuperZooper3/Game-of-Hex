@@ -45,17 +45,15 @@ def simStep(stepping: bool = False) -> None:
             ca: int = cell.age
             nextstate: bool = cs
 
-            # Skip computing the rules and the age for a cell if it and all the cells around it are dead
-            if not (cs == False and b1.aliveAround(cx, cy) == 0):
-                # Compute all the rules
-                freeze: bool = FREEZERULE(b1, cx, cy)
+            # Compute all the rules
+            freeze: bool = FREEZERULE(b1, cx, cy)
 
-                # Combine all the rules (for now simple because we don't have many rules)
-                nextstate: bool = freeze
-                if nextstate == True:
-                    ca = ca + 1 if ca is not None else 1
-                else:
-                    ca = None
+            # Combine all the rules (for now simple because we don't have many rules)
+            nextstate: bool = freeze
+            if nextstate == True:
+                ca = ca + 1 if ca is not None else 1
+            else:
+                ca = None
 
             # Write to the b2
             b2.write(cx, cy, nextstate, ca)
