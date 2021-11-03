@@ -6,7 +6,7 @@ import sys
 from typing import Dict, List, Tuple
 import pygame
 from board import Board
-
+from types import FunctionType
 from settings import *
 
 buttons: Dict = {"pause": None, "clear": None, "step": None, "gif": None}
@@ -108,12 +108,12 @@ def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
 def handleEvents(
-    onclick: function = None,
-    onchangepause: function = None,
-    onclear: function = None,
-    onstep: function = None,
-    ongif: function = None,
-    onoutline: function = None,
+    onclick: FunctionType = None,
+    onchangepause: FunctionType = None,
+    onclear: FunctionType = None,
+    onstep: FunctionType = None,
+    ongif: FunctionType = None,
+    onoutline: FunctionType = None,
 ) -> None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

@@ -1,9 +1,9 @@
 import argparse
 from collections import OrderedDict
 import json
+from types import FunctionType
 from typing import Dict, List, Tuple
 from rules import freeze, eternalFreeze
-
 import pygame
 
 parser: argparse.ArgumentParser = argparse.ArgumentParser(
@@ -108,9 +108,9 @@ GIFSPEED: float = 0.4
 
 # Rule for cell freezing
 if args.candie:
-    FREEZERULE: function = freeze
+    FREEZERULE: FunctionType = freeze
 else:
-    FREEZERULE: function = eternalFreeze
+    FREEZERULE: FunctionType = eternalFreeze
 
 # Game clock
 clock: pygame.time.Clock = pygame.time.Clock()
@@ -139,9 +139,9 @@ if args.previous:
         RESOLUTION: Tuple[int] = tuple(previous["resolution"])
         OUTLINE: bool = previous["outline"]
         if previous["candie"]:
-            FREEZERULE: function = freeze
+            FREEZERULE: FunctionType = freeze
         else:
-            FREEZERULE: function = eternalFreeze
+            FREEZERULE: FunctionType = eternalFreeze
 
 with open("settings.json", "w+", encoding="UTF-8") as f:
     json.dump(
