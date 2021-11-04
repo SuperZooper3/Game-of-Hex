@@ -114,6 +114,7 @@ def handleEvents(
     onstep: FunctionType = None,
     ongif: FunctionType = None,
     onoutline: FunctionType = None,
+    onnamesc: FunctionType = None,
 ) -> None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -138,6 +139,9 @@ def handleEvents(
                 return
             elif buttons["outline"].collidepoint(event.pos):
                 onoutline()
+                return
+            elif buttons["SCname"].collidepoint(event.pos):
+                onnamesc()
                 return
 
             eventX -= OFFSET
@@ -211,3 +215,8 @@ def renderDebug(screen: pygame.display) -> None:
     pygame.draw.rect(screen, [0, 0, 0], buttons["outline"])
     outline_text: pygame.Surface = get_fps_font(size=14).render("Outline SC", 1, pygame.Color("white"))
     screen.blit(outline_text, (RESOLUTION[0] - 140, 390))
+
+    buttons["SCname"] = pygame.Rect(RESOLUTION[0] - 150, 450, 125, 50)
+    pygame.draw.rect(screen, [0, 0, 0], buttons["SCname"])
+    outline_text: pygame.Surface = get_fps_font(size=14).render("Name SC", 1, pygame.Color("white"))
+    screen.blit(outline_text, (RESOLUTION[0] - 140, 465))

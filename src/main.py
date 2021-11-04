@@ -103,6 +103,9 @@ def outlineSC() -> None:
     # Draw the board again
     renderBoard(screen, b1)
 
+def onnameSC() -> None:
+    gif.screenshot(screen, path="img/name/" + str(input("Name: ")))
+
 
 while True:
     if not text:
@@ -113,6 +116,7 @@ while True:
             onstep=step,
             ongif=gif.compileGif,
             onoutline=outlineSC,
+            onnamesc=onnameSC,
         )
     simStep()
     renderBoard(screen, b1, text=text)
