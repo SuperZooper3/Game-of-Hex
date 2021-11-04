@@ -8,7 +8,7 @@ import gif
 import rules
 import utils
 from board import Board
-from render import handleEvents, renderBoard
+from render import handleEvents, renderBoard, drawText
 from settings import *
 
 print("---Game of Hex, starting!---")
@@ -104,7 +104,9 @@ def outlineSC() -> None:
     renderBoard(screen, b1)
 
 def onnameSC() -> None:
-    gif.screenshot(screen, path="img/name/" + str(input("Name: ")))
+    name = str(input("Name: "))
+    drawText(screen, name)
+    gif.screenshot(screen, path="img/name/" + name)
 
 
 while True:

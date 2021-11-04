@@ -103,6 +103,11 @@ def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board
                 width=THICKNESS,
             )
 
+# Write text in the bottom left of the board
+def drawText(screen: pygame.display, text: str) -> None:
+    font = pygame.font.SysFont("Comic Sans MS", 40)
+    text = font.render(text, True, (0, 0, 0))
+    screen.blit(text, (0, RESOLUTION[1] - 50))
 
 # handle click events
 # propagates onclick; onchangepause; onclear; onstep
