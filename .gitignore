@@ -2,6 +2,7 @@ __pycache__
 .vscode/
 src/img/*.png
 src/img/name/*.png
-src/gif/*.gif
+src/img/gif/*.gif
 src/img/outline/*.png
 src/img/sc/*.png
+src/settings.json
