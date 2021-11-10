@@ -21,6 +21,9 @@ def clearImg() -> None:  # Clear all the screenshots from the folder
 def screenshot(screen: display, path: str = "img/sc/sfsc") -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
     image.save(screen, f"{path}{cnt}.png")
+    im = Image.open(f"{path}{cnt}.png")
+    im = im.crop((1, 1, RESOLUTION[0]-150, RESOLUTION[1]))
+    im.save(f"{path}{cnt}.png")
     cnt += 1
 
 

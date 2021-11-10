@@ -4,5 +4,5 @@ src/img/*.png
 src/img/name/*.png
 src/img/gif/*.gif
 src/img/outline/*.png
-src/img/sc/*.png
+src/img/sc/
 src/settings.json
