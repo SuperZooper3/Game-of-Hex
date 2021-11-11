@@ -34,7 +34,7 @@ def getHexCoords(radius: int, position: List[int]) -> List[Tuple[float]]:
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board: Board = None, grid: bool = DOGRID, outl: bool = OUTLINE) -> None:
+def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board: Board = None, grid: bool = DOGRID, outl: bool = OUTLINE, coloured: bool = None) -> None:
     color: Tuple[int] = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
@@ -60,7 +60,7 @@ def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board
         )
 
     # draw the polygon filled
-    if not outl:
+    if not outl or coloured:
         pygame.draw.polygon(screen, color, coords)
 
     if grid:
@@ -167,7 +167,7 @@ def handleEvents(
 
 
 # Render the board on the pygame screen
-def renderBoard(screen: pygame.display, board: Board, text: bool = False, grid: bool = DOGRID, outl: bool = OUTLINE) -> None:
+def renderBoard(screen: pygame.display, board: Board, text: bool = False, grid: bool = DOGRID, outl: bool = OUTLINE, coloured: bool = None) -> None:
     clock.tick(get_maxfps(text=text))
     if text:
         os.system("cls" if platform.system() == "Windows" else "clear")
@@ -184,6 +184,7 @@ def renderBoard(screen: pygame.display, board: Board, text: bool = False, grid: 
             board=board,
             grid=grid,
             outl=outl,
+            coloured=coloured,
         )
 
     pygame.display.flip()

@@ -105,9 +105,10 @@ def outlineSC() -> None:
 
 def onnameSC() -> None:
     name = str(input("Name: "))
+    renderBoard(screen, b1, grid=True, outl=True, coloured=True)
     drawText(screen, name)
     gif.screenshot(screen, path="img/name/" + name)
-
+    renderBoard(screen, b1)
 
 while True:
     if not text:
