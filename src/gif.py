@@ -3,7 +3,7 @@ import os
 import datetime
 from typing import List
 from pygame import image, display
-from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION
+from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION, CROPPING
 from PIL import Image, PngImagePlugin
 from platform import system
 
@@ -22,7 +22,7 @@ def screenshot(screen: display, path: str = "img/sc/sfsc") -> None:  # Takes a s
     global cnt
     image.save(screen, f"{path}{cnt}.png")
     im = Image.open(f"{path}{cnt}.png")
-    im = im.crop((1, 1, RESOLUTION[0]-150, RESOLUTION[1]))
+    im = im.crop((1, 1, RESOLUTION[0]-CROPPING, RESOLUTION[1]))
     im.save(f"{path}{cnt}.png")
     cnt += 1
 
@@ -39,7 +39,7 @@ def compileGif() -> None:
         )  # Conver the colours for nicer gifs
 
         new_frame = new_frame.resize(
-            tuple(round(n / GIFCOMPRESSION) for n in RESOLUTION), Image.LANCZOS
+            (round((RESOLUTION[0] - CROPPING) / GIFCOMPRESSION), round(RESOLUTION[1] / GIFCOMPRESSION) ), Image.LANCZOS
         )  # Compress the gif
 
         frames.append(new_frame)  # Load it onto an array

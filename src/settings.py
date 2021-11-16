@@ -58,7 +58,10 @@ OUTLINE: bool = args.outline
 RESOLUTION: Tuple[int] = tuple(args.resolution)
 
 # How many times to divide the size of the gif (not that important so I have 1)
-GIFCOMPRESSION: int = 2
+GIFCOMPRESSION: int = 1
+
+# Image cropping x:
+CROPPING: int = 150
 
 # Thickness of the outline drawing
 THICKNESS: int = args.thickness
