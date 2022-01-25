@@ -7,3 +7,4 @@ src/img/outline/*.png
 src/img/sc/
 src/settings.json
 .DS_Store
+env/
