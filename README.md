@@ -22,10 +22,14 @@ This is a game of life that runs on hexagonal grids to simulate crystal structur
 
 These are the rules built in:
 <https://clairelommeblog.wordpress.com/category/apmep-journees-2020/>
-
 ![The ruleset](assets/readme/rules.jpg)
 
 Translates to:
+
+- If there are 1,3,4,5 or 6 alive adjacent cells, the cell becomes alive on the next step.
+- If there are 0 or 2 alive adjacent cells, the cell does not change.
+
+If the candie argument is passed, then the rule is:
 
 - If there are 1,3,4,5 or 6 alive adjacent cells, the cell becomes alive on the next step.
 - If there are 0 or 2 alive adjacent cells, the cell dies on the next step.

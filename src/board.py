@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Generator, List, Tuple
 
 cellsAroundEven = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [-1, -1]]
 cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
@@ -20,11 +20,11 @@ class Cell:
         Cell
     """
 
-    def __init__(self, x: int, y: int, alive: bool = False, age=None):
-        self.x = x
-        self.y = y
-        self.alive = alive
-        self.age = age
+    def __init__(self, x: int, y: int, alive: bool = False, age: int = None):
+        self.x: int = x
+        self.y: int = y
+        self.alive: bool = alive
+        self.age: int = age
 
 
 """
@@ -44,9 +44,9 @@ class Board:
     """
 
     def __init__(self, x: int, y: int):
-        self.grid = [[Cell(_x, _y) for _y in range(y)] for _x in range(x)]
-        self.x = x
-        self.y = y
+        self.grid: List[List[Cell]] = [[Cell(_x, _y) for _y in range(y)] for _x in range(x)]
+        self.x: int = x
+        self.y: int = y
 
     """
     Board.genAlive(*aliveCells: Tuple[list], x: int, y:int): classmethod that generates a board with the given cell coordinates alive and returns the board
@@ -61,7 +61,7 @@ class Board:
 
     @classmethod
     def genAlive(cls, aliveCells: Tuple[list], x: int, y: int):
-        board = cls(x, y)
+        board: Board = cls(x, y)
         for cell in aliveCells:
             board.write(cell[0], cell[1], True, 1)
         return board
@@ -72,7 +72,7 @@ class Board:
         a generator that returns a dict per cell
     """
 
-    def __iter__(self):
+    def __iter__(self) -> Generator:
         for x in self.grid:
             for cell in x:
                 yield cell
@@ -118,7 +118,7 @@ class Board:
     """
 
     def aliveAround(self, x: int, y: int) -> int:
-        count = 0
+        count: int = 0
         if x % 2 == 0:
             cellsAround = cellsAroundEven
         else:
@@ -139,7 +139,7 @@ class Board:
     """
 
     def around(self, x: int, y: int) -> List[bool]:
-        cells = []
+        cells: List[Cell] = []
         if x % 2 == 0:
             cellsAround = cellsAroundEven
         else:
@@ -191,8 +191,8 @@ class Board:
     """
 
     def __str__(self) -> str:
-        string = ""
-        colors = True
+        string: str = ""
+        colors: bool = True
         for y in range(self.y):
             if y % 2 != 0:
                 string += " "

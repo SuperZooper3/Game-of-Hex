@@ -3,20 +3,21 @@ import argparse
 from copy import deepcopy
 
 import datetime
+from typing import Tuple
 import gif
 import rules
 import utils
 from board import Board
-from render import handleEvents, renderBoard
+from render import handleEvents, renderBoard, drawText
 from settings import *
 
 print("---Game of Hex, starting!---")
-paused = False
+paused: bool = not text
 
-b1 = Board.genAlive(
+b1: Board = Board.genAlive(
     startCells, x, y
 )  # This is the board that we will be displaying to the user
-b2 = Board(
+b2: Board = Board(
     x, y
 )  # This is the board to which we will write the next step's board, which will then be transfered to b1 and cleared
 
@@ -27,34 +28,32 @@ if not text:
     import pygame
 
     pygame.init()
-    screen = pygame.display.set_mode(RESOLUTION)
+    screen: pygame.Surface = pygame.display.set_mode(RESOLUTION)
 else:
     screen = None
 
 # Simulate a step of the board
-def simStep(stepping=False):
+def simStep(stepping: bool = False) -> None:
     global b1, b2
     if not paused or stepping:
         # b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
         # Itterate over all of the cells
         for cell in b1:
-            cx = cell.x
-            cy = cell.y
-            cs = cell.alive
-            ca = cell.age
-            nextstate = cs
+            cx: int = cell.x
+            cy: int = cell.y
+            cs: bool = cell.alive
+            ca: int = cell.age
+            nextstate: bool = cs
 
-            # Skip computing the rules and the age for a cell if it and all the cells around it are dead
-            if not (cs == False and b1.aliveAround(cx, cy) == 0):
-                # Compute all the rules
-                freeze = rules.freeze(b1, cx, cy)
+            # Compute all the rules
+            freeze: bool = FREEZERULE(b1, cx, cy)
 
-                # Combine all the rules (for now simple because we don't have many rules)
-                nextstate = freeze
-                if nextstate == True:
-                    ca = ca + 1 if ca is not None else 1
-                else:
-                    ca = None
+            # Combine all the rules (for now simple because we don't have many rules)
+            nextstate: bool = freeze
+            if nextstate == True:
+                ca = ca + 1 if ca is not None else 1
+            else:
+                ca = None
 
             # Write to the b2
             b2.write(cx, cy, nextstate, ca)
@@ -66,16 +65,16 @@ def simStep(stepping=False):
             gif.screenshot(screen)
 
 
-def clickHandler(pos):
+def clickHandler(pos: Tuple[int]) -> None:
     b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
 
 
-def togglepause():
+def togglepause() -> None:
     global paused
     paused = not paused
 
 
-def clearBoard():
+def clearBoard() -> None:
     gif.clearImg()
     global paused
     paused = True
@@ -83,13 +82,13 @@ def clearBoard():
     b2.clear()
 
 
-def step():
+def step() -> None:
     simStep(stepping=True)
     renderBoard(screen, b1)
 
 
-def outlineSC():
-    t = str(round(datetime.datetime.now().timestamp() * 10))[3:]
+def outlineSC() -> None:
+    t: str = str(round(datetime.datetime.now().timestamp() * 10))[3:]
 
     # DRAW THE JUST OUTLINE
     renderBoard(screen, b1, grid=False, outl=True)
@@ -104,6 +103,12 @@ def outlineSC():
     # Draw the board again
     renderBoard(screen, b1)
 
+def onnameSC() -> None:
+    name = str(input("Name: "))
+    renderBoard(screen, b1, grid=True, outl=True, coloured=True)
+    drawText(screen, name)
+    gif.screenshot(screen, path="img/name/" + name)
+    renderBoard(screen, b1)
 
 while True:
     if not text:
@@ -114,6 +119,7 @@ while True:
             onstep=step,
             ongif=gif.compileGif,
             onoutline=outlineSC,
+            onnamesc=onnameSC,
         )
     simStep()
     renderBoard(screen, b1, text=text)

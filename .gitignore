@@ -3,3 +3,11 @@ __pycache__
 /img/*.png
 .DS_Store
 env
+src/img/*.png
+src/img/name/*.png
+src/img/gif/*.gif
+src/img/outline/*.png
+src/img/sc/
+src/settings.json
+.DS_Store
+env/
