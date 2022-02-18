@@ -14,6 +14,7 @@ Args:
         bool returns if the cell is to be frozen in the next step
 """
 
+
 def freeze(b: Board, x: int, y: int) -> bool:
     n = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
@@ -29,6 +30,7 @@ def freeze(b: Board, x: int, y: int) -> bool:
         else:
             # print("Number of alive is not in lists:", n)
             return False
+
 
 # Different version of the freeze rule that prevents cells from dying
 def eternalFreeze(b: Board, x: int, y: int) -> bool:

@@ -44,7 +44,9 @@ class Board:
     """
 
     def __init__(self, x: int, y: int):
-        self.grid: List[List[Cell]] = [[Cell(_x, _y) for _y in range(y)] for _x in range(x)]
+        self.grid: List[List[Cell]] = [
+            [Cell(_x, _y) for _y in range(y)] for _x in range(x)
+        ]
         self.x: int = x
         self.y: int = y
 

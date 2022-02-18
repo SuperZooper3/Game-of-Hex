@@ -1,12 +1,14 @@
 # pylint: disable=no-member, no-name-in-module
-from math import cos, pi, radians, sin
 import os
 import platform
 import sys
-from typing import Dict, List, Tuple
-import pygame
-from board import Board
+from math import cos, pi, radians, sin
 from types import FunctionType
+from typing import Dict, List, Tuple
+
+import pygame
+
+from board import Board
 from settings import *
 
 buttons: Dict = {"pause": None, "clear": None, "step": None, "gif": None}
@@ -34,7 +36,16 @@ def getHexCoords(radius: int, position: List[int]) -> List[Tuple[float]]:
 # Draws a hex from the coords `pos` (from board), takes care of converting
 # into irl coords
 # Also does some math
-def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board: Board = None, grid: bool = DOGRID, outl: bool = OUTLINE, coloured: bool = None) -> None:
+def drawHex(
+    screen: pygame.display,
+    pos: List[int],
+    alive: bool,
+    age: int,
+    board: Board = None,
+    grid: bool = DOGRID,
+    outl: bool = OUTLINE,
+    coloured: bool = None,
+) -> None:
     color: Tuple[int] = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
@@ -103,11 +114,13 @@ def drawHex(screen: pygame.display, pos: List[int], alive: bool, age: int, board
                 width=THICKNESS,
             )
 
+
 # Write text in the bottom left of the board
 def drawText(screen: pygame.display, text: str) -> None:
     font = pygame.font.SysFont("Comic Sans MS", 40)
     text = font.render(text, True, (0, 0, 0))
     screen.blit(text, (0, RESOLUTION[1] - 50))
+
 
 # handle click events
 # propagates onclick; onchangepause; onclear; onstep
@@ -167,7 +180,14 @@ def handleEvents(
 
 
 # Render the board on the pygame screen
-def renderBoard(screen: pygame.display, board: Board, text: bool = False, grid: bool = DOGRID, outl: bool = OUTLINE, coloured: bool = None) -> None:
+def renderBoard(
+    screen: pygame.display,
+    board: Board,
+    text: bool = False,
+    grid: bool = DOGRID,
+    outl: bool = OUTLINE,
+    coloured: bool = None,
+) -> None:
     clock.tick(get_maxfps(text=text))
     if text:
         os.system("cls" if platform.system() == "Windows" else "clear")
@@ -204,25 +224,35 @@ def renderDebug(screen: pygame.display) -> None:
 
     buttons["clear"] = pygame.Rect(RESOLUTION[0] - 150, 150, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["clear"])
-    clear_text: pygame.Surface = get_fps_font(size=14).render("Clear", 1, pygame.Color("white"))
+    clear_text: pygame.Surface = get_fps_font(size=14).render(
+        "Clear", 1, pygame.Color("white")
+    )
     screen.blit(clear_text, (RESOLUTION[0] - 140, 165))
 
     buttons["step"] = pygame.Rect(RESOLUTION[0] - 150, 225, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
-    step_text: pygame.Surface = get_fps_font(size=14).render("Step", 1, pygame.Color("white"))
+    step_text: pygame.Surface = get_fps_font(size=14).render(
+        "Step", 1, pygame.Color("white")
+    )
     screen.blit(step_text, (RESOLUTION[0] - 140, 240))
 
     buttons["gif"] = pygame.Rect(RESOLUTION[0] - 150, 300, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["gif"])
-    gif_text: pygame.Surface = get_fps_font(size=14).render("Make Gif", 1, pygame.Color("white"))
+    gif_text: pygame.Surface = get_fps_font(size=14).render(
+        "Make Gif", 1, pygame.Color("white")
+    )
     screen.blit(gif_text, (RESOLUTION[0] - 140, 315))
 
     buttons["outline"] = pygame.Rect(RESOLUTION[0] - 150, 375, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["outline"])
-    outline_text: pygame.Surface = get_fps_font(size=14).render("Outline SC", 1, pygame.Color("white"))
+    outline_text: pygame.Surface = get_fps_font(size=14).render(
+        "Outline SC", 1, pygame.Color("white")
+    )
     screen.blit(outline_text, (RESOLUTION[0] - 140, 390))
 
     buttons["SCname"] = pygame.Rect(RESOLUTION[0] - 150, 450, 125, 50)
     pygame.draw.rect(screen, [0, 0, 0], buttons["SCname"])
-    outline_text: pygame.Surface = get_fps_font(size=14).render("Name SC", 1, pygame.Color("white"))
+    outline_text: pygame.Surface = get_fps_font(size=14).render(
+        "Name SC", 1, pygame.Color("white")
+    )
     screen.blit(outline_text, (RESOLUTION[0] - 140, 465))

@@ -1,14 +1,14 @@
 # pylint: disable=no-member
 import argparse
-from copy import deepcopy
-
 import datetime
+from copy import deepcopy
 from typing import Tuple
+
 import gif
 import rules
 import utils
 from board import Board
-from render import handleEvents, renderBoard, drawText
+from render import drawText, handleEvents, renderBoard
 from settings import *
 
 print("---Game of Hex, starting!---")
@@ -103,12 +103,14 @@ def outlineSC() -> None:
     # Draw the board again
     renderBoard(screen, b1)
 
+
 def onnameSC() -> None:
     name = str(input("Name: "))
     renderBoard(screen, b1, grid=True, outl=True, coloured=True)
     drawText(screen, name)
     gif.screenshot(screen, path="img/name/" + name)
     renderBoard(screen, b1)
+
 
 while True:
     if not text:

@@ -1,11 +1,13 @@
+import datetime
 import glob
 import os
-import datetime
-from typing import List
-from pygame import image, display
-from settings import GIFSPEED, RESOLUTION, GIFCOMPRESSION, CROPPING
-from PIL import Image, PngImagePlugin
 from platform import system
+from typing import List
+
+from PIL import Image, PngImagePlugin
+from pygame import display, image
+
+from settings import CROPPING, GIFCOMPRESSION, GIFSPEED, RESOLUTION
 
 sys = system().lower()
 
@@ -18,11 +20,13 @@ def clearImg() -> None:  # Clear all the screenshots from the folder
     [os.remove(png) for png in glob.glob("img/sc/sfsc*png")]
 
 
-def screenshot(screen: display, path: str = "img/sc/sfsc") -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
+def screenshot(
+    screen: display, path: str = "img/sc/sfsc"
+) -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
     image.save(screen, f"{path}{cnt}.png")
     im = Image.open(f"{path}{cnt}.png")
-    im = im.crop((1, 1, RESOLUTION[0]-CROPPING, RESOLUTION[1]))
+    im = im.crop((1, 1, RESOLUTION[0] - CROPPING, RESOLUTION[1]))
     im.save(f"{path}{cnt}.png")
     cnt += 1
 
@@ -39,14 +43,20 @@ def compileGif() -> None:
         )  # Conver the colours for nicer gifs
 
         new_frame = new_frame.resize(
-            (round((RESOLUTION[0] - CROPPING) / GIFCOMPRESSION), round(RESOLUTION[1] / GIFCOMPRESSION) ), Image.LANCZOS
+            (
+                round((RESOLUTION[0] - CROPPING) / GIFCOMPRESSION),
+                round(RESOLUTION[1] / GIFCOMPRESSION),
+            ),
+            Image.LANCZOS,
         )  # Compress the gif
 
         frames.append(new_frame)  # Load it onto an array
 
     # Save into a GIF file that loops forever
-    t: str = str(round(datetime.datetime.now().timestamp() * 10))[3:]  # Time to timestamp the gif
-    
+    t: str = str(round(datetime.datetime.now().timestamp() * 10))[
+        3:
+    ]  # Time to timestamp the gif
+
     if len(frames) > 0:
         frames[0].save(
             f"img/gif/snowflake{t}.gif",

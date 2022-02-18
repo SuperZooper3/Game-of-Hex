@@ -1,10 +1,12 @@
 import argparse
-from collections import OrderedDict
 import json
+from collections import OrderedDict
 from types import FunctionType
 from typing import Dict, List, Tuple
-from rules import freeze, eternalFreeze
+
 import pygame
+
+from rules import eternalFreeze, freeze
 
 parser: argparse.ArgumentParser = argparse.ArgumentParser(
     description="Run the game of life using hexagonal grids"
@@ -157,7 +159,7 @@ with open("settings.json", "w+", encoding="UTF-8") as f:
             "grid": DOGRID,
             "resolution": RESOLUTION,
             "outline": OUTLINE,
-            "candie": args.candie
+            "candie": args.candie,
         },
         f,
     )
