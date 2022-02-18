@@ -1,3 +1,5 @@
 __pycache__
 .vscode/
 /img/*.png
+.DS_Store
+env
