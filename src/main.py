@@ -3,6 +3,7 @@ import argparse
 import datetime
 from copy import deepcopy
 from typing import Tuple
+import sys
 
 import gif
 import rules
@@ -11,7 +12,7 @@ from board import Board
 from render import drawText, handleEvents, renderBoard
 from settings import *
 
-print("---Game of Hex, starting!---")
+print("---Game of Hex: starting!---")
 paused: bool = not text
 
 b1: Board = Board.genAlive(
@@ -113,15 +114,19 @@ def onnameSC() -> None:
 
 
 while True:
-    if not text:
-        handleEvents(
-            onclick=clickHandler,
-            onchangepause=togglepause,
-            onclear=clearBoard,
-            onstep=step,
-            ongif=gif.compileGif,
-            onoutline=outlineSC,
-            onnamesc=onnameSC,
-        )
-    simStep()
-    renderBoard(screen, b1, text=text)
+    try:
+        if not text:
+            handleEvents(
+                onclick=clickHandler,
+                onchangepause=togglepause,
+                onclear=clearBoard,
+                onstep=step,
+                ongif=gif.compileGif,
+                onoutline=outlineSC,
+                onnamesc=onnameSC,
+            )
+        simStep()
+        renderBoard(screen, b1, text=text)
+    except KeyboardInterrupt:
+        print("---Game of Hex: exiting---")
+        sys.exit(0)
