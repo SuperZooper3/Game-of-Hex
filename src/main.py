@@ -59,6 +59,8 @@ def simStep(stepping: bool = False) -> None:
             # Write to the b2
             b2.write(cx, cy, nextstate, ca)
 
+            # Graph data collection code goes here
+
         # Copy b2 to b1
         b1 = deepcopy(b2)
         # Take a screenshot of the board for a gif
@@ -127,6 +129,7 @@ while True:
             )
         simStep()
         renderBoard(screen, b1, text=text)
+        # Draw the graph here
     except KeyboardInterrupt:
         print("---Game of Hex: exiting---")
         sys.exit(0)
