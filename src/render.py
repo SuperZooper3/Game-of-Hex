@@ -3,15 +3,35 @@ import os
 import platform
 import sys
 from math import cos, pi, radians, sin
-from types import FunctionType
-from typing import Dict, List, Tuple
+from types import FunctionType, NoneType
+from typing import Dict, List, Tuple, Union
 
 import pygame
 
 from board import Board
 from settings import *
 
-buttons: Dict = {"pause": None, "clear": None, "step": None, "gif": None}
+buttons: Dict[str, NoneType | pygame.Rect] = {
+    "pause": None,
+    "clear": None,
+    "step": None,
+    "gif": None,
+    "outline": None,
+    "SCname": None,
+}
+
+buttonsName: Dict[str, str] = {
+    "pause": "Pause/Resume",
+    "clear": "Clear",
+    "step": "Step",
+    "gif": "GIF",
+    "outline": "Outline",
+    "SCname": "Name SC",
+}
+
+# idk, probably the cause of the pixel offset errors
+MAGIC_NUMBER = 1.7
+
 
 # Easy math to start with
 def closest(lst: List[int], K: int) -> int:
@@ -60,14 +80,18 @@ def drawHex(
             RADIUS,
             (
                 (pos[0] * RADIUS) * 1.5 + OFFSET,
-                (pos[1] * RADIUS) * 1.7  # idk why 1.7, but oh well
+                (pos[1] * RADIUS) * MAGIC_NUMBER  # idk why 1.7, but oh well
                 + OFFSET
                 + hexCoordsOffset,
             ),
         )
     else:
         coords = getHexCoords(
-            RADIUS, ((pos[0] * RADIUS) * 1.5 + OFFSET, (pos[1] * RADIUS) * 1.7 + OFFSET)
+            RADIUS,
+            (
+                (pos[0] * RADIUS) * 1.5 + OFFSET,
+                (pos[1] * RADIUS) * MAGIC_NUMBER + OFFSET,
+            ),
         )
 
     # draw the polygon filled
@@ -171,7 +195,7 @@ def handleEvents(
                 eventY -= RADIUS
 
             eventY -= OFFSET
-            eventY /= 1.7
+            eventY /= MAGIC_NUMBER
             eventY /= RADIUS
 
             roundedY = round(eventY)
@@ -217,42 +241,14 @@ def renderDebug(screen: pygame.display) -> None:
     fps_text: pygame.Surface = get_fps_font().render(fps, 1, pygame.Color("black"))
     screen.blit(fps_text, (RESOLUTION[0] - 150, 20))
 
-    buttons["pause"] = pygame.Rect(RESOLUTION[0] - 150, 75, 125, 50)
-    pygame.draw.rect(screen, [42, 106, 209], buttons["pause"])
-    pause_text = get_fps_font(size=14).render("Pause/Resume", 1, pygame.Color("white"))
-    screen.blit(pause_text, (RESOLUTION[0] - 140, 90))
+    paintButtons(screen)
 
-    buttons["clear"] = pygame.Rect(RESOLUTION[0] - 150, 150, 125, 50)
-    pygame.draw.rect(screen, [0, 0, 0], buttons["clear"])
-    clear_text: pygame.Surface = get_fps_font(size=14).render(
-        "Clear", 1, pygame.Color("white")
-    )
-    screen.blit(clear_text, (RESOLUTION[0] - 140, 165))
 
-    buttons["step"] = pygame.Rect(RESOLUTION[0] - 150, 225, 125, 50)
-    pygame.draw.rect(screen, [0, 0, 0], buttons["step"])
-    step_text: pygame.Surface = get_fps_font(size=14).render(
-        "Step", 1, pygame.Color("white")
-    )
-    screen.blit(step_text, (RESOLUTION[0] - 140, 240))
-
-    buttons["gif"] = pygame.Rect(RESOLUTION[0] - 150, 300, 125, 50)
-    pygame.draw.rect(screen, [0, 0, 0], buttons["gif"])
-    gif_text: pygame.Surface = get_fps_font(size=14).render(
-        "Make Gif", 1, pygame.Color("white")
-    )
-    screen.blit(gif_text, (RESOLUTION[0] - 140, 315))
-
-    buttons["outline"] = pygame.Rect(RESOLUTION[0] - 150, 375, 125, 50)
-    pygame.draw.rect(screen, [0, 0, 0], buttons["outline"])
-    outline_text: pygame.Surface = get_fps_font(size=14).render(
-        "Outline SC", 1, pygame.Color("white")
-    )
-    screen.blit(outline_text, (RESOLUTION[0] - 140, 390))
-
-    buttons["SCname"] = pygame.Rect(RESOLUTION[0] - 150, 450, 125, 50)
-    pygame.draw.rect(screen, [0, 0, 0], buttons["SCname"])
-    outline_text: pygame.Surface = get_fps_font(size=14).render(
-        "Name SC", 1, pygame.Color("white")
-    )
-    screen.blit(outline_text, (RESOLUTION[0] - 140, 465))
+def paintButtons(screen: pygame.display) -> None:
+    for idx, name in enumerate(buttons):
+        buttons[name] = pygame.Rect(RESOLUTION[0] - 150, 75 + (75 * idx), 125, 50)
+        pygame.draw.rect(screen, [0, 0, 0], buttons[name])
+        outline_text: pygame.Surface = get_fps_font(size=14).render(
+            buttonsName[name], 1, pygame.Color("white")
+        )
+        screen.blit(outline_text, (RESOLUTION[0] - 140, 90 + (75 * idx)))
