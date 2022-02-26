@@ -1,14 +1,10 @@
 # Game of Hex
 
-**A game of life clone that runs in a hexagonal grid for crystal and snowflake simulations!**
+Lire ce document en [français](README_FR.md).
+
+**A Game of Life by John Conway" clone that runs in a hexagonal grid for crystal and snowflake simulations!**
 
 ![An example simulation](assets/readme/ex.png)
-
-## Table of contents
-
-- Features
-- Setup
-- How to use
 
 ## Features
 
@@ -17,7 +13,7 @@
 This is a game of life that runs on hexagonal grids to simulate crystal structures, like snowflakes.
 
 - Custom board and grid management
-- Cell types with easily changeable metadata (age, coordinates, state, etc.)
+- Cell types with modifiable metadata (age, coordinates, state, etc.)
 - Easily expandable and editable ruleset!
 
 These are the rules built in:
@@ -29,25 +25,25 @@ Translates to:
 - If there are 1,3,4,5 or 6 alive adjacent cells, the cell becomes alive on the next step.
 - If there are 0 or 2 alive adjacent cells, the cell does not change.
 
-If the candie argument is passed, then the rule is:
+If the `candie` argument is passed, then the rule is:
 
 - If there are 1,3,4,5 or 6 alive adjacent cells, the cell becomes alive on the next step.
 - If there are 0 or 2 alive adjacent cells, the cell dies on the next step.
 
-#### UI
+### UI
 
-- Built in options for rendering in command line (unix and windows)
+- Built in options for rendering in command line (Unix and windows)
 - Pygame user interface, with age based colouring to make pretty snowflakes!
 - Easy to add new rendering methods.
 
-#### GIFS
+### GIFS
 
 - Easy to make gifs (Pygame only) that make it easy to share your simulations with your friends.
 - Also helps with showcasing larger boards that may be slow to run.
 
-![An example gif](assets/readme/exgif.gif)
+![An example GIF](assets/readme/exgif.gif)
 
-#### Laser cutting outlines
+### Laser cutting outlines
 
 - One click to export outlines for laser cutting.
 ![An example outline](assets/readme/exoutline.png)
@@ -57,7 +53,7 @@ If the candie argument is passed, then the rule is:
 
 You will need:
 
-- Python 3.7.7 and higher but **lower than 3.10**.
+- Python 3.7.7 or higher but **lower than 3.10**.
 - All the dependencies in requirements.txt. From the base path of this git, run `pip install -r requirements.txt` to install them all.
 
 ## How to use
@@ -66,7 +62,7 @@ Navigate to `src` and run `python main.py`. It should print some stuff about pyg
 
 There are a couple command line arguements that you can use to change how it runs!
 
-```optional arguments:
+```txt
   -h, --help            show this help message and exit
   -x X                  Width of the grid
   -y Y                  Height of the grid
@@ -78,7 +74,7 @@ There are a couple command line arguements that you can use to change how it run
   -l, --lines           Draw hexagon grid outline
   --resolution RESOLUTION RESOLUTION     Resolution of the window to open
   -p, --previous        Use previous settings
-  ```
+```
 
 The first time you run the program, a `settings.json` file will be created. The below picture was taken with: `{"x": 190, "y": 135, "maxfps": null, "radius": 3, "text": false, "lines": false, "resolution": [1000, 700], "outline": false}`. This file is referenced when you use `-p`.
 
@@ -95,11 +91,11 @@ If you don't select `--text`, a Pygame window should open after a couple of seco
   - `Step` runs one step of the simulation at a time.
   - `Make a gif` saves a gif of everything that has happened since the last clear or the start. It gets saved to `src/img/gif`. They are **ready to share!**
   - `Outline SC` takes a screenshot of the outline of the alive cells (same as running `-o` but just for one frame.) The picture is saved to `src/img/outline`.
-- The green part shows the framerate. When the board is paused this shows how many frames the drawing script can draw in a second and during simulation this is the number of simulation steps that can be run per second.
+- The green part shows the framerate. When the board is paused this shows how many frames the drawing script can draw in a second and during simulation this is the number of simulation steps that were run in the last second.
 
 ### Text display
 
-If you use `--text`, you can't really interact with the with the simulation in real time. In `settings.py`, place the coordinates for cells that are to exist at the start in `startCells = []` (list of tuples).
+If you use `--text`, you can't really interact with the simulation in real time. In `settings.py`, place the coordinates for cells that are to exist at the start in `startCells = []` (list of tuples).
 
 ![How the UI works](assets/readme/text.jpg)
 
