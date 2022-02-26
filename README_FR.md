@@ -3,7 +3,7 @@
 Read this document in [english](README.md).
 
 
-**Un clone du "Jeu de la Vie de John Conway" qui utilise une grille hexagonale pour simuler des structures de cristal et de flocon de neige!**
+**Un clone du "Jeu de la Vie de John Conway" qui utilise une grille hexagonale pour simuler les structures de cristaux et de flocons de neige!**
 
 ![Un example d'une simulation](assets/readme/ex.png)
 
@@ -13,9 +13,9 @@ Read this document in [english](README.md).
 
 Ce clone du Jeu de la Vie utilise une grille hexagonale pour simuler des structures de cristal telle que des flocons de neiges.
 
-- Planche personnalisé avec gestion de la grille
+- Système de grille personnalisé avec gestion de la grille hexagonalle
 - Meta-données des cellules modifiable (âge, coordonnées, état, etc.)
-- Règles extensibles et personnalisables!
+- Règles de simulation extensibles et personnalisables!
 
 Les règles suivantes sont tirées de [ce site](https://clairelommeblog.wordpress.com/category/apmep-journees-2020/):  
 ![The ruleset](assets/readme/rules.jpg)
@@ -23,7 +23,7 @@ Les règles suivantes sont tirées de [ce site](https://clairelommeblog.wordpres
 Si l'argument `candie` est passé, alors les règles sont les suivantes:
 
 - Avec 1, 3, 4, 5 ou 6 cellules vivantes adjacentes, la cellule devient (ou reste) vivante au prochain tour.
-- Avec 0 ou 2 cellules vivantes adjacentes, la cellule meurt.
+- Avec 0 ou 2 cellules vivantes adjacentes, la cellule meurt (dans le jeu de base, les cellules ne peuvent pas mourir).
 
 ### Interface Utilisateur
 
@@ -58,17 +58,17 @@ Veulliez naviguer dans le répertoire `src` et exécuter `python main.py`. Il de
 Il existe plusieurs options d'exécution:
 
 ```txt
-  -h, --help            show this help message and exit
-  -x X                  Width of the grid
-  -y Y                  Height of the grid
-  -f MAXFPS, --maxfps MAXFPS     Maximum frames per seconds
-  -r RADIUS, --radius RADIUS    Radius of the hexes (in pixels)
-  -o, --outline     Only display hexagon structure outlines (laser cutting)
-  -t THICKNESS, --thickness THICKNESS   Thickness of the outline lines (might be important for laser cutters.)
-  --text                Use a text UI
-  -l, --lines           Draw hexagon grid outline
-  --resolution RESOLUTION RESOLUTION     Resolution of the window to open
-  -p, --previous        Use previous settings
+  -h, --help            montre de l'aide
+  -x X                  Épaisseur de la grille
+  -y Y                  Hauteur de la grille
+  -f MAXFPS, --maxfps MAXFPS    Images maximales par seconde
+  -r RADIUS, --radius RADIUS    Rayon des hexagones (en pixels)
+  -o, --outline     Afficher uniquement les contours de la structure hexagonale (découpe laser)
+  -t THICKNESS, --thickness THICKNESS   Épaisseur des lignes de contour (peut être important pour les découpeuses au laser.)
+  --text                Utiliser une interface de la console
+  -l, --lines           Dessiner le contour de la grille hexagonale
+  --resolution RESOLUTION RESOLUTION     Résolution de la fenêtre PyGame
+  -p, --previous        Utiliser les paramètres précédents
 ```
 
 La première fois que vous exécuterez le programme, un fichier `settings.json` sera créé. Vous pouvez le modifier à votre convenance et puis l'utiliser avec l'option `-p`.
@@ -79,7 +79,7 @@ Si vous n'utilizer pas `--text`, une fenêtre Pygame s'ouvrira par défaut.
 
 ![Example de l'interface](assets/readme/ui.png)
 
-- Un rouge il y a la grille, vous pouvez clicker dessus pour ajouter ou enlever des cellules.
+- En rouge il y a la grille, vous pouvez clicker dessus pour ajouter ou enlever des cellules.
 - La partie magenta contient les boutons pour controller la simulation.
   - `Pause / Resume` pause ou continue la simulation. Lorsque vous commencez, la simulation est automatiquement en pause. Lorsque la simulation est en marche, elle ira aussi vite que possible.
   - `Clear` réinitialize la grille.
