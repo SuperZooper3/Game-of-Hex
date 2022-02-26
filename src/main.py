@@ -1,9 +1,9 @@
 # pylint: disable=no-member
 import argparse
 import datetime
+import sys
 from copy import deepcopy
 from typing import Tuple
-import sys
 
 import gif
 import rules
