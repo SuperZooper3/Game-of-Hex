@@ -11,7 +11,7 @@ import pygame
 from board import Board
 from settings import *
 
-buttons: Dict[str, NoneType | pygame.Rect] = {
+buttons: Dict[str, Optional[pygame.Rect]] = {
     "pause": None,
     "clear": None,
     "step": None,
@@ -41,7 +41,9 @@ def closest(lst: List[int], K: int) -> int:
 
 # https://stackoverflow.com/questions/29064259/drawing-pentagon-hexagon-in-pygame + math = :exploding_head:
 # returns the 6 points for a regular hexagon
-def getHexCoords(radius: int, position: List[int]) -> List[Tuple[float]]:
+def getHexCoords(
+    radius: int, position: Tuple[float, float]
+) -> List[Tuple[float, float]]:
     pi2: float = 2 * pi
     n: int = 6
     return [
@@ -57,8 +59,8 @@ def getHexCoords(radius: int, position: List[int]) -> List[Tuple[float]]:
 # into irl coords
 # Also does some math
 def drawHex(
-    screen: pygame.display,
-    pos: List[int],
+    screen: pygame.surface.Surface,
+    pos: Tuple[int, int],
     alive: bool,
     age: int,
     board: Board = None,
@@ -66,17 +68,20 @@ def drawHex(
     outl: bool = OUTLINE,
     coloured: bool = None,
 ) -> None:
-    color: Tuple[int] = (255, 255, 255) if not alive else (0, 0, 0)
+    color: Tuple[int, int, int] = (255, 255, 255) if not alive else (0, 0, 0)
     if age is not None and alive:
         color = CELLCOLORS[closest(list(CELLCOLORS.keys()), age)]
     else:
         color = CELLCOLORS[0]
 
+    if board is None:
+        return
+
     # Every second hex needs to be slightly higher
     if pos[0] % 2 == 1:
         # Get ready for more math
         hexCoordsOffset: float = sin(radians(60)) * RADIUS
-        coords: List[Tuple[float]] = getHexCoords(
+        coords: List[Tuple[float, float]] = getHexCoords(
             RADIUS,
             (
                 (pos[0] * RADIUS) * 1.5 + OFFSET,
@@ -142,8 +147,8 @@ def drawHex(
 # Write text in the bottom left of the board
 def drawText(screen: pygame.surface.Surface, text: str) -> None:
     font = pygame.font.SysFont("Comic Sans MS", 40)
-    text = font.render(text, True, (0, 0, 0))
-    screen.blit(text, (0, RESOLUTION[1] - 50))
+    rendered_text = font.render(text, True, (0, 0, 0))
+    screen.blit(rendered_text, (0, RESOLUTION[1] - 50))
 
 
 # handle click events
@@ -161,28 +166,56 @@ def handleEvents(
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        elif (
+            event.type == pygame.KEYDOWN
+            and event.key == pygame.K_SPACE
+            and onchangepause is not None
+        ):
             onchangepause()
         elif event.type == pygame.MOUSEBUTTONUP:
-            eventX: int = event.pos[0]
-            eventY: int = event.pos[1]
+            eventX: float = event.pos[0]
+            eventY: float = event.pos[1]
 
-            if buttons["pause"].collidepoint(event.pos):
+            if (
+                buttons["pause"] is not None
+                and onchangepause is not None
+                and buttons["pause"].collidepoint(event.pos)
+            ):
                 onchangepause()
                 return
-            elif buttons["clear"].collidepoint(event.pos):
+            elif (
+                buttons["clear"] is not None
+                and onclear is not None
+                and buttons["clear"].collidepoint(event.pos)
+            ):
                 onclear()
                 return
-            elif buttons["step"].collidepoint(event.pos):
+            elif (
+                buttons["step"] is not None
+                and onstep is not None
+                and buttons["step"].collidepoint(event.pos)
+            ):
                 onstep()
                 return
-            elif buttons["gif"].collidepoint(event.pos):
+            elif (
+                buttons["gif"] is not None
+                and ongif is not None
+                and buttons["gif"].collidepoint(event.pos)
+            ):
                 ongif()
                 return
-            elif buttons["outline"].collidepoint(event.pos):
+            elif (
+                buttons["outline"] is not None
+                and onoutline is not None
+                and buttons["outline"].collidepoint(event.pos)
+            ):
                 onoutline()
                 return
-            elif buttons["SCname"].collidepoint(event.pos):
+            elif (
+                buttons["SCname"] is not None
+                and onnamesc is not None
+                and buttons["SCname"].collidepoint(event.pos)
+            ):
                 onnamesc()
                 return
 
@@ -199,8 +232,8 @@ def handleEvents(
             eventY /= RADIUS
 
             roundedY = round(eventY)
-
-            onclick((roundedX, roundedY))
+            if onclick is not None:
+                onclick((roundedX, roundedY))
 
 
 # Render the board on the pygame screen
@@ -238,7 +271,9 @@ def renderBoard(
 def renderDebug(screen: pygame.surface.Surface) -> None:
     screen.fill((255, 255, 255))
     fps: str = "FPS: " + str(int(clock.get_fps()))
-    fps_text: pygame.Surface = get_fps_font().render(fps, 1, pygame.Color("black"))
+    fps_text: pygame.surface.Surface = get_fps_font().render(
+        fps, True, pygame.Color("black")
+    )
     screen.blit(fps_text, (RESOLUTION[0] - 150, 20))
 
     paintButtons(screen)
@@ -247,8 +282,12 @@ def renderDebug(screen: pygame.surface.Surface) -> None:
 def paintButtons(screen: pygame.surface.Surface) -> None:
     for idx, name in enumerate(buttons):
         buttons[name] = pygame.Rect(RESOLUTION[0] - 150, 75 + (75 * idx), 125, 50)
-        pygame.draw.rect(screen, [0, 0, 0], buttons[name])
-        outline_text: pygame.Surface = get_fps_font(size=14).render(
-            buttonsName[name], 1, pygame.Color("white")
+        button_rect = buttons[name]
+
+        if button_rect is not None:
+            pygame.draw.rect(screen, [0, 0, 0], button_rect)
+
+        outline_text: pygame.surface.Surface = get_fps_font(size=14).render(
+            buttonsName[name], True, pygame.Color("white")
         )
         screen.blit(outline_text, (RESOLUTION[0] - 140, 90 + (75 * idx)))

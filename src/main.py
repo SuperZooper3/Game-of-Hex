@@ -11,6 +11,7 @@ import utils
 from board import Board
 from render import drawText, handleEvents, renderBoard
 from settings import *
+from exceptions import OutOfBoundsError
 
 print("---Game of Hex: starting!---")
 paused: bool = not text
@@ -63,7 +64,10 @@ def simStep(stepping: bool = False) -> None:
 
 
 def clickHandler(pos: Tuple[int, int]) -> None:
-    b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
+    try:
+        b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
+    except OutOfBoundsError:
+        pass
 
 
 def togglepause() -> None:
