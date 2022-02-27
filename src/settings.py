@@ -5,8 +5,8 @@ from types import FunctionType
 from typing import Callable, Dict, List, Optional, Tuple
 
 import pygame
-from board import Board
 
+from board import Board
 from rules import eternalFreeze, freeze
 
 parser: argparse.ArgumentParser = argparse.ArgumentParser(

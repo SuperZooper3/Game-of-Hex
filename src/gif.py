@@ -4,9 +4,10 @@ import os
 from platform import system
 from typing import List
 
+import pygame
 from PIL import Image, PngImagePlugin  # type: ignore
 from pygame import display, image
-import pygame
+
 from settings import CROPPING, GIFCOMPRESSION, GIFSPEED, RESOLUTION
 
 sys = system().lower()
