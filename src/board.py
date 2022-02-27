@@ -1,4 +1,7 @@
-from typing import Generator, List, Tuple
+from types import NoneType
+from typing import Generator, List, Optional, Tuple
+
+from exceptions import OutOfBoundsError
 
 cellsAroundEven = [[0, -1], [1, -1], [1, 0], [0, 1], [-1, 0], [-1, -1]]
 cellsAroundOdd = [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
@@ -23,7 +26,7 @@ class Cell:
         self.x: int = x
         self.y: int = y
         self.alive: bool = alive
-        self.age: int = age
+        self.age: Optional[int] = age
 
 
 class Board:
@@ -88,10 +91,10 @@ class Board:
         """
 
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
-            return None
+            raise OutOfBoundsError
         return self.grid[x][y].alive
 
-    def age(self, x: int, y: int) -> bool:
+    def age(self, x: int, y: int) -> Optional[int]:
         """
         Board.age(x: int, y: int) -> bool: returns the age of a given cell
         Args:
@@ -103,7 +106,7 @@ class Board:
         """
 
         if (x < 0 or x >= self.x) or (y < 0 or y >= self.y):
-            return None
+            raise OutOfBoundsError
         return self.grid[x][y].age
 
     def aliveAround(self, x: int, y: int) -> int:
@@ -127,7 +130,7 @@ class Board:
                 count += 1
         return count
 
-    def around(self, x: int, y: int) -> List[bool]:
+    def around(self, x: int, y: int) -> List[Optional[bool]]:
         """
         Board.around(x: int, y: int) -> list[bool]: returns a list of the cells around the given cell(excluding itself)
         Args:
@@ -138,7 +141,7 @@ class Board:
             list[bool] the state of the cells around the checked cell, order is up, up-right, down-right, down, down-left, up-left
         """
 
-        cells: List[Cell] = []
+        cells: List[Optional[bool]] = []
         if x % 2 == 0:
             cellsAround = cellsAroundEven
         else:
@@ -148,7 +151,7 @@ class Board:
             cells.append(self.alive(x + xOffset, y + yOffset))
         return cells
 
-    def write(self, x: int, y: int, alive: bool, age: int = None) -> bool:
+    def write(self, x: int, y: int, alive: bool, age: int = None) -> Optional[bool]:
         """
         Board.write(x: int, y: int, alive: bool) -> bool: changes the state of a cell
         Args:
@@ -165,7 +168,7 @@ class Board:
             or (y < 0 or y >= self.y)
             or not (alive == True or alive == False)
         ):
-            return None
+            raise OutOfBoundsError
         self.grid[x][y].alive = alive
         if age is not None:
             self.grid[x][y].age = age  # If an age is passed, add it
@@ -197,7 +200,7 @@ class Board:
                 string += " "
             for x in range(self.x):
                 dis = 0 if self.age(x, y) is None else self.age(x, y)
-                if int(self.alive(x, y)) == True:
+                if int(self.alive(x, y)):
                     if colors:
                         string += "\33[34m" + str(dis) + " " + "\033[0m"
                     else:
