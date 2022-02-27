@@ -126,7 +126,7 @@ clock: pygame.time.Clock = pygame.time.Clock()
 
 # Cells to be there at start (list of tuples)
 # [(x, y), (x, y), ...]
-startCells: List[Tuple[int]] = []
+startCells: List[Tuple[int, int]] = []
 
 # Font for the fps counter
 # Function becuase pygame needs to be initialized before calling font methods

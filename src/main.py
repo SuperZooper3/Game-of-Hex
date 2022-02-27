@@ -29,9 +29,7 @@ if not text:
     import pygame
 
     pygame.init()
-    screen: pygame.Surface = pygame.display.set_mode(RESOLUTION)
-else:
-    screen = None
+    screen: pygame.surface.Surface = pygame.display.set_mode(RESOLUTION)
 
 # Simulate a step of the board
 def simStep(stepping: bool = False) -> None:
@@ -44,20 +42,18 @@ def simStep(stepping: bool = False) -> None:
             cy: int = cell.y
             cs: bool = cell.alive
             ca: int = cell.age
-            nextstate: bool = cs
+            nextstate: Optional[bool] = cs
 
             # Compute all the rules
-            freeze: bool = FREEZERULE(b1, cx, cy)
+            freeze: Optional[bool] = FREEZERULE(b1, cx, cy)
 
             # Combine all the rules (for now simple because we don't have many rules)
-            nextstate: bool = freeze
+            nextstate = freeze
             if nextstate == True:
                 ca = ca + 1 if ca is not None else 1
-            else:
-                ca = None
 
             # Write to the b2
-            b2.write(cx, cy, nextstate, ca)
+            b2.write(cx, cy, nextstate, age=ca if nextstate else None)
 
         # Copy b2 to b1
         b1 = deepcopy(b2)
@@ -66,7 +62,7 @@ def simStep(stepping: bool = False) -> None:
             gif.screenshot(screen)
 
 
-def clickHandler(pos: Tuple[int]) -> None:
+def clickHandler(pos: Tuple[int, int]) -> None:
     b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
 
 

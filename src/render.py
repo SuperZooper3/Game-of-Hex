@@ -140,7 +140,7 @@ def drawHex(
 
 
 # Write text in the bottom left of the board
-def drawText(screen: pygame.display, text: str) -> None:
+def drawText(screen: pygame.surface.Surface, text: str) -> None:
     font = pygame.font.SysFont("Comic Sans MS", 40)
     text = font.render(text, True, (0, 0, 0))
     screen.blit(text, (0, RESOLUTION[1] - 50))
@@ -150,7 +150,7 @@ def drawText(screen: pygame.display, text: str) -> None:
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
 def handleEvents(
-    onclick: Callable[[Tuple[int]], None] = None,
+    onclick: Callable[[Tuple[int, int]], None] = None,
     onchangepause: Callable[[], None] = None,
     onclear: Callable[[], None] = None,
     onstep: Callable[[], None] = None,
@@ -205,7 +205,7 @@ def handleEvents(
 
 # Render the board on the pygame screen
 def renderBoard(
-    screen: pygame.Surface,
+    screen: pygame.surface.Surface,
     board: Board,
     text: bool = False,
     grid: bool = DOGRID,
@@ -235,7 +235,7 @@ def renderBoard(
 
 
 # Render debug buttons and text
-def renderDebug(screen: pygame.Surface) -> None:
+def renderDebug(screen: pygame.surface.Surface) -> None:
     screen.fill((255, 255, 255))
     fps: str = "FPS: " + str(int(clock.get_fps()))
     fps_text: pygame.Surface = get_fps_font().render(fps, 1, pygame.Color("black"))
@@ -244,7 +244,7 @@ def renderDebug(screen: pygame.Surface) -> None:
     paintButtons(screen)
 
 
-def paintButtons(screen: pygame.Surface) -> None:
+def paintButtons(screen: pygame.surface.Surface) -> None:
     for idx, name in enumerate(buttons):
         buttons[name] = pygame.Rect(RESOLUTION[0] - 150, 75 + (75 * idx), 125, 50)
         pygame.draw.rect(screen, [0, 0, 0], buttons[name])

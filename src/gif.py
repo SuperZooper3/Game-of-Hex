@@ -22,7 +22,7 @@ def clearImg() -> None:  # Clear all the screenshots from the folder
 
 
 def screenshot(
-    screen: pygame.Surface, path: str = "img/sc/sfsc"
+    screen: pygame.surface.Surface, path: str = "img/sc/sfsc"
 ) -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
     image.save(screen, f"{path}{cnt}.png")

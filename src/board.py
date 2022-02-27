@@ -52,7 +52,7 @@ class Board:
         self.y: int = y
 
     @classmethod
-    def genAlive(cls, aliveCells: Tuple[list], x: int, y: int):
+    def genAlive(cls, aliveCells: list[Tuple[int, int]], x: int, y: int):
         """
         Board.genAlive(*aliveCells: Tuple[list], x: int, y:int): classmethod that generates a board with the given cell coordinates alive and returns the board
         Args:
@@ -154,7 +154,9 @@ class Board:
             cells.append(self.alive(x + xOffset, y + yOffset))
         return cells
 
-    def write(self, x: int, y: int, alive: bool, age: int = None) -> Optional[bool]:
+    def write(
+        self, x: int, y: int, alive: Optional[bool], age: int = None
+    ) -> Optional[bool]:
         """
         Board.write(x: int, y: int, alive: bool) -> bool: changes the state of a cell
         Args:
