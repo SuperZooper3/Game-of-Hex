@@ -2,7 +2,6 @@
 
 Read this document in [english](README.md).
 
-
 **Un clone du "Jeu de la Vie de John Conway" qui utilise une grille hexagonale pour simuler les structures de cristaux et de flocons de neige!**
 
 ![Un example d'une simulation](assets/readme/ex.png)
@@ -47,7 +46,8 @@ Si l'argument `candie` est passé, alors les règles sont les suivantes:
 
 ## Installation
 
-Préréquisite:
+Prérequis:
+
 - Python 3.7.7 ou plus haut **mais plus petit que 3.10** (pour la compatibilité avec Pygame).
 - Toutes les dépendances dans le fichier `requirements.txt`. Depuis le répertoire de base de ce git, exécutez `pip install -r requirements.txt`.
 
