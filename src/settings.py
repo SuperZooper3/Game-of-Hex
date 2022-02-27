@@ -2,9 +2,10 @@ import argparse
 import json
 from collections import OrderedDict
 from types import FunctionType
-from typing import Dict, List, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
 import pygame
+from board import Board
 
 from rules import eternalFreeze, freeze
 
@@ -57,7 +58,7 @@ def get_maxfps(text: bool = False) -> int:
 OUTLINE: bool = args.outline
 
 # Size of the window opened
-RESOLUTION: Tuple[int] = tuple(args.resolution)
+RESOLUTION: Tuple[int, ...] = tuple(args.resolution)
 
 # How many times to divide the size of the gif (not that important so I have 1)
 GIFCOMPRESSION: int = 1
@@ -69,7 +70,10 @@ CROPPING: int = 150
 THICKNESS: int = args.thickness
 
 # Set the colours depending on the ages
-BGCOLOR: Tuple[int] = (186, 186, 186)
+
+BGCOLOR: Tuple[int, int, int, int] = (
+    (186, 186, 186, 255) if not OUTLINE else (0, 0, 0, 0)
+)
 
 CELLCOLORS: OrderedDict = OrderedDict()
 CELLCOLORS[0] = BGCOLOR
@@ -111,11 +115,11 @@ DOGRID: bool = args.grid
 # Number of seconds per frame of the gif
 GIFSPEED: float = 0.4
 
+
 # Rule for cell freezing
-if args.candie:
-    FREEZERULE: FunctionType = freeze
-else:
-    FREEZERULE: FunctionType = eternalFreeze
+FREEZERULE: Callable[[Board, int, int], Optional[bool]] = (
+    freeze if args.candie else eternalFreeze
+)
 
 # Game clock
 clock: pygame.time.Clock = pygame.time.Clock()
@@ -130,24 +134,21 @@ def get_fps_font(size: int = 32) -> pygame.font.Font:
     return pygame.font.SysFont("verdana", size)
 
 
-if OUTLINE:
-    BGCOLOR: Tuple[int] = (0, 0, 0, 0)
-
 if args.previous:
     with open("settings.json", "r", encoding="UTF-8") as f:
         previous: Dict = json.load(f)
-        x: int = previous["x"]
-        y: int = previous["y"]
-        maxfps: int = previous["maxfps"]
-        RADIUS: int = previous["radius"]
-        text: bool = previous["text"]
-        DOGRID: bool = previous["grid"]
-        RESOLUTION: Tuple[int] = tuple(previous["resolution"])
-        OUTLINE: bool = previous["outline"]
+        x = previous["x"]
+        y = previous["y"]
+        maxfps = previous["maxfps"]
+        RADIUS = previous["radius"]
+        text = previous["text"]
+        DOGRID = previous["grid"]
+        RESOLUTION = tuple(previous["resolution"])
+        OUTLINE = previous["outline"]
         if previous["candie"]:
-            FREEZERULE: FunctionType = freeze
+            FREEZERULE = freeze
         else:
-            FREEZERULE: FunctionType = eternalFreeze
+            FREEZERULE = eternalFreeze
 
 with open("settings.json", "w+", encoding="UTF-8") as f:
     json.dump(

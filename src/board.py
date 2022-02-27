@@ -126,8 +126,11 @@ class Board:
         else:
             cellsAround = cellsAroundOdd
         for xOffset, yOffset in cellsAround:
-            if self.alive(x + xOffset, y + yOffset) == True:
-                count += 1
+            try:
+                if self.alive(x + xOffset, y + yOffset) == True:
+                    count += 1
+            except OutOfBoundsError:
+                pass
         return count
 
     def around(self, x: int, y: int) -> List[Optional[bool]]:
