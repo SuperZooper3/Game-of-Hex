@@ -5,7 +5,7 @@ from board import *
 # returns if the rule is followed or broken
 
 
-def freeze(b: Board, x: int, y: int) -> bool:
+def freeze(b: Board, x: int, y: int) -> Optional[bool]:
     """
     freeze(b: Board,x: int, y: int) -> bool
     Args:
@@ -19,7 +19,7 @@ def freeze(b: Board, x: int, y: int) -> bool:
     n = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
     good: List[int] = [1, 3, 4, 5, 6]
-    bad: List = []  # list of the values that would lead to a dead cell
+    bad: List[int] = []  # list of the values that would lead to a dead cell
     if n != None:
         if n in good:
             # print("Number of alive, good:", n, x, y)
@@ -30,10 +30,11 @@ def freeze(b: Board, x: int, y: int) -> bool:
         else:
             # print("Number of alive is not in lists:", n)
             return False
+    return None
 
 
 # Different version of the freeze rule that prevents cells from dying
-def eternalFreeze(b: Board, x: int, y: int) -> bool:
+def eternalFreeze(b: Board, x: int, y: int) -> Optional[bool]:
     n: int = b.aliveAround(x, y)
     # list of all the adjacent values that will lead to an alive cell
     good: List[int] = [1, 3, 4, 5, 6]
@@ -50,3 +51,4 @@ def eternalFreeze(b: Board, x: int, y: int) -> bool:
         else:
             # print("Number of alive is not in lists:", n)
             return False
+    return None
