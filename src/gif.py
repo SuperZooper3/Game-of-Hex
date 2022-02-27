@@ -4,9 +4,9 @@ import os
 from platform import system
 from typing import List
 
-from PIL import Image, PngImagePlugin
+from PIL import Image, PngImagePlugin  # type: ignore
 from pygame import display, image
-
+import pygame
 from settings import CROPPING, GIFCOMPRESSION, GIFSPEED, RESOLUTION
 
 sys = system().lower()
@@ -17,11 +17,12 @@ cnt: int = 0
 
 
 def clearImg() -> None:  # Clear all the screenshots from the folder
-    [os.remove(png) for png in glob.glob("img/sc/sfsc*png")]
+    for png in glob.glob("img/sc/sfsc*png"):
+        os.remove(png)
 
 
 def screenshot(
-    screen: display, path: str = "img/sc/sfsc"
+    screen: pygame.Surface, path: str = "img/sc/sfsc"
 ) -> None:  # Takes a screenshot of the gamescreen and saves it for gif making
     global cnt
     image.save(screen, f"{path}{cnt}.png")
@@ -68,9 +69,12 @@ def compileGif() -> None:
             optimize=True,
         )
         if sys == "windows":  # dosent work on mac :kekw:
-            os.startfile(
+            # Open the gif to watch it instantly
+            os.startfile(  # type: ignore
                 os.path.join(os.getcwd(), f"img/gif/snowflake{t}.gif")
-            )  # Open the gif to watch it instantly
+            )
 
+    # #savingram
     for i in frames:
-        i.close()  # #savingram
+        # For some reason, mypy thinks `i` is a str /shrug
+        i.close()  # type: ignore

@@ -150,13 +150,13 @@ def drawText(screen: pygame.display, text: str) -> None:
 # propagates onclick; onchangepause; onclear; onstep
 # Requires the args to be funcs
 def handleEvents(
-    onclick: FunctionType = None,
-    onchangepause: FunctionType = None,
-    onclear: FunctionType = None,
-    onstep: FunctionType = None,
-    ongif: FunctionType = None,
-    onoutline: FunctionType = None,
-    onnamesc: FunctionType = None,
+    onclick: Callable[[Tuple[int]], None] = None,
+    onchangepause: Callable[[], None] = None,
+    onclear: Callable[[], None] = None,
+    onstep: Callable[[], None] = None,
+    ongif: Callable[[], None] = None,
+    onoutline: Callable[[], None] = None,
+    onnamesc: Callable[[], None] = None,
 ) -> None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -205,7 +205,7 @@ def handleEvents(
 
 # Render the board on the pygame screen
 def renderBoard(
-    screen: pygame.display,
+    screen: pygame.Surface,
     board: Board,
     text: bool = False,
     grid: bool = DOGRID,
@@ -235,7 +235,7 @@ def renderBoard(
 
 
 # Render debug buttons and text
-def renderDebug(screen: pygame.display) -> None:
+def renderDebug(screen: pygame.Surface) -> None:
     screen.fill((255, 255, 255))
     fps: str = "FPS: " + str(int(clock.get_fps()))
     fps_text: pygame.Surface = get_fps_font().render(fps, 1, pygame.Color("black"))
@@ -244,7 +244,7 @@ def renderDebug(screen: pygame.display) -> None:
     paintButtons(screen)
 
 
-def paintButtons(screen: pygame.display) -> None:
+def paintButtons(screen: pygame.Surface) -> None:
     for idx, name in enumerate(buttons):
         buttons[name] = pygame.Rect(RESOLUTION[0] - 150, 75 + (75 * idx), 125, 50)
         pygame.draw.rect(screen, [0, 0, 0], buttons[name])
