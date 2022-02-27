@@ -9,9 +9,9 @@ import gif
 import rules
 import utils
 from board import Board
+from exceptions import OutOfBoundsError
 from render import drawText, handleEvents, renderBoard
 from settings import *
-from exceptions import OutOfBoundsError
 
 print("---Game of Hex: starting!---")
 paused: bool = not text
