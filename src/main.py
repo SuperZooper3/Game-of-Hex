@@ -23,6 +23,9 @@ b2: Board = Board(
     x, y
 )  # This is the board to which we will write the next step's board, which will then be transfered to b1 and cleared
 
+cellCounts = [] # The number of cells that exist each step (list of ints)
+averageAge = [] # The average age of cells at each step (list of floats)
+
 # Get rid of all of the gifs until now
 gif.clearImg()
 
@@ -34,8 +37,11 @@ if not text:
 
 # Simulate a step of the board
 def simStep(stepping: bool = False) -> None:
-    global b1, b2
+    global b1, b2, averageAge, cellCounts
     if not paused or stepping:
+        cellCount: int = 0
+        totalAge: int = 0
+
         # b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
         # Itterate over all of the cells
         for cell in b1:
@@ -52,6 +58,8 @@ def simStep(stepping: bool = False) -> None:
             nextstate = freeze
             if nextstate == True:
                 ca = ca + 1 if ca is not None else 1
+                cellCount += 1
+                totalAge += ca
 
             # Write to the b2
             b2.write(cx, cy, nextstate, age=ca if nextstate else None)
@@ -61,6 +69,9 @@ def simStep(stepping: bool = False) -> None:
         # Take a screenshot of the board for a gif
         if not text:
             gif.screenshot(screen)
+        
+        cellCounts.append(cellCount)
+        averageAge.append(totalAge/cellCount)
 
 
 def clickHandler(pos: Tuple[int, int]) -> None:
@@ -74,13 +85,14 @@ def togglepause() -> None:
     global paused
     paused = not paused
 
-
 def clearBoard() -> None:
     gif.clearImg()
-    global paused
+    global paused, averageAge, cellCounts
     paused = True
     b1.clear()
     b2.clear()
+    cellCounts = [] # Reset the stats, comment out if you want to see the resets in the stats
+    averageAge = []
 
 
 def step() -> None:
@@ -89,7 +101,8 @@ def step() -> None:
 
 def stats() -> None:
     # run stats function
-    print("Stats!")
+    print(cellCounts)
+    print(averageAge)
     return
 
 
