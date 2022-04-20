@@ -30,6 +30,10 @@ Si l'argument `candie` est passé, alors les règles sont les suivantes:
 - Interface graphique Pygame, avec une coloration basée sur l'âge pour rendre les flocons de neige jolis!
 - Ajout de nouvelles méthodes de rendu facile!
 
+#### Statistiques
+
+- Visualizez certaines données telle que le nombre de cellules vivantes au cours du temps et l'âge moyen des cellules.
+
 ### GIFS
 
 - Des GIFS facile à créer (Pygame seulement) pour partager vos simulations avec vos amis.

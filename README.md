@@ -36,6 +36,10 @@ If the `candie` argument is passed, then the rule is:
 - Pygame user interface, with age based colouring to make pretty snowflakes!
 - Easy to add new rendering methods.
 
+#### Statistics
+
+- Get interesting data about the simulation such number of cells alive over time and average age of a cell.
+
 ### GIFS
 
 - Easy to make gifs (Pygame only) that make it easy to share your simulations with your friends.
