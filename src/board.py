@@ -1,4 +1,3 @@
-from types import NoneType
 from typing import Generator, List, Optional, Tuple
 
 from exceptions import OutOfBoundsError

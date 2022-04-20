@@ -11,6 +11,7 @@ import utils
 from board import Board
 from exceptions import OutOfBoundsError
 from render import drawText, handleEvents, renderBoard
+from stats import plotCellCount, plotAverageAge
 from settings import *
 
 print("---Game of Hex: starting!---")
@@ -100,9 +101,8 @@ def step() -> None:
     renderBoard(screen, b1)
 
 def stats() -> None:
-    # run stats function
-    print(cellCounts)
-    print(averageAge)
+    plotCellCount(cellCounts)
+    plotAverageAge(averageAge)
     return
 
 

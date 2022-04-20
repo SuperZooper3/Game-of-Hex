@@ -3,7 +3,7 @@ import os
 import platform
 import sys
 from math import cos, pi, radians, sin
-from types import FunctionType, NoneType
+from types import FunctionType
 from typing import Dict, List, Tuple, Union
 
 import pygame
