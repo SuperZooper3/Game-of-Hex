@@ -72,7 +72,10 @@ def simStep(stepping: bool = False) -> None:
             gif.screenshot(screen)
         
         cellCounts.append(cellCount)
-        averageAge.append(totalAge/cellCount)
+        if cellCount > 0:
+            averageAge.append(totalAge/cellCount)
+        else:
+            averageAge.append(0)
 
 
 def clickHandler(pos: Tuple[int, int]) -> None:
