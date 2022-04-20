@@ -87,6 +87,11 @@ def step() -> None:
     simStep(stepping=True)
     renderBoard(screen, b1)
 
+def stats() -> None:
+    # run stats function
+    print("Stats!")
+    return
+
 
 def outlineSC() -> None:
     t: str = str(round(datetime.datetime.now().timestamp() * 10))[3:]
@@ -124,6 +129,7 @@ while True:
                 ongif=gif.compileGif,
                 onoutline=outlineSC,
                 onnamesc=onnameSC,
+                onstats=stats
             )
         simStep()
         renderBoard(screen, b1, text=text)
