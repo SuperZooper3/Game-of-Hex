@@ -3,7 +3,7 @@ import os
 import platform
 import sys
 from math import cos, pi, radians, sin
-from types import FunctionType, NoneType
+from types import FunctionType
 from typing import Dict, List, Tuple, Union
 
 import pygame
@@ -18,6 +18,7 @@ buttons: Dict[str, Optional[pygame.Rect]] = {
     "gif": None,
     "outline": None,
     "SCname": None,
+    "Stats": None,
 }
 
 buttonsName: Dict[str, str] = {
@@ -27,6 +28,7 @@ buttonsName: Dict[str, str] = {
     "gif": "GIF",
     "outline": "Outline",
     "SCname": "Name SC",
+    "Stats": "Stats",
 }
 
 # idk, probably the cause of the pixel offset errors
@@ -162,6 +164,8 @@ def handleEvents(
     ongif: Callable[[], None] = None,
     onoutline: Callable[[], None] = None,
     onnamesc: Callable[[], None] = None,
+    onstats: Callable[[], None] = None,
+
 ) -> None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -217,6 +221,12 @@ def handleEvents(
                 and buttons["SCname"].collidepoint(event.pos)
             ):
                 onnamesc()
+            elif (
+                buttons["Stats"] is not None
+                and onnamesc is not None
+                and buttons["Stats"].collidepoint(event.pos)
+            ):
+                onstats()
                 return
 
             eventX -= OFFSET
