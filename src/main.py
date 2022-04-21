@@ -11,7 +11,7 @@ import utils
 from board import Board
 from exceptions import OutOfBoundsError
 from render import drawText, handleEvents, renderBoard
-from stats import plotCellCount, plotAverageAge
+from stats import plotCellCount, plotAverageAge, plotNewCellCount
 from settings import *
 
 print("---Game of Hex: starting!---")
@@ -26,6 +26,7 @@ b2: Board = Board(
 
 cellCounts = [] # The number of cells that exist each step (list of ints)
 averageAge = [] # The average age of cells at each step (list of floats)
+newCellCounts = [0] # The number of new cells per step
 
 # Get rid of all of the gifs until now
 gif.clearImg()
@@ -38,10 +39,11 @@ if not text:
 
 # Simulate a step of the board
 def simStep(stepping: bool = False) -> None:
-    global b1, b2, averageAge, cellCounts
+    global b1, b2, averageAge, cellCounts, newCellCounts
     if not paused or stepping:
         cellCount: int = 0
         totalAge: int = 0
+        newCellCount: int = 0
 
         # b2.clear() # Clear the current board Note: **we dont need to do this caus all of the cells are gona be overwitten anyways**
         # Itterate over all of the cells
@@ -57,6 +59,9 @@ def simStep(stepping: bool = False) -> None:
 
             # Combine all the rules (for now simple because we don't have many rules)
             nextstate = freeze
+
+            if not cs and nextstate: # So this is a new cell
+                newCellCount += 1
             if nextstate == True:
                 ca = ca + 1 if ca is not None else 1
                 cellCount += 1
@@ -70,7 +75,7 @@ def simStep(stepping: bool = False) -> None:
         # Take a screenshot of the board for a gif
         if not text:
             gif.screenshot(screen)
-        
+        newCellCounts.append(newCellCount)
         cellCounts.append(cellCount)
         if cellCount > 0:
             averageAge.append(totalAge/cellCount)
@@ -79,8 +84,13 @@ def simStep(stepping: bool = False) -> None:
 
 
 def clickHandler(pos: Tuple[int, int]) -> None:
+    global newCellCounts
     try:
         b1.write(*pos, not b1.alive(*pos), age=None if b1.alive(*pos) else 1)
+        if b1.alive(*pos):
+            newCellCounts[-1] += 1
+        else:
+            if newCellCounts[-1] > 0: newCellCounts[-1] -= 1
     except OutOfBoundsError:
         pass
 
@@ -91,12 +101,13 @@ def togglepause() -> None:
 
 def clearBoard() -> None:
     gif.clearImg()
-    global paused, averageAge, cellCounts
+    global paused, averageAge, cellCounts, newCellCounts
     paused = True
     b1.clear()
     b2.clear()
     cellCounts = [] # Reset the stats, comment out if you want to see the resets in the stats
     averageAge = []
+    newCellCounts = [0]
 
 
 def step() -> None:
@@ -106,6 +117,7 @@ def step() -> None:
 def stats() -> None:
     plotCellCount(cellCounts)
     plotAverageAge(averageAge)
+    plotNewCellCount(newCellCounts)
     return
 
 
