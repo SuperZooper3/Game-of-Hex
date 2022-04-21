@@ -19,7 +19,7 @@ def plotAverageAge(l):
     plt.plot(x, y, color ='darkblue')
     plt.xlabel("Le pas")
     plt.ylabel("L'age moyen des cellules")
-    plt.title("L'age des cellules en fonction du pas")
+    plt.title("L'age moyen des cellules en fonction du pas")
     plt.fill_between(x= x, y1= y, color= "b",alpha= 0.2)
 
     plt.show()
