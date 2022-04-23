@@ -13,14 +13,14 @@ parser: argparse.ArgumentParser = argparse.ArgumentParser(
     description="Run the game of life using hexagonal grids"
 )
 
-scaling = 3
+scaling = 0.2
 
-parser.add_argument("-x", type=int, default=190*scaling, help="Width of the grid")
-parser.add_argument("-y", type=int, default=135*scaling, help="Height of the grid")
+parser.add_argument("-x", type=int, default=int(190*scaling), help="Width of the grid")
+parser.add_argument("-y", type=int, default=int(130*scaling), help="Height of the grid")
 parser.add_argument(
     "-f", "--maxfps", type=int, dest="maxfps", help="Maximum frames per seconds"
 )
-parser.add_argument("-r", "--radius", type=int, default=3/scaling, help="Radius of the hexes")
+parser.add_argument("-r", "--radius", type=int, default=int(3/scaling), help="Radius of the hexes")
 parser.add_argument(
     "-o", "--outline", action="store_true", help="Only display hex outlines"
 )
