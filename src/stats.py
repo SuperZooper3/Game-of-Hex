@@ -9,6 +9,9 @@ def plotCellCount(l):
     plt.xlabel("Le pas")
     plt.ylabel("Le nombre de cellules")
     plt.title("Le nombre de cellules en fonction du pas")
+    # Uncomment the lines below to see the cell counts on a log-log scale. This is useufull as a proof for the fact that we have a fractal
+    # plt.yscale('log')
+    # plt.xscale('log')
     plt.fill_between(x= x, y1= y, color= "purple",alpha= 0.2)
     plt.show()
 
@@ -21,7 +24,6 @@ def plotAverageAge(l):
     plt.ylabel("L'age moyen des cellules")
     plt.title("L'age moyen des cellules en fonction du pas")
     plt.fill_between(x= x, y1= y, color= "b",alpha= 0.2)
-
     plt.show()
 
 def plotNewCellCount(l):
