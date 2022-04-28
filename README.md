@@ -95,6 +95,8 @@ If you don't select `--text`, a Pygame window should open after a couple of seco
   - `Step` runs one step of the simulation at a time.
   - `Make a gif` saves a gif of everything that has happened since the last clear or the start. It gets saved to `src/img/gif`. They are **ready to share!**
   - `Outline SC` takes a screenshot of the outline of the alive cells (same as running `-o` but just for one frame.) The picture is saved to `src/img/outline`.
+  - `Name SC` asks for a name in the terminal from which the program was launched, and then saves an image with the name in it. This can be used for education where students can all have their own picture printed out.
+  - `Stats` opens mutliple matplotlib windows with stats on the average age of all cells alive, the number of alive cells and the increase per step
 - The green part shows the framerate. When the board is paused this shows how many frames the drawing script can draw in a second and during simulation this is the number of simulation steps that were run in the last second.
 
 ### Text display
