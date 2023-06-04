@@ -1,4 +1,4 @@
-# Game of Hex
+# Game of Hex (also known as Snowfake)
 
 Lire ce document en [français](README_FR.md).
 
